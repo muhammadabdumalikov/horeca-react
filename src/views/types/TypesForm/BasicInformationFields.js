@@ -1,5 +1,5 @@
 import React from 'react'
-import { AdaptableCard, RichTextEditor } from 'components/shared'
+import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
 import { Field } from 'formik'
 

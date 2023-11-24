@@ -106,7 +106,7 @@ const CompanyTable = () => {
         (state) => state.salesCompanyList.data.filterData
     )
 
-    const loading = useSelector((state) => state.salesCompanyList.data.loading)
+    // const loading = useSelector((state) => state.salesCompanyList.data.loading)
 
     // const data = useSelector((state) => state.salesProductList.data.productList)
 

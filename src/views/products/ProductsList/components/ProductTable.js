@@ -116,7 +116,7 @@ const ProductTable = () => {
         (state) => state.salesProductList.data.filterData
     )
 
-    const loading = useSelector((state) => state.salesProductList.data.loading)
+    // const loading = useSelector((state) => state.salesProductList.data.loading)
     
     // const data = useSelector((state) => state.salesProductList.data.productList)
 

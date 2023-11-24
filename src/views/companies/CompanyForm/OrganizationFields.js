@@ -1,7 +1,7 @@
 import React from 'react'
 import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
-import CreatableSelect from 'react-select/creatable'
+// import CreatableSelect from 'react-select/creatable'
 import { Field } from 'formik'
 
 export const categories = [

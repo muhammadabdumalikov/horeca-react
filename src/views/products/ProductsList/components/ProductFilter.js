@@ -1,5 +1,5 @@
 import React, { useState, useRef, forwardRef } from 'react'
-import { HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
+import { HiOutlineFilter } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     getProducts,
@@ -7,7 +7,6 @@ import {
     initialTableData,
 } from '../store/dataSlice'
 import {
-    Input,
     Button,
     Checkbox,
     Radio,

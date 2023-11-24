@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { Badge } from 'components/ui'
+// import { Badge } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,23 +11,23 @@ import CompanyDeleteConfirmation from './CompanyDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 
-const inventoryStatusColor = {
-    0: {
-        label: 'В наличии',
-        dotClass: 'bg-emerald-500',
-        textClass: 'text-emerald-500',
-    },
-    1: {
-        label: 'Ограниченное',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
-    },
-    2: {
-        label: 'Распродано',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-}
+// const inventoryStatusColor = {
+//     0: {
+//         label: 'В наличии',
+//         dotClass: 'bg-emerald-500',
+//         textClass: 'text-emerald-500',
+//     },
+//     1: {
+//         label: 'Ограниченное',
+//         dotClass: 'bg-amber-500',
+//         textClass: 'text-amber-500',
+//     },
+//     2: {
+//         label: 'Распродано',
+//         dotClass: 'bg-red-500',
+//         textClass: 'text-red-500',
+//     },
+// }
 
 const data = [
     {
@@ -106,7 +106,7 @@ const CompanyTable = () => {
         (state) => state.salesCompanyList.data.filterData
     )
 
-    const loading = useSelector((state) => state.salesCompanyList.data.loading)
+    // const loading = useSelector((state) => state.salesCompanyList.data.loading)
 
     // const data = useSelector((state) => state.salesProductList.data.productList)
 
