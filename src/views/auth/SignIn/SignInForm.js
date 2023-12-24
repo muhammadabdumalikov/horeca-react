@@ -2,19 +2,20 @@ import React from 'react'
 import {
     Input,
     Button,
-    Checkbox,
+    // Checkbox,
     FormItem,
     FormContainer,
     Alert,
 } from 'components/ui'
-import { PasswordInput, ActionLink } from 'components/shared'
+import { PasswordInput } from 'components/shared'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import useAuth from 'utils/hooks/useAuth'
+// import { setToken } from 'store/auth/sessionSlice'
 
 const validationSchema = Yup.object().shape({
-    userName: Yup.string().required('Please enter your user name'),
+    username: Yup.string().required('Please enter your user name'),
     password: Yup.string().required('Please enter your password'),
     rememberMe: Yup.bool(),
 })
@@ -23,19 +24,24 @@ const SignInForm = (props) => {
     const {
         disableSubmit = false,
         className,
-        forgotPasswordUrl = '/forgot-password',
-        signUpUrl = '/sign-up',
+        // forgotPasswordUrl = '/forgot-password',
+        // signUpUrl = '/sign-up',
     } = props
 
     const [message, setMessage] = useTimeOutMessage()
 
     const { signIn } = useAuth()
 
+    // console.log('signIn', signIn)
     const onSignIn = async (values, setSubmitting) => {
-        const { userName, password } = values
-        setSubmitting(true)
 
-        const result = await signIn({ userName, password })
+        const { username, password } = values
+        setSubmitting(true)
+        // console.log( 'values', values)
+
+        const result = await signIn({ username, password })
+        
+        // console.log('result', result)
 
         if (result.status === 'failed') {
             setMessage(result.message)
@@ -54,8 +60,8 @@ const SignInForm = (props) => {
             <Formik
                 // Remove this initial value
                 initialValues={{
-                    userName: 'admin',
-                    password: '123Qwe',
+                    username: 'admin',
+                    password: '12345',
                     rememberMe: true,
                 }}
                 validationSchema={validationSchema}
@@ -72,13 +78,13 @@ const SignInForm = (props) => {
                         <FormContainer>
                             <FormItem
                                 label="User Name"
-                                invalid={errors.userName && touched.userName}
-                                errorMessage={errors.userName}
+                                invalid={errors.username && touched.username}
+                                errorMessage={errors.username}
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
-                                    name="userName"
+                                    name="username"
                                     placeholder="User Name"
                                     component={Input}
                                 />
@@ -95,7 +101,7 @@ const SignInForm = (props) => {
                                     component={PasswordInput}
                                 />
                             </FormItem>
-                            <div className="flex justify-between mb-6">
+                            {/* <div className="flex justify-between mb-6">
                                 <Field
                                     className="mb-0"
                                     name="rememberMe"
@@ -105,7 +111,7 @@ const SignInForm = (props) => {
                                 <ActionLink to={forgotPasswordUrl}>
                                     Forgot Password?
                                 </ActionLink>
-                            </div>
+                            </div> */}
                             <Button
                                 block
                                 loading={isSubmitting}
@@ -114,10 +120,10 @@ const SignInForm = (props) => {
                             >
                                 {isSubmitting ? 'Signing in...' : 'Sign In'}
                             </Button>
-                            <div className="mt-4 text-center">
+                            {/* <div className="mt-4 text-center">
                                 <span>Don't have an account yet? </span>
                                 <ActionLink to={signUpUrl}>Sign up</ActionLink>
-                            </div>
+                            </div> */}
                         </FormContainer>
                     </Form>
                 )}

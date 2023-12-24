@@ -1,10 +1,10 @@
 const appConfig = {
-    apiPrefix: '/api',
+    apiPrefix: 'https://horecaapi.uz/api/',
     authenticatedEntryPath: '/products',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
     locale: 'en',
-    enableMock: true,
+    enableMock: false,
 }
 
 export default appConfig

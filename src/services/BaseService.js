@@ -18,6 +18,8 @@ BaseService.interceptors.request.use(
         const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
         const persistData = deepParseJson(rawPersistData)
 
+        console.log('persistData', persistData)
+
         let accessToken = persistData.auth.session.token
 
         if (!accessToken) {
@@ -30,7 +32,6 @@ BaseService.interceptors.request.use(
                 REQUEST_HEADER_AUTH_KEY
             ] = `${TOKEN_TYPE}${accessToken}`
         }
-
         return config
     },
     (error) => {

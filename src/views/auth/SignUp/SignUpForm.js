@@ -26,9 +26,9 @@ const SignUpForm = (props) => {
     const [message, setMessage] = useTimeOutMessage()
 
     const onSignUp = async (values, setSubmitting) => {
-        const { userName, password, email } = values
+        const { username, password, email } = values
         setSubmitting(true)
-        const result = await signUp({ userName, password, email })
+        const result = await signUp({ username, password, email })
 
         if (result.status === 'failed') {
             setMessage(result.message)
@@ -46,7 +46,7 @@ const SignUpForm = (props) => {
             )}
             <Formik
                 initialValues={{
-                    userName: 'admin1',
+                    username: 'admin1',
                     password: '123Qwe1',
                     confirmPassword: '123Qwe1',
                     email: 'test@testmail.com',
@@ -65,13 +65,13 @@ const SignUpForm = (props) => {
                         <FormContainer>
                             <FormItem
                                 label="User Name"
-                                invalid={errors.userName && touched.userName}
-                                errorMessage={errors.userName}
+                                invalid={errors.username && touched.username}
+                                errorMessage={errors.username}
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
-                                    name="userName"
+                                    name="username"
                                     placeholder="User Name"
                                     component={Input}
                                 />

@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, initialState } from 'store/auth/userSlice'
-import { apiSignIn, apiSignOut, apiSignUp } from 'services/AuthService'
-import { onSignInSuccess, onSignOutSuccess } from 'store/auth/sessionSlice'
+import { apiSignIn, apiSignUp } from 'services/AuthService'
+import { onSignInSuccess, onSignOutSuccess, setToken } from 'store/auth/sessionSlice'
 import appConfig from 'configs/app.config'
 import { REDIRECT_URL_KEY } from 'constants/app.constant'
 import { useNavigate } from 'react-router-dom'
@@ -16,18 +16,24 @@ function useAuth() {
 
     const { token, signedIn } = useSelector((state) => state.auth.session)
 
+    // console.log('token', token)
+    // console.log('signedIn', signedIn)
+
     const signIn = async (values) => {
+
         try {
             const resp = await apiSignIn(values)
+
             if (resp.data) {
-                const { token } = resp.data
-                dispatch(onSignInSuccess(token))
-                if (resp.data.user) {
+                const { accessToken } = resp.data
+                dispatch(onSignInSuccess(accessToken))
+                if (resp.data.admin) {
+                    // console.log('resp.data.admin', resp.data.admin)
                     dispatch(
                         setUser(
-                            resp.data.user || {
+                            resp.data.admin || {
                                 avatar: '',
-                                userName: 'Anonymous',
+                                userName: 'Anonymous',  
                                 authority: ['USER'],
                                 email: '',
                             }
@@ -55,8 +61,8 @@ function useAuth() {
         try {
             const resp = await apiSignUp(values)
             if (resp.data) {
-                const { token } = resp.data
-                dispatch(onSignInSuccess(token))
+                const { accessToken } = resp.data
+                dispatch(onSignInSuccess(accessToken))
                 if (resp.data.user) {
                     dispatch(
                         setUser(
@@ -93,12 +99,11 @@ function useAuth() {
     }
 
     const signOut = async () => {
-        await apiSignOut()
         handleSignOut()
     }
 
     return {
-        authenticated: token && signedIn,
+        authenticated: token || signedIn,
         signIn,
         signUp,
         signOut,

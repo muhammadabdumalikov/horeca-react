@@ -193,7 +193,6 @@ const DataTable = forwardRef((props, ref) => {
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
-                                console.log(header, 'header')
                                 return (
                                     <Th
                                         key={header.id}

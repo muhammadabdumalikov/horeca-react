@@ -120,7 +120,7 @@ const ProductTable = () => {
     
     // const data = useSelector((state) => state.salesProductList.data.productList)
 
-    console.log(data, 'data')
+    // console.log(data, 'data')
 
     useEffect(() => {
         fetchData()

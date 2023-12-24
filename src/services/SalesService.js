@@ -73,28 +73,28 @@ export async function apiGetSalesOrderDetails(params) {
 }
 export async function apiGetSalesCompany(params) {
     return ApiService.fetchData({
-        url: '/api/company',
+        url: '/company',
         method: 'get',
         params,
     })
 }
 export async function apiDeleteSalesCompany(data) {
     return ApiService.fetchData({
-        url: '/api/company',
+        url: '/company',
         method: 'delete',
         data,
     })
 }
 export async function apiCreateSalesCompany(data) {
     return ApiService.fetchData({
-        url: '/api/company',
+        url: '/company',
         method: 'post',
         data,
     })
 }
 export async function apiPutSalesCompany(data) {
     return ApiService.fetchData({
-        url: '/api/company',
+        url: '/company',
         method: 'put',
         data,
     })
