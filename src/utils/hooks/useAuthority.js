@@ -14,6 +14,8 @@ function useAuthority(userAuthority = [], authority = [], emptyCheck = false) {
         return !emptyCheck
     }
 
+    console.log('roleMatched', roleMatched)
+
     return roleMatched
 }
 

@@ -12,39 +12,17 @@ import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 
 const inventoryStatusColor = {
-    0: {
-        label: 'В наличии',
+    1: {
+        label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    1: {
-        label: 'Ограниченное',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
-    },
-    2: {
-        label: 'Распродано',
+    0: {
+        label: 'Неактивный',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
 }
-
-const data = [
-    {
-        id: 1,
-        uz_name: 'Coca Cola',
-        ru_name: 'Coca Cola',
-        region: 'Tashkent',
-        in_active: 0,
-    },
-    {
-        id: 2,
-        uz_name: 'Nestle',
-        ru_name: 'Nestle',
-        region: 'Tashkent',
-        in_active: 1,
-    },
-]
 
 const ActionColumn = ({ row }) => {
     const dispatch = useDispatch()
@@ -78,19 +56,8 @@ const ActionColumn = ({ row }) => {
     )
 }
 
-const CompanyColumn = ({ row }) => {
-    // const avatar = row.img ? (
-    //     <Avatar src={row.img} />
-    // ) : (
-    //     <Avatar icon={<FiPackage />} />
-    // )
-
-    return (
-        <div className="flex items-center">
-            {/* {avatar} */}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.ru_name}</span>
-        </div>
-    )
+const isActive = (status) => {
+    return status === true ? 1 : 0
 }
 
 const CompanyTable = () => {
@@ -106,9 +73,9 @@ const CompanyTable = () => {
         (state) => state.salesCompanyList.data.filterData
     )
 
-    // const loading = useSelector((state) => state.salesCompanyList.data.loading)
+    const loading = useSelector((state) => state.salesCompanyList.data.loading)
 
-    // const data = useSelector((state) => state.salesProductList.data.productList)
+    const data = useSelector((state) => state.salesCompanyList.data.companyList)
 
     useEffect(() => {
         fetchData()
@@ -127,7 +94,7 @@ const CompanyTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(getCompanies({}))
     }
 
     const columns = useMemo(
@@ -135,10 +102,16 @@ const CompanyTable = () => {
             {
                 header: 'Название компании',
                 accessorKey: 'ru_name',
-                width: "250px",
+                width: '250px',
                 cell: (props) => {
-                    const row = props.row.original
-                    return <CompanyColumn row={row} />
+                    const row = props.row.original.ru_name
+                    return (
+                        <div className="flex items-center">
+                            <span className={`ml-2 rtl:mr-2 font-semibold`}>
+                                {row}
+                            </span>
+                        </div>
+                    )
                 },
             },
             {
@@ -146,8 +119,14 @@ const CompanyTable = () => {
                 accessorKey: 'region',
                 width: "200px",
                 cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.region}</span>
+                    const row = props.row.original.ru_country
+                    return (
+                        <div className="flex items-center">
+                            <span className={`ml-2 rtl:mr-2 font-semibold`}>
+                                {row}
+                            </span>
+                        </div>
+                    )
                 },
             },
 
@@ -161,13 +140,13 @@ const CompanyTable = () => {
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[in_active].dotClass
+                                    inventoryStatusColor[isActive(in_active)].dotClass
                                 }
                             />
                             <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[in_active].textClass}`}
+                                className={`capitalize font-semibold ${inventoryStatusColor[isActive(in_active)].textClass}`}
                             >
-                                {inventoryStatusColor[in_active].label}
+                                {inventoryStatusColor[isActive(in_active)].label}
                             </span>
                         </div>
                     )
@@ -206,10 +185,10 @@ const CompanyTable = () => {
             <DataTable
                 ref={tableRef}
                 columns={columns}
-                data={data}
+                data={data.list}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ className: 'rounded-md' }}
-                // loading={loading}
+                loading={loading}
                 pagingData={tableData}
                 onPaginationChange={onPaginationChange}
                 onSelectChange={onSelectChange}

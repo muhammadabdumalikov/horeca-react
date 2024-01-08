@@ -23,7 +23,7 @@ function useAuth() {
 
         try {
             const resp = await apiSignIn(values)
-
+            // console.log('resp', resp)
             if (resp.data) {
                 const { accessToken } = resp.data
                 dispatch(onSignInSuccess(accessToken))
@@ -94,7 +94,7 @@ function useAuth() {
 
     const handleSignOut = () => {
         dispatch(onSignOutSuccess())
-        dispatch(setUser(initialState))
+        // dispatch(setUser(initialState))
         navigate(appConfig.unAuthenticatedEntryPath)
     }
 
@@ -103,7 +103,7 @@ function useAuth() {
     }
 
     return {
-        authenticated: token || signedIn,
+        authenticated: token,
         signIn,
         signUp,
         signOut,

@@ -23,8 +23,10 @@ BaseService.interceptors.request.use(
         let accessToken = persistData.auth.session.token
 
         if (!accessToken) {
-            const { auth } = store.getState()
-            accessToken = auth.session.token
+                console.log('store', store.getState())
+            // const { auth } = store.getState()
+            // console.log('auth', auth)
+            // accessToken = auth.session.token
         }
 
         if (accessToken) {

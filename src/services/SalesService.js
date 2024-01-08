@@ -10,8 +10,8 @@ export async function apiGetSalesDashboardData(data) {
 
 export async function apiGetSalesProducts(data) {
     return ApiService.fetchData({
-        url: '/sales/products',
-        method: 'post',
+        url: '/product',
+        method: 'get',
         data,
     })
 }
@@ -72,6 +72,7 @@ export async function apiGetSalesOrderDetails(params) {
     })
 }
 export async function apiGetSalesCompany(params) {
+    console.log(params, 'params')
     return ApiService.fetchData({
         url: '/company',
         method: 'get',
@@ -80,21 +81,21 @@ export async function apiGetSalesCompany(params) {
 }
 export async function apiDeleteSalesCompany(data) {
     return ApiService.fetchData({
-        url: '/company',
+        url: '/',
         method: 'delete',
         data,
     })
 }
 export async function apiCreateSalesCompany(data) {
     return ApiService.fetchData({
-        url: '/company',
+        url: '/',
         method: 'post',
         data,
     })
 }
 export async function apiPutSalesCompany(data) {
     return ApiService.fetchData({
-        url: '/company',
+        url: '/',
         method: 'put',
         data,
     })
