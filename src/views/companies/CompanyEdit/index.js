@@ -67,7 +67,7 @@ const ProductEdit = () => {
                 type="success"
                 duration={2500}
             >
-                Product successfuly {keyword}
+                Успешно добавлен {keyword}
             </Notification>,
             {
                 placement: 'top-center',

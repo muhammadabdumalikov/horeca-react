@@ -10,20 +10,29 @@ import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
+import reducer from './store'
+import { injectReducer } from 'store'
 
 const { useUniqueId } = hooks
+injectReducer('productForm', reducer)
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Введите название товара'),
-    category_id: Yup.string().required('Выберите категорию'),
-    company_id: Yup.string().required('Выберите производитель'),
-    type: Yup.string().required('Выберите тип товара'),
-    dona_price: Yup.string().required('Введите цену за единицу товара'),
-    blok_price: Yup.string().required('Введите цену за блок товара'),
-    disc_price: Yup.string().required('Введите цену за скидку товара'),
-    blokda_soni: Yup.string().required('Введите количество товара в блоке'),
-    productCode: Yup.string().required('Введите код товара'),
+    enName: Yup.string().required('Введите название товара'),
+    ruName: Yup.string().required('Введите название товара'),
+    uzName: Yup.string().required('Введите название товара'),
+    barcode: Yup.string().required('Введите код товара'),
+    // measure: Yup.string().required('Введите единицу измерения товара'),
+    description: Yup.string().required('Введите описание товара'),
+    discountPrice: Yup.string().required('Введите цену за скидку товара'),
+    blockPrice: Yup.string().required('Введите цену за блок товара'),
+    countPrice: Yup.string().required('Введите цену за единицу товара'),
+    categoryId: Yup.string().required('Выберите категорию'),
+    companyId: Yup.string().required('Выберите производитель'),
+    countInBlock: Yup.string().required('Введите количество товара в блоке'),
+    image: Yup.string().required('Загрузите изображение товара'),
+    blockCount: Yup.string().required('Введите количество блоков товара'),
 })
+
 
 const DeleteProductButton = ({ onDelete }) => {
     const [dialogOpen, setDialogOpen] = useState(false)
@@ -77,9 +86,6 @@ const ProductForm = forwardRef((props, ref) => {
 
     const newId = useUniqueId('product-')
 
-    console.log(type, "type")
-    console.log(ref, "ref")
-
     return (
         <>
             <Formik
@@ -95,7 +101,6 @@ const ProductForm = forwardRef((props, ref) => {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
-
                     const formData = cloneDeep(values)
                     formData.tags = formData.tags.map((tag) => tag.value)
                     if (type === 'new') {
@@ -177,19 +182,36 @@ const ProductForm = forwardRef((props, ref) => {
 
 ProductForm.defaultProps = {
     type: 'edit',
+    // initialData: {
+    //     id: "",
+    //     name: "",
+    //     blokda_soni: "",
+    //     category_id: "",
+    //     company_id: "",
+    //     description: '',
+    //     blok_price: "",
+    //     dona_price: "",
+    //     disc_price: "",
+    //     type: "",
+    //     productCode: "",
+    //     img: "",
+    //     imgList: [],
+    // },
     initialData: {
-        id: "",
-        name: "",
-        blokda_soni: "",
-        category_id: "",
-        company_id: "",
+        companyId: '',
+        categoryId: '',
+        measure: '',
+        barcode: '',
+        image: '',
+        countInBlock: '',
+        blockCount: '',
         description: '',
-        blok_price: "",
-        dona_price: "",
-        disc_price: "",
-        type: "",
-        productCode: "",
-        img: "",
+        countPrice: '',
+        blockPrice: '',
+        discountPrice: '',
+        uzName: '',
+        ruName: '',
+        enName: '',
         imgList: [],
     },
 }

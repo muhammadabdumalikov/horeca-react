@@ -1,6 +1,6 @@
 import React from 'react'
 import { AdaptableCard } from 'components/shared'
-import { Input, FormItem } from 'components/ui'
+import { Input, FormItem, Select } from 'components/ui'
 import NumberFormat from 'react-number-format'
 import { Field } from 'formik'
 
@@ -41,10 +41,10 @@ const PricingFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Цена за шт."
-                        invalid={errors.dona_price && touched.dona_price}
-                        errorMessage={errors.dona_price}
+                        invalid={errors.countPrice && touched.countPrice}
+                        errorMessage={errors.countPrice}
                     >
-                        <Field name="dona_price">
+                        <Field name="countPrice">
                             {({ field, form }) => {
                                 return (
                                     <NumberFormatInput
@@ -67,10 +67,10 @@ const PricingFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Цена за блок"
-                        invalid={errors.blok_price && touched.blok_price}
-                        errorMessage={errors.blok_price}
+                        invalid={errors.blockPrice && touched.blockPrice}
+                        errorMessage={errors.blockPrice}
                     >
-                        <Field name="blok_price">
+                        <Field name="blockPrice">
                             {({ field, form }) => {
                                 return (
                                     <NumberFormatInput
@@ -95,10 +95,10 @@ const PricingFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Цена в акции"
-                        invalid={errors.disc_price && touched.disc_price}
-                        errorMessage={errors.disc_price}
+                        invalid={errors.discountPrice && touched.discountPrice}
+                        errorMessage={errors.discountPrice}
                     >
-                        <Field name="disc_price">
+                        <Field name="discountPrice">
                             {({ field, form }) => {
                                 return (
                                     <NumberFormatInput
@@ -118,6 +118,30 @@ const PricingFields = (props) => {
                         </Field>
                     </FormItem>
                 </div>
+                {/* <FormItem
+                        label="Eд. измерения"
+                        invalid={errors.measure && touched.measure}
+                        errorMessage={errors.measure}
+                    >
+                        <Field name="measure">
+                            {({ field, form }) => (
+                                <Select
+                                    field={field}
+                                    form={form}
+                                    options={measureList}
+                                    value={measureList?.filter(
+                                        (tag) => tag.value === measureList.measure
+                                    )}
+                                    onChange={(option) =>
+                                        form.setFieldValue(
+                                            field.name,
+                                            option.value
+                                        )
+                                    }
+                                />
+                            )}
+                        </Field>
+                    </FormItem> */}
                 {/* <div className="col-span-1">
                     <FormItem
                         label="Ставка налога(%)"

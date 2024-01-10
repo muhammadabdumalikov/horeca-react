@@ -102,6 +102,8 @@ const ImageList = (props) => {
 const ProductImages = (props) => {
     const { values } = props
 
+    console.log('values', values)
+
     const beforeUpload = (file) => {
         let valid = true
 

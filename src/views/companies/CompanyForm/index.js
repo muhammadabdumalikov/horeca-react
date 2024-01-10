@@ -74,8 +74,6 @@ const ProductForm = forwardRef((props, ref) => {
 
     const newId = useUniqueId('product-')
 
-    // console.log(type, "type")
-    // console.log(ref, "ref")
 
     return (
         <>

@@ -53,6 +53,21 @@ const BasicInformationFields = (props) => {
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="col-span-1">
+                    <FormItem
+                        label="Наименование компании (анг)"
+                        invalid={errors.name && touched.name}
+                        errorMessage={errors.name}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="name"
+                            placeholder="Наименование компании (анг)"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
                 <div className="col-span-1">
                     <FormItem
                         label="Регион"

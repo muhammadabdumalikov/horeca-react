@@ -10,6 +10,7 @@ import useThemeClass from 'utils/hooks/useThemeClass'
 import CompanyDeleteConfirmation from './CompanyDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
+import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
     1: {
@@ -54,10 +55,6 @@ const ActionColumn = ({ row }) => {
             </span>
         </div>
     )
-}
-
-const isActive = (status) => {
-    return status === true ? 1 : 0
 }
 
 const CompanyTable = () => {
@@ -117,7 +114,7 @@ const CompanyTable = () => {
             {
                 header: 'Регион',
                 accessorKey: 'region',
-                width: "200px",
+                width: '200px',
                 cell: (props) => {
                     const row = props.row.original.ru_country
                     return (
@@ -133,20 +130,27 @@ const CompanyTable = () => {
             {
                 header: 'Статус',
                 accessorKey: 'in_active',
-                width: "200px",
+                width: '200px',
                 cell: (props) => {
                     const { in_active } = props.row.original
                     return (
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[isActive(in_active)].dotClass
+                                    inventoryStatusColor[isActive(in_active)]
+                                        .dotClass
                                 }
                             />
                             <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[isActive(in_active)].textClass}`}
+                                className={`capitalize font-semibold ${
+                                    inventoryStatusColor[isActive(in_active)]
+                                        .textClass
+                                }`}
                             >
-                                {inventoryStatusColor[isActive(in_active)].label}
+                                {
+                                    inventoryStatusColor[isActive(in_active)]
+                                        .label
+                                }
                             </span>
                         </div>
                     )

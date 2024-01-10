@@ -17,29 +17,65 @@ const BasicInformationFields = (props) => {
     return (
         <AdaptableCard className="mb-4" divider>
             <h5>Базовая информация</h5>
-            <p className="mb-6">Раздел для настройки основной информации о продукте</p>
-            <FormItem
-                label="Наименование товара"
-                invalid={errors.name && touched.name}
-                errorMessage={errors.name}
-            >
-                <Field
-                    type="text"
-                    autoComplete="off"
-                    name="name"
-                    placeholder="Наименование товара"
-                    component={Input}
-                />
-            </FormItem>
+            <p className="mb-6">
+                Раздел для настройки основной информации о продукте
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="col-span-1">
+                    <FormItem
+                        label="Наименование товара (рус)"
+                        invalid={errors.ruName && touched.ruName}
+                        errorMessage={errors.ruName}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="ruName"
+                            placeholder="Количество"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+                <div className="col-span-1">
+                    <FormItem
+                        label="Наименование товара (узб)"
+                        invalid={errors.uzName && touched.uzName}
+                        errorMessage={errors.uzName}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="uzName"
+                            placeholder="Количество"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+                <div className="col-span-1">
+                    <FormItem
+                        label="Наименование товара (анг)"
+                        invalid={errors.enName && touched.enName}
+                        errorMessage={errors.enName}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="enName"
+                            placeholder="Количество"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+            </div>
             <FormItem
                 label="Код продукта"
-                invalid={errors.productCode && touched.productCode}
-                errorMessage={errors.productCode}
+                invalid={errors.barcode && touched.barcode}
+                errorMessage={errors.barcode}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="productCode"
+                    name="barcode"
                     placeholder="Код"
                     component={Input}
                 />

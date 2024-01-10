@@ -11,6 +11,7 @@ import useThemeClass from 'utils/hooks/useThemeClass'
 import ProductDeleteConfirmation from './ProductDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
+import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
     0: {
@@ -30,30 +31,30 @@ const inventoryStatusColor = {
     },
 }
 
-const data = [
-    {
-        id: 1,
-        name: 'Cola 2.25L',
-        category: 'Mobile',
-        stock: 10,
-        status: 0,
-        dona_price: 1099,
-        blok_price: 1000,
-        disc_price: 900
-        // img: '/assets/images/products/iphone-12-pro-max.png',
-    },
-    {
-        id: 2,
-        name: 'Pepsi 2.25L',
-        category: 'Mobile',
-        stock: 10,
-        status: 2,
-        dona_price: 1099,
-        blok_price: 1000,
-        disc_price: 900
-        // img: '/assets/images/products/iphone-12-pro-max.png',
-    }
-]
+// const data = [
+//     {
+//         id: 1,
+//         name: 'Cola 2.25L',
+//         category: 'Mobile',
+//         stock: 10,
+//         status: 0,
+//         dona_price: 1099,
+//         blok_price: 1000,
+//         disc_price: 900
+//         // img: '/assets/images/products/iphone-12-pro-max.png',
+//     },
+//     {
+//         id: 2,
+//         name: 'Pepsi 2.25L',
+//         category: 'Mobile',
+//         stock: 10,
+//         status: 2,
+//         dona_price: 1099,
+//         blok_price: 1000,
+//         disc_price: 900
+//         // img: '/assets/images/products/iphone-12-pro-max.png',
+//     }
+// ]
 
 const ActionColumn = ({ row }) => {
     const dispatch = useDispatch()
@@ -88,8 +89,8 @@ const ActionColumn = ({ row }) => {
 }
 
 const ProductColumn = ({ row }) => {
-    const avatar = row.img ? (
-        <Avatar src={row.img} />
+    const avatar = row.image ? (
+        <Avatar src={row.image} />
     ) : (
         <Avatar icon={<FiPackage />} />
     )
@@ -97,13 +98,12 @@ const ProductColumn = ({ row }) => {
     return (
         <div className="flex items-center">
             {avatar}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.name}</span>
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.ru_name}</span>
         </div>
     )
 }
 
 const ProductTable = () => {
-
     const tableRef = useRef(null)
 
     const dispatch = useDispatch()
@@ -116,11 +116,11 @@ const ProductTable = () => {
         (state) => state.salesProductList.data.filterData
     )
 
-    // const loading = useSelector((state) => state.salesProductList.data.loading)
-    
-    // const data = useSelector((state) => state.salesProductList.data.productList)
+    const loading = useSelector((state) => state.salesProductList.data.loading)
 
-    // console.log(data, 'data')
+    const data = useSelector((state) => state.salesProductList.data.productList)
+
+    console.log(data, 'data')
 
     useEffect(() => {
         fetchData()
@@ -152,19 +152,19 @@ const ProductTable = () => {
                     return <ProductColumn row={row} />
                 },
             },
-            {
-                header: 'Категория',
-                accessorKey: 'category',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.category}</span>
-                },
-            },
-            {
-                header: 'Остаток',
-                accessorKey: 'stock',
-                sortable: true,
-            },
+            // {
+            //     header: 'Категория',
+            //     accessorKey: 'category',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return <span className="capitalize">{row.category}</span>
+            //     },
+            // },
+            // {
+            //     header: 'Остаток',
+            //     accessorKey: 'stock',
+            //     sortable: true,
+            // },
             {
                 header: 'Статус',
                 accessorKey: 'status',
@@ -174,13 +174,17 @@ const ProductTable = () => {
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[status].dotClass
+                                    inventoryStatusColor[isActive(status)]
+                                        .dotClass
                                 }
                             />
                             <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
+                                className={`capitalize font-semibold ${
+                                    inventoryStatusColor[isActive(status)]
+                                        .textClass
+                                }`}
                             >
-                                {inventoryStatusColor[status].label}
+                                {inventoryStatusColor[isActive(status)].label}
                             </span>
                         </div>
                     )
@@ -190,24 +194,24 @@ const ProductTable = () => {
                 header: 'Цена за шт.',
                 accessorKey: 'dona_price',
                 cell: (props) => {
-                    const { dona_price } = props.row.original
-                    return <span>{dona_price}</span>
+                    const { discount_price } = props.row.original
+                    return <span>{discount_price}</span>
                 },
             },
             {
                 header: 'Цена за блок',
                 accessorKey: 'blok_price',
                 cell: (props) => {
-                    const { blok_price } = props.row.original
-                    return <span>{blok_price}</span>
+                    const { block_price } = props.row.original
+                    return <span>{block_price}</span>
                 },
             },
             {
                 header: 'Цена в акции',
                 accessorKey: 'disc_price',
                 cell: (props) => {
-                    const { disc_price } = props.row.original
-                    return <span>{disc_price}</span>
+                    const { discount_price } = props.row.original
+                    return <span>{discount_price}</span>
                 },
             },
             {
@@ -243,10 +247,10 @@ const ProductTable = () => {
             <DataTable
                 ref={tableRef}
                 columns={columns}
-                data={data}
+                data={data.list}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ className: 'rounded-md' }}
-                // loading={loading}
+                loading={loading}
                 pagingData={tableData}
                 onPaginationChange={onPaginationChange}
                 onSelectChange={onSelectChange}

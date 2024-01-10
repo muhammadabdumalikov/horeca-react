@@ -100,3 +100,10 @@ export async function apiPutSalesCompany(data) {
         data,
     })
 }
+export async function apiGetCategory(params) {
+    return ApiService.fetchData({
+        url: '/category',
+        method: 'get',
+        params,
+    })
+}

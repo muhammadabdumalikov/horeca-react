@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
 // import CreatableSelect from 'react-select/creatable'
 import { Field } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCategory, getCompany } from './store/dataSlice'
 
 export const categories = [
     { label: 'Bags', value: 'bags' },
@@ -19,6 +21,34 @@ export const tags = [
 
 const OrganizationFields = (props) => {
     const { values, touched, errors } = props
+    const dispatch = useDispatch()
+
+    const categoryList = useSelector(
+        (state) => state.productForm.data.categoryList
+    )
+    const companyList = useSelector(
+        (state) => state.productForm.data.companyList
+    )
+
+    useEffect(() => {
+        fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const fetchData = () => {
+        dispatch(getCategory({}))
+        dispatch(getCompany({}))
+    }
+
+    const categoryOptions = categoryList.list?.map((category) => ({
+        label: category.ru_name,
+        value: category.id,
+    }))
+
+    const companyOptions = companyList.list?.map((company) => ({
+        label: company.ru_name,
+        value: company.id,
+    }))
 
     return (
         <AdaptableCard className="mb-4" divider isLastChild>
@@ -28,18 +58,19 @@ const OrganizationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Категория товара"
-                        invalid={errors.category_id && touched.category_id}
-                        errorMessage={errors.category_id}
+                        invalid={errors.categoryId && touched.categoryId}
+                        errorMessage={errors.categoryId}
                     >
-                        <Field name="category_id">
+                        <Field name="categoryId">
                             {({ field, form }) => (
                                 <Select
                                     field={field}
                                     form={form}
-                                    options={categories}
-                                    value={categories.filter(
+                                    options={categoryOptions}
+                                    value={categoryOptions?.filter(
                                         (category) =>
-                                            category.value === values.category_id
+                                            category.value ===
+                                            values.categoryId
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(
@@ -55,17 +86,17 @@ const OrganizationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Производитель"
-                        invalid={errors.company_id && touched.company_id}
-                        errorMessage={errors.company_id}
+                        invalid={errors.companyId && touched.companyId}
+                        errorMessage={errors.companyId}
                     >
-                        <Field name="company_id">
+                        <Field name="companyId">
                             {({ field, form }) => (
                                 <Select
                                     field={field}
                                     form={form}
-                                    options={tags}
-                                    value={tags.filter(
-                                        (tag) => tag.value === values.company_id
+                                    options={companyOptions}
+                                    value={companyOptions?.filter(
+                                        (tag) => tag.value === values.companyId
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(
@@ -82,6 +113,21 @@ const OrganizationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
+                        label="Количество шт. (на блоке)"
+                        invalid={errors.blockCount && touched.blockCount}
+                        errorMessage={errors.blockCount}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="blockCount"
+                            placeholder="Количество"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+                <div className="col-span-1">
+                    {/* <FormItem
                         label="Тип товара"
                         invalid={errors.type && touched.type}
                         errorMessage={errors.type}
@@ -104,22 +150,7 @@ const OrganizationFields = (props) => {
                                 />
                             )}
                         </Field>
-                    </FormItem>
-                </div>
-                <div className="col-span-1">
-                    <FormItem
-                        label="Количество шт. (на блоке)"
-                        invalid={errors.blokda_soni && touched.blokda_soni}
-                        errorMessage={errors.blokda_soni}
-                    >
-                        <Field
-                            type="text"
-                            autoComplete="off"
-                            name="blokda_soni"
-                            placeholder="Количество"
-                            component={Input}
-                        />
-                    </FormItem>
+                    </FormItem> */}
                 </div>
             </div>
         </AdaptableCard>
