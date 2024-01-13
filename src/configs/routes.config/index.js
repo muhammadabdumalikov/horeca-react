@@ -79,7 +79,13 @@ export const protectedRoutes = [
     {
         key: 'users',
         path: '/users',
-        component: React.lazy(() => import('views/users')),
+        component: React.lazy(() => import('views/customers')),
+        authority: [],
+    },
+    {
+        key: 'userDetail',
+        path: '/users/:id',
+        component: React.lazy(() => import('views/customers/CustomerDetail')),
         authority: [],
     },
     {
@@ -88,6 +94,7 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/orders')),
         authority: [],
     },
+
     // {
     //     key: 'collapseMenu.item1',
     //     path: '/collapse-menu-item-view-1',
