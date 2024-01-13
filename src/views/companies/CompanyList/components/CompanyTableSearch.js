@@ -12,15 +12,14 @@ const ProductTableSearch = () => {
     const searchInput = useRef()
 
     const tableData = useSelector(
-        // (state) => state.salesProductList.data.tableData
-        (state) => []
+        (state) => state.salesCompanyList.data.tableData
     )
 
     const debounceFn = debounce(handleDebounceFn, 500)
 
     function handleDebounceFn(val) {
         const newTableData = cloneDeep(tableData)
-        newTableData.query = val
+        newTableData.search = val
         newTableData.pageIndex = 1
         if (typeof val === 'string' && val.length > 1) {
             fetchData(newTableData)

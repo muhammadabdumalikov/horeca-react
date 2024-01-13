@@ -2,12 +2,28 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiGetSalesProducts,
     apiDeleteSalesProducts,
+    apiGetCategory,
+    apiGetSalesCompany,
 } from 'services/SalesService'
 
 export const getProducts = createAsyncThunk(
     'salesProductList/data/getProducts',
     async (data) => {
         const response = await apiGetSalesProducts(data)
+        return response.data
+    }
+)
+export const getCategory = createAsyncThunk(
+    'salesProductList/data/getCatalog',
+    async (data) => {
+        const response = await apiGetCategory(data)
+        return response.data
+    }
+)
+export const getCompany = createAsyncThunk(
+    'salesProductList/data/getCompany',
+    async (data) => {
+        const response = await apiGetSalesCompany(data)
         return response.data
     }
 )
@@ -19,20 +35,19 @@ export const deleteProduct = async (data) => {
 
 export const initialTableData = {
     total: 0,
-    pageIndex: 1,
+    page: 1,
     pageSize: 10,
-    query: '',
-    sort: {
-        order: '',
-        key: '',
-    },
+    search: '',
+    // sort: {
+    //     order: '',
+    //     key: '',
+    // },
 }
 
 export const initialFilterData = {
-    name: '',
-    category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
-    status: [0, 1, 2],
-    productStatus: 0,
+    inActive: true,
+    categoryId: null,
+    companyId: null,
 }
 
 const dataSlice = createSlice({
@@ -40,6 +55,8 @@ const dataSlice = createSlice({
     initialState: {
         loading: false,
         productList: [],
+        categoryList: [],
+        companyList: [],
         tableData: initialTableData,
         filterData: initialFilterData,
     },
@@ -62,6 +79,13 @@ const dataSlice = createSlice({
         },
         [getProducts.pending]: (state) => {
             state.loading = true
+        },
+        [getCategory.fulfilled]: (state, action) => {
+            console.log('ok')
+            state.categoryList = action.payload.data
+        },
+        [getCompany.fulfilled]: (state, action) => {
+            state.companyList = action.payload.data
         },
     },
 })

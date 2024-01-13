@@ -47,12 +47,12 @@ const ActionColumn = ({ row }) => {
             >
                 <HiOutlinePencil />
             </span>
-            <span
+            {/* <span
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onDelete}
             >
                 <HiOutlineTrash />
-            </span>
+            </span> */}
         </div>
     )
 }
@@ -62,7 +62,7 @@ const CompanyTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, sort, query, total } = useSelector(
+    const { pageIndex, pageSize, query, total } = useSelector(
         (state) => state.salesCompanyList.data.tableData
     )
 
@@ -77,7 +77,7 @@ const CompanyTable = () => {
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageIndex, pageSize, sort])
+    }, [pageIndex, pageSize])
 
     useEffect(() => {
         if (tableRef) {
@@ -86,12 +86,12 @@ const CompanyTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, sort, query, total }),
-        [pageIndex, pageSize, sort, query, total]
+        () => ({ pageIndex, pageSize, query, total }),
+        [pageIndex, pageSize, query, total]
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({}))
+        dispatch(getCompanies({pageIndex, query}))
     }
 
     const columns = useMemo(

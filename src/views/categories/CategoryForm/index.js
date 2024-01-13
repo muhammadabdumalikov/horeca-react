@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react'
-import { FormContainer, Button, hooks } from 'components/ui'
+import { FormContainer, Button } from 'components/ui'
 import { StickyFooter, ConfirmDialog } from 'components/shared'
 import { Form, Formik } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
@@ -8,18 +8,10 @@ import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
 
-const { useUniqueId } = hooks
-
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Введите название товара'),
-    category_id: Yup.string().required('Выберите категорию'),
-    company_id: Yup.string().required('Выберите производитель'),
-    type: Yup.string().required('Выберите тип товара'),
-    dona_price: Yup.string().required('Введите цену за единицу товара'),
-    blok_price: Yup.string().required('Введите цену за блок товара'),
-    disc_price: Yup.string().required('Введите цену за скидку товара'),
-    blokda_soni: Yup.string().required('Введите количество товара в блоке'),
-    productCode: Yup.string().required('Введите код товара'),
+    enName: Yup.string().test('len', 'Введите название категории', (val) => val?.length >= 3),
+    uzName: Yup.string().test('len', 'Введите название категории', (val) => val?.length >= 3),
+    ruName: Yup.string().test('len', 'Введите название категории', (val) => val?.length >= 3)
 })
 
 const DeleteProductButton = ({ onDelete }) => {
@@ -72,34 +64,16 @@ const DeleteProductButton = ({ onDelete }) => {
 const ProductForm = forwardRef((props, ref) => {
     const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
 
-    const newId = useUniqueId('product-')
-
-    // console.log(type, "type")
-    // console.log(ref, "ref")
-
     return (
         <>
             <Formik
                 innerRef={ref}
                 initialValues={{
                     ...initialData,
-                    // tags: initialData?.tags
-                    //     ? initialData.tags.map((value) => ({
-                    //           label: value,
-                    //           value,
-                    //       }))
-                    //     : [],
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
                     const formData = cloneDeep(values)
-                    formData.tags = formData.tags.map((tag) => tag.value)
-                    if (type === 'new') {
-                        formData.id = newId
-                        if (formData.imgList.length > 0) {
-                            formData.img = formData.imgList[0].img
-                        }
-                    }
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
@@ -167,19 +141,9 @@ const ProductForm = forwardRef((props, ref) => {
 ProductForm.defaultProps = {
     type: 'edit',
     initialData: {
-        id: '',
-        name: '',
-        blokda_soni: '',
-        category_id: '',
-        company_id: '',
-        description: '',
-        blok_price: '',
-        dona_price: '',
-        disc_price: '',
-        type: '',
-        productCode: '',
-        img: '',
-        imgList: [],
+        ruName: '',
+        uzName: '',
+        enName: '',
     },
 }
 

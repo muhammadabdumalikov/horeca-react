@@ -5,7 +5,6 @@ const ApiService = {
         return new Promise((resolve, reject) => {
             BaseService(param)
                 .then((response) => {
-                    console.log('response', response)
                     resolve(response)
                 })
                 .catch((errors) => {

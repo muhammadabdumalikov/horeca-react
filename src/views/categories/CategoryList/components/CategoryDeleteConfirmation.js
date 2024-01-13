@@ -3,18 +3,18 @@ import { toast, Notification } from 'components/ui'
 import { ConfirmDialog } from 'components/shared'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleDeleteConfirmation } from '../store/stateSlice'
-import { deleteCompany, getCompanies } from '../store/dataSlice'
+import { deleteCompany, getCategories } from '../store/dataSlice'
 
 const ProductDeleteConfirmation = () => {
     const dispatch = useDispatch()
     const dialogOpen = useSelector(
-        (state) => state.salesCompanyList.state.deleteConfirmation
+        (state) => state.categoryList.state.deleteConfirmation
     )
     const selectedCompany = useSelector(
-        (state) => state.salesCompanyList.state.selectedCompany
+        (state) => state.categoryList.state.selectedCompany
     )
     const tableData = useSelector(
-        (state) => state.salesCompanyList.data.tableData
+        (state) => state.categoryList.data.tableData
     )
 
     const onDialogClose = () => {
@@ -26,7 +26,7 @@ const ProductDeleteConfirmation = () => {
         const success = await deleteCompany({ id: selectedCompany })
 
         if (success) {
-            dispatch(getCompanies(tableData))
+            dispatch(getCategories(tableData))
             toast.push(
                 <Notification
                     title={'Successfuly Deleted'}

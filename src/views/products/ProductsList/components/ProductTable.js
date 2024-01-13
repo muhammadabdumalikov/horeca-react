@@ -57,7 +57,7 @@ const inventoryStatusColor = {
 // ]
 
 const ActionColumn = ({ row }) => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
@@ -65,10 +65,10 @@ const ActionColumn = ({ row }) => {
         navigate(`/products/edit/${row.id}`)
     }
 
-    const onDelete = () => {
-        dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedProduct(row.id))
-    }
+    // const onDelete = () => {
+    //     dispatch(toggleDeleteConfirmation(true))
+    //     dispatch(setSelectedProduct(row.id))
+    // }
 
     return (
         <div className="flex justify-end text-lg">
@@ -78,12 +78,12 @@ const ActionColumn = ({ row }) => {
             >
                 <HiOutlinePencil />
             </span>
-            <span
+            {/* <span
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onDelete}
             >
                 <HiOutlineTrash />
-            </span>
+            </span> */}
         </div>
     )
 }
@@ -108,7 +108,7 @@ const ProductTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, sort, query, total } = useSelector(
+    const { pageIndex, pageSize, search, total } = useSelector(
         (state) => state.salesProductList.data.tableData
     )
 
@@ -120,12 +120,10 @@ const ProductTable = () => {
 
     const data = useSelector((state) => state.salesProductList.data.productList)
 
-    console.log(data, 'data')
-
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageIndex, pageSize, sort])
+    }, [pageIndex, pageSize])
 
     useEffect(() => {
         if (tableRef) {
@@ -134,13 +132,15 @@ const ProductTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, sort, query, total }),
-        [pageIndex, pageSize, sort, query, total]
+        () => ({ pageIndex, pageSize, search, total }),
+        [pageIndex, pageSize, search, total]
     )
 
     const fetchData = () => {
-        dispatch(getProducts({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(getProducts({search}))
     }
+
+    // console.log(search, 'search')
 
     const columns = useMemo(
         () => [
@@ -256,7 +256,7 @@ const ProductTable = () => {
                 onSelectChange={onSelectChange}
                 onSort={onSort}
             />
-            <ProductDeleteConfirmation />
+            {/* <ProductDeleteConfirmation /> */}
         </>
     )
 }

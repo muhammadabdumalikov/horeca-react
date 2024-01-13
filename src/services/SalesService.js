@@ -8,11 +8,17 @@ export async function apiGetSalesDashboardData(data) {
     })
 }
 
-export async function apiGetSalesProducts(data) {
+export async function apiGetSalesProducts(params) {
     return ApiService.fetchData({
         url: '/product',
         method: 'get',
-        data,
+        params,
+    })
+}
+export async function apiGetProductById({id}) {
+    return ApiService.fetchData({
+        url: `/product/find/${id}`,
+        method: 'get',
     })
 }
 
@@ -42,7 +48,7 @@ export async function apiPutSalesProduct(data) {
 
 export async function apiCreateSalesProduct(data) {
     return ApiService.fetchData({
-        url: '/sales/products/create',
+        url: '/product/create',
         method: 'post',
         data,
     })
@@ -72,7 +78,6 @@ export async function apiGetSalesOrderDetails(params) {
     })
 }
 export async function apiGetSalesCompany(params) {
-    console.log(params, 'params')
     return ApiService.fetchData({
         url: '/company',
         method: 'get',
@@ -105,5 +110,12 @@ export async function apiGetCategory(params) {
         url: '/category',
         method: 'get',
         params,
+    })
+}
+export async function apiCreateCategory(data) {
+    return ApiService.fetchData({
+        url: '/category/create',
+        method: 'post',
+        data,
     })
 }

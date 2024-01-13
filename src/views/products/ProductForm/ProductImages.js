@@ -10,7 +10,7 @@ import { Field } from 'formik'
 import cloneDeep from 'lodash/cloneDeep'
 
 const ImageList = (props) => {
-    const { imgList, onImageDelete } = props
+    const { image, onImageDelete } = props
 
     const [selectedImg, setSelectedImg] = useState({})
     const [viewOpen, setViewOpen] = useState(false)
@@ -45,32 +45,27 @@ const ImageList = (props) => {
 
     return (
         <>
-            {imgList.map((img) => (
-                <div
-                    className="group relative rounded border p-2 flex"
-                    key={img.id}
-                >
-                    <img
-                        className="rounded max-h-[140px] max-w-full"
-                        src={img.img}
-                        alt={img.name}
-                    />
-                    <div className="absolute inset-2 bg-gray-900/[.7] group-hover:flex hidden text-xl items-center justify-center">
-                        <span
-                            onClick={() => onViewOpen(img)}
-                            className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
-                        >
-                            <HiEye />
-                        </span>
-                        <span
-                            onClick={() => onDeleteConfirmation(img)}
-                            className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
-                        >
-                            <HiTrash />
-                        </span>
-                    </div>
+            <div className="group relative rounded border p-2 flex" key={image}>
+                <img
+                    className="rounded max-h-[140px] max-w-full"
+                    src={image}
+                    alt={image}
+                />
+                <div className="absolute inset-2 bg-gray-900/[.7] group-hover:flex hidden text-xl items-center justify-center">
+                    <span
+                        onClick={() => onViewOpen(image)}
+                        className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
+                    >
+                        <HiEye />
+                    </span>
+                    <span
+                        onClick={() => onDeleteConfirmation(image)}
+                        className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
+                    >
+                        <HiTrash />
+                    </span>
                 </div>
-            ))}
+            </div>
             <Dialog
                 isOpen={viewOpen}
                 onClose={onDialogClose}
@@ -79,7 +74,7 @@ const ImageList = (props) => {
                 <h5 className="mb-4">{selectedImg.name}</h5>
                 <img
                     className="w-full"
-                    src={selectedImg.img}
+                    src={selectedImg}
                     alt={selectedImg.name}
                 />
             </Dialog>
@@ -102,7 +97,7 @@ const ImageList = (props) => {
 const ProductImages = (props) => {
     const { values } = props
 
-    console.log('values', values)
+    // console.log('values', values)
 
     const beforeUpload = (file) => {
         let valid = true
@@ -126,27 +121,23 @@ const ProductImages = (props) => {
     const onUpload = (form, field, files) => {
         let imageId = '1-img-0'
         const latestUpload = files.length - 1
-        if (values.imgList.length > 0) {
-            const prevImgId = values.imgList[values.imgList.length - 1].id
+        if (values.image.length > 0) {
+            const prevImgId = values.image[values.image.length - 1].id
             const splitImgId = prevImgId.split('-')
             const newIdNumber = parseInt(splitImgId[splitImgId.length - 1]) + 1
             splitImgId.pop()
             const newIdArr = [...splitImgId, ...[newIdNumber]]
             imageId = newIdArr.join('-')
         }
-        const image = {
-            id: imageId,
-            name: files[latestUpload].name,
-            img: URL.createObjectURL(files[latestUpload]),
-        }
-        const imageList = [...values.imgList, ...[image]]
-        console.log('imageList', imageList)
-        form.setFieldValue(field.name, imageList)
+
+        const image = URL.createObjectURL(files[latestUpload])
+
+        form.setFieldValue(field.name, image)
     }
 
-    const handleImageDelete = (form, field, deletedImg) => {
-        let imgList = cloneDeep(values.imgList)
-        imgList = imgList.filter((img) => img.id !== deletedImg.id)
+    const handleImageDelete = (form, field) => {
+        let imgList = cloneDeep(values.image)
+        imgList = ""
         form.setFieldValue(field.name, imgList)
     }
 
@@ -155,18 +146,18 @@ const ProductImages = (props) => {
             <h5>Изображение продукта</h5>
             <p className="mb-6">Добавьте или измените изображение товара</p>
             <FormItem>
-                <Field name="imgList">
+                <Field name="image">
                     {({ field, form }) => {
-                        if (values.imgList?.length > 0) {
+                        if (values.image?.length > 0) {
                             return (
                                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                                     <ImageList
-                                        imgList={values.imgList}
+                                        image={values.image}
                                         onImageDelete={(img) =>
                                             handleImageDelete(form, field, img)
                                         }
                                     />
-                                    <Upload
+                                    {/* <Upload
                                         className="min-h-fit"
                                         beforeUpload={beforeUpload}
                                         onChange={(files) =>
@@ -184,7 +175,7 @@ const ProductImages = (props) => {
                                                 Загрузить
                                             </p>
                                         </div>
-                                    </Upload>
+                                    </Upload> */}
                                 </div>
                             )
                         }

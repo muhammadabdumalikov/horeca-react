@@ -29,10 +29,9 @@ const validationSchema = Yup.object().shape({
     categoryId: Yup.string().required('Выберите категорию'),
     companyId: Yup.string().required('Выберите производитель'),
     countInBlock: Yup.string().required('Введите количество товара в блоке'),
-    image: Yup.string().required('Загрузите изображение товара'),
+    // image: Yup.string().required('Загрузите изображение товара'),
     blockCount: Yup.string().required('Введите количество блоков товара'),
 })
-
 
 const DeleteProductButton = ({ onDelete }) => {
     const [dialogOpen, setDialogOpen] = useState(false)
@@ -59,7 +58,7 @@ const DeleteProductButton = ({ onDelete }) => {
                 type="button"
                 onClick={onConfirmDialogOpen}
             >
-                Удалить
+                Неактивно
             </Button>
             <ConfirmDialog
                 isOpen={dialogOpen}
@@ -85,7 +84,6 @@ const ProductForm = forwardRef((props, ref) => {
     const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
 
     const newId = useUniqueId('product-')
-
     return (
         <>
             <Formik
@@ -101,14 +99,15 @@ const ProductForm = forwardRef((props, ref) => {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
+                    console.log('values', values)
                     const formData = cloneDeep(values)
-                    formData.tags = formData.tags.map((tag) => tag.value)
-                    if (type === 'new') {
-                        formData.id = newId
-                        if (formData.imgList.length > 0) {
-                            formData.img = formData.imgList[0].img
-                        }
-                    }
+                    // formData.tags = formData.tags.map((tag) => tag.value)
+                    // if (type === 'new') {
+                    //     formData.id = newId
+                    //     if (formData.imgList.length > 0) {
+                    //         formData.img = formData.imgList[0].img
+                    //     }
+                    // }
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
@@ -200,7 +199,6 @@ ProductForm.defaultProps = {
     initialData: {
         companyId: '',
         categoryId: '',
-        measure: '',
         barcode: '',
         image: '',
         countInBlock: '',
@@ -212,7 +210,6 @@ ProductForm.defaultProps = {
         uzName: '',
         ruName: '',
         enName: '',
-        imgList: [],
     },
 }
 

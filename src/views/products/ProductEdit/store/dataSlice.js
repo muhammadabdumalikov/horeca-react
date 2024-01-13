@@ -3,12 +3,20 @@ import {
     apiGetSalesProduct,
     apiPutSalesProduct,
     apiDeleteSalesProducts,
+    apiGetProductById,
 } from 'services/SalesService'
 
 export const getProduct = createAsyncThunk(
     'salesProductEdit/data/getProducts',
     async (data) => {
         const response = await apiGetSalesProduct(data)
+        return response.data
+    }
+)
+export const getProductById = createAsyncThunk(
+    'salesProductEdit/data/getProductById',
+    async (data) => {
+        const response = await apiGetProductById(data)
         return response.data
     }
 )
@@ -28,6 +36,7 @@ const dataSlice = createSlice({
     initialState: {
         loading: false,
         productData: [],
+        getProdyctById: {},
     },
     reducers: {},
     extraReducers: {
@@ -37,6 +46,9 @@ const dataSlice = createSlice({
         },
         [getProduct.pending]: (state) => {
             state.loading = true
+        },
+        [getProductById.fulfilled]: (state, action) => {
+            state.getProdyctById = action.payload.data
         },
     },
 })

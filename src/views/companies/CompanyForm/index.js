@@ -90,15 +90,16 @@ const ProductForm = forwardRef((props, ref) => {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    const formData = cloneDeep(values)
-                    formData.tags = formData.tags.map((tag) => tag.value)
-                    if (type === 'new') {
-                        formData.id = newId
-                        if (formData.imgList.length > 0) {
-                            formData.img = formData.imgList[0].img
-                        }
-                    }
-                    onFormSubmit?.(formData, setSubmitting)
+                    console.log('values', values)
+                    // const formData = cloneDeep(values)
+                    // formData.tags = formData.tags.map((tag) => tag.value)
+                    // if (type === 'new') {
+                    //     formData.id = newId
+                    //     if (formData.imgList.length > 0) {
+                    //         formData.img = formData.imgList[0].img
+                    //     }
+                    // }
+                    // onFormSubmit?.(formData, setSubmitting)
                 }}
             >
                 {({ values, touched, errors, isSubmitting }) => (

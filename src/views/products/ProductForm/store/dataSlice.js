@@ -16,6 +16,7 @@ export const getCompany = createAsyncThunk(
     }
 )
 
+
 // export const deleteProduct = async (data) => {
 //     const response = await apiDeleteSalesProducts(data)
 //     return response.data
@@ -59,6 +60,7 @@ const dataSlice = createSlice({
         [getCompany.fulfilled]: (state, action) => {
             state.companyList = action.payload.data
         },
+       
     },
 })
 

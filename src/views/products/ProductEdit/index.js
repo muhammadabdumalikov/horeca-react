@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { getProduct, updateProduct, deleteProduct } from './store/dataSlice'
+import { getProduct, updateProduct, deleteProduct, getProductById } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../ProductForm'
 
@@ -29,14 +29,14 @@ const ProductEdit = () => {
     const location = useLocation()
     const navigate = useNavigate()
 
-    const productData = useSelector(
-        (state) => state.salesProductEdit.data.productData
+    const productItem = useSelector(
+        (state) => state.salesProductEdit.data.getProdyctById
     )
 
     const loading = useSelector((state) => state.salesProductEdit.data.loading)
 
     const fetchData = (data) => {
-        dispatch(getProduct(data))
+        dispatch(getProductById(data))
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
@@ -54,7 +54,7 @@ const ProductEdit = () => {
 
     const handleDelete = async (setDialogOpen) => {
         setDialogOpen(false)
-        const success = await deleteProduct({ id: productData.id })
+        const success = await deleteProduct({ id: productItem.id })
         if (success) {
             popNotification('deleted')
         }
@@ -85,14 +85,16 @@ const ProductEdit = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
 
+    console.log(productItem, 'productItem')
+
     return (
         <>
             <Loading loading={false}>
-                {!isEmpty(data) && (
+                {!isEmpty(productItem) && (
                     <>
                         <ProductForm
                             type="edit"
-                            initialData={data}
+                            initialData={productItem}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
                             onDelete={handleDelete}
@@ -100,7 +102,7 @@ const ProductEdit = () => {
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(productData) && (
+            {!loading && isEmpty(productItem) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"

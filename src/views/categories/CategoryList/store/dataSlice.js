@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiDeleteSalesCompany,
-    apiGetSalesCompany,
+    apiGetCategory,
 } from 'services/SalesService'
 
-export const getCompanies = createAsyncThunk(
-    'salesCompanyList/data/getCompanies',
+export const getCategories = createAsyncThunk(
+    'categoryList/data/getCategories',
     async (data) => {
-        const response = await apiGetSalesCompany(data)
+        const response = await apiGetCategory(data)
         return response.data
     }
 )
@@ -19,55 +19,43 @@ export const deleteCompany = async (data) => {
 
 export const initialTableData = {
     total: 0,
-    pageIndex: 1,
+    page: 1,
     pageSize: 10,
-    query: '',
-    sort: {
-        order: '',
-        key: '',
-    },
-}
-
-export const initialFilterData = {
-    name: '',
-    category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
-    status: [0, 1, 2],
-    productStatus: 0,
+    limit: 10,
+    search: '',
 }
 
 const dataSlice = createSlice({
-    name: 'salesCompany/data',
+    name: 'categoryList/data',
     initialState: {
         loading: false,
-        companyList: [],
+        categoryList: [],
         tableData: initialTableData,
-        filterData: initialFilterData,
     },
     reducers: {
-        updateCompanyList: (state, action) => {
+        updateCategoryList: (state, action) => {
             state.companyList = action.payload
         },
         setTableData: (state, action) => {
             state.tableData = action.payload
         },
-        setFilterData: (state, action) => {
-            state.filterData = action.payload
-        },
     },
     extraReducers: {
-        [getCompanies.fulfilled]: (state, action) => {
-            state.companyList = action.payload.data
-            state.tableData.total = action.payload.total
+        [getCategories.fulfilled]: (state, action) => {
+            state.categoryList = action.payload.data
+            state.tableData.total = action.payload?.more_info?.pages
+            state.tableData.page = action.payload?.more_info?.page
+            state.tableData.pageSize = action.payload?.more_info?.count
             state.loading = false
         },
-        [getCompanies.pending]: (state) => {
+        [getCategories.pending]: (state) => {
             state.loading = true
         },
     },
 })
 
 export const {
-    updateCompanyList,
+    updateCategoryList,
     setTableData,
     setFilterData,
 } = dataSlice.actions

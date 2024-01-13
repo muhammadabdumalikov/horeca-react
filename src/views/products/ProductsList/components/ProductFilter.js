@@ -1,18 +1,19 @@
-import React, { useState, useRef, forwardRef } from 'react'
+import React, { useState, useRef, forwardRef, useEffect } from 'react'
 import { HiOutlineFilter } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     getProducts,
     setFilterData,
-    initialTableData,
+    getCategory,
+    getCompany,
 } from '../store/dataSlice'
 import {
     Button,
-    Checkbox,
     Radio,
     FormItem,
     FormContainer,
     Drawer,
+    Select,
 } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 
@@ -23,11 +24,41 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
         (state) => state.salesProductList.data.filterData
     )
 
+    console.log(filterData, 'filterData')
+
     const handleSubmit = (values) => {
+        console.log(values, 'values')
         onSubmitComplete?.()
         dispatch(setFilterData(values))
-        dispatch(getProducts(initialTableData))
+        dispatch(getProducts(values))
     }
+
+    const categoryList = useSelector(
+        (state) => state.salesProductList.data.categoryList
+    )
+    const companyList = useSelector(
+        (state) => state.salesProductList.data.companyList
+    )
+
+    useEffect(() => {
+        fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const fetchData = () => {
+        dispatch(getCategory({}))
+        dispatch(getCompany({}))
+    }
+
+    const categoryOptions = categoryList.list?.map((category) => ({
+        label: category.ru_name,
+        value: category.id,
+    }))
+
+    const companyOptions = companyList.list?.map((company) => ({
+        label: company.ru_name,
+        value: company.id,
+    }))
 
     return (
         <Formik
@@ -41,113 +72,74 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
             {({ values, touched, errors }) => (
                 <Form>
                     <FormContainer>
-                        {/* <FormItem
-                            invalid={errors.name && touched.name}
-                            errorMessage={errors.name}
-                        >
-                            <h6 className="mb-4">Included text</h6>
-                            <Field
-                                type="text"
-                                autoComplete="off"
-                                name="name"
-                                placeholder="Keyword"
-                                component={Input}
-                                prefix={<HiOutlineSearch className="text-lg" />}
-                            />
-                        </FormItem> */}
                         <FormItem
-                            invalid={errors.category && touched.category}
-                            errorMessage={errors.category}
+                            label="Категория товара"
+                            invalid={errors.categoryId && touched.categoryId}
+                            errorMessage={errors.categoryId}
                         >
-                            <h6 className="mb-4">Категория продукта</h6>
-                            <Field name="category">
+                            <Field name="categoryId">
                                 {({ field, form }) => (
-                                    <>
-                                        <Checkbox.Group
-                                            vertical
-                                            onChange={(options) =>
-                                                form.setFieldValue(
-                                                    field.name,
-                                                    options
-                                                )
-                                            }
-                                            value={values.category}
-                                        >
-                                            <Checkbox
-                                                className="mb-3"
-                                                name={field.name}
-                                                value="bags"
-                                            >
-                                                Напитки{' '}
-                                            </Checkbox>
-                                        </Checkbox.Group>
-                                    </>
+                                    <Select
+                                        field={field}
+                                        form={form}
+                                        options={categoryOptions}
+                                        value={categoryOptions?.filter(
+                                            (category) =>
+                                                category.value ===
+                                                values.categoryId
+                                        )}
+                                        onChange={(option) =>
+                                            form.setFieldValue(
+                                                field.name,
+                                                option.value
+                                            )
+                                        }
+                                    />
                                 )}
                             </Field>
                         </FormItem>
                         <FormItem
-                            invalid={errors.status && touched.status}
-                            errorMessage={errors.status}
-                        >
-                            <h6 className="mb-4">Категория продукта</h6>
-                            <Field name="status">
-                                {({ field, form }) => (
-                                    <>
-                                        <Checkbox.Group
-                                            vertical
-                                            onChange={(options) =>
-                                                form.setFieldValue(
-                                                    field.name,
-                                                    options
-                                                )
-                                            }
-                                            value={values.status}
-                                        >
-                                            <Checkbox
-                                                className="mb-3"
-                                                name={field.name}
-                                                value={0}
-                                            >
-                                                В наличии{' '}
-                                            </Checkbox>
-                                            <Checkbox
-                                                className="mb-3"
-                                                name={field.name}
-                                                value={1}
-                                            >
-                                                Ограниченное{' '}
-                                            </Checkbox>
-                                            <Checkbox
-                                                className="mb-3"
-                                                name={field.name}
-                                                value={2}
-                                            >
-                                                Распродано{' '}
-                                            </Checkbox>
-                                        </Checkbox.Group>
-                                    </>
-                                )}
-                            </Field>
-                        </FormItem>
+                        label="Производитель"
+                        invalid={errors.companyId && touched.companyId}
+                        errorMessage={errors.companyId}
+                    >
+                        <Field name="companyId">
+                            {({ field, form }) => {
+                                return (
+                                    <Select
+                                        field={field}
+                                        form={form}
+                                        options={companyOptions}
+                                        value={companyOptions?.filter(
+                                            (tag) => tag.value === values.companyId
+                                        )}
+                                        onChange={(option) =>
+                                            form.setFieldValue(
+                                                field.name,
+                                                option.value
+                                            )
+                                        }
+                                    />
+                                )
+                            }}
+                        </Field>
+                    </FormItem>
                         <FormItem
-                            invalid={
-                                errors.productStatus && touched.productStatus
-                            }
-                            errorMessage={errors.productStatus}
+                            invalid={errors.inActive && touched.inActive}
+                            errorMessage={errors.inActive}
                         >
                             <h6 className="mb-4">Статус продукта</h6>
-                            <Field name="productStatus">
+                            <Field name="inActive">
                                 {({ field, form }) => (
                                     <Radio.Group
                                         vertical
-                                        value={values.productStatus}
+                                        value={values.inActive}
                                         onChange={(val) =>
                                             form.setFieldValue(field.name, val)
                                         }
                                     >
-                                        <Radio value={0}>Опубликовано</Radio>
-                                        <Radio value={1}>Неполноценный</Radio>
-                                        <Radio value={2}>Архив</Radio>
+                                        <Radio value={true}>Активно</Radio>
+                                        <Radio value={false}>Неактивно</Radio>
                                     </Radio.Group>
                                 )}
                             </Field>

@@ -1,40 +1,40 @@
 import React from 'react'
 import { toast, Notification } from 'components/ui'
 import { useNavigate } from 'react-router-dom'
-import { apiCreateSalesProduct } from 'services/SalesService'
-import ProductForm from '../TypesForm'
+import { apiCreateCategory } from 'services/SalesService'
+import ProductForm from '../CategoryForm'
 
 const ProductNew = () => {
     const navigate = useNavigate()
 
-    const addProduct = async (data) => {
-        const response = await apiCreateSalesProduct(data)
+    const addCategory = async (data) => {
+        const response = await apiCreateCategory(data)
         return response.data
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
         setSubmitting(true)
-        const success = await addProduct(values)
+        const success = await addCategory(values)
         setSubmitting(false)
         if (success) {
             toast.push(
                 <Notification
-                    title={'Successfuly added'}
+                    title={'Успешно'}
                     type="success"
                     duration={2500}
                 >
-                    Компания успешно добавлен
+                    Категория успешно добавлен
                 </Notification>,
                 {
                     placement: 'top-center',
                 }
             )
-            navigate('/types')
+            navigate('/categories')
         }
     }
 
     const handleDiscard = () => {
-        navigate('/types')
+        navigate('/categories')
     }
 
     return (

@@ -13,24 +13,28 @@ const ProductNew = () => {
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
-        setSubmitting(true)
-        const success = await addProduct(values)
-        setSubmitting(false)
-        if (success) {
-            toast.push(
-                <Notification
-                    title={'Successfuly added'}
-                    type="success"
-                    duration={2500}
-                >
-                    Товар успешно добавлен
-                </Notification>,
-                {
-                    placement: 'top-center',
-                }
-            )
-            navigate('/products')
-        }
+        // setSubmitting(true)
+        // const success = await addProduct(values)
+        // setSubmitting(false)
+        // if (success) {
+        //     toast.push(
+        //         <Notification
+        //             title={'Successfuly added'}
+        //             type="success"
+        //             duration={2500}
+        //         >
+        //             Товар успешно добавлен
+        //         </Notification>,
+        //         {
+        //             placement: 'top-center',
+        //         }
+        //     )
+        //     navigate('/products')
+        console.log(values, 'values')
+        // return ''
+        // }
+
+
     }
 
     const handleDiscard = () => {

@@ -20,12 +20,9 @@ export const deleteCompany = async (data) => {
 export const initialTableData = {
     total: 0,
     pageIndex: 1,
-    pageSize: 10,
-    query: '',
-    sort: {
-        order: '',
-        key: '',
-    },
+    limit: 10,
+    search: '',
+    in_active: true,
 }
 
 export const initialFilterData = {
@@ -57,7 +54,7 @@ const dataSlice = createSlice({
     extraReducers: {
         [getCompanies.fulfilled]: (state, action) => {
             state.companyList = action.payload.data
-            state.tableData.total = action.payload.total
+            // state.tableData.total = action.payload.total
             state.loading = false
         },
         [getCompanies.pending]: (state) => {

@@ -7,7 +7,7 @@ import { injectReducer } from 'store/index'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getProduct, updateProduct, deleteProduct } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
-import ProductForm from '../TypesForm'
+import ProductForm from '../CategoryForm'
 
 injectReducer('salesProductEdit', reducer)
 
@@ -49,7 +49,7 @@ const ProductEdit = () => {
     }
 
     const handleDiscard = () => {
-        navigate('/types')
+        navigate('/categories')
     }
 
     const handleDelete = async (setDialogOpen) => {

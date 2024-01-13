@@ -1,23 +1,9 @@
 import React, { useEffect } from 'react'
 import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
-// import CreatableSelect from 'react-select/creatable'
 import { Field } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategory, getCompany } from './store/dataSlice'
-
-export const categories = [
-    { label: 'Bags', value: 'bags' },
-    { label: 'Cloths', value: 'cloths' },
-    { label: 'Devices', value: 'devices' },
-    { label: 'Shoes', value: 'shoes' },
-    { label: 'Watches', value: 'watches' },
-]
-
-export const tags = [
-    { label: 'trend', value: 'trend' },
-    { label: 'unisex', value: 'unisex' },
-]
 
 const OrganizationFields = (props) => {
     const { values, touched, errors } = props
@@ -69,8 +55,7 @@ const OrganizationFields = (props) => {
                                     options={categoryOptions}
                                     value={categoryOptions?.filter(
                                         (category) =>
-                                            category.value ===
-                                            values.categoryId
+                                            category.value === values.categoryId
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(
