@@ -4,12 +4,13 @@ import { HiPlusCircle } from 'react-icons/hi'
 import ProductTableSearch from './CategoryTableSearch'
 // import ProductFilter from './CompanyFilter'
 import { Link } from 'react-router-dom'
+import CategoryTableFilter from './CategoryTableFilter'
 
 const CategoryTableTools = () => {
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
             <ProductTableSearch />
-            {/* <ProductFilter /> */}
+            <CategoryTableFilter/>
 
             <Link
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"

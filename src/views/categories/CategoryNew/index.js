@@ -16,20 +16,25 @@ const ProductNew = () => {
         setSubmitting(true)
         const success = await addCategory(values)
         setSubmitting(false)
-        if (success) {
-            toast.push(
-                <Notification
-                    title={'Успешно'}
-                    type="success"
-                    duration={2500}
-                >
-                    Категория успешно добавлен
-                </Notification>,
-                {
-                    placement: 'top-center',
-                }
-            )
-            navigate('/categories')
+
+        try {
+            if (success) {
+                toast.push(
+                    <Notification
+                        title={'Успешно'}
+                        type="success"
+                        duration={2500}
+                    >
+                        Категория успешно добавлен
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+                navigate('/categories')
+            }
+        } catch (error) {
+            console.log(error, 'error')
         }
     }
 

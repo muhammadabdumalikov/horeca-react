@@ -2,12 +2,20 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiDeleteSalesCompany,
     apiGetSalesCompany,
+    apiInactiveCompany,
 } from 'services/SalesService'
 
 export const getCompanies = createAsyncThunk(
     'salesCompanyList/data/getCompanies',
     async (data) => {
         const response = await apiGetSalesCompany(data)
+        return response.data
+    }
+)
+export const inActiveCompany = createAsyncThunk(
+    'salesCompanyList/data/inActiveCompany',
+    async (data) => {
+        const response = await apiInactiveCompany(data)
         return response.data
     }
 )
@@ -20,9 +28,9 @@ export const deleteCompany = async (data) => {
 export const initialTableData = {
     total: 0,
     pageIndex: 1,
+    pageSize: 10,
     limit: 10,
     search: '',
-    in_active: true,
 }
 
 export const initialFilterData = {
@@ -30,6 +38,7 @@ export const initialFilterData = {
     category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
     status: [0, 1, 2],
     productStatus: 0,
+    status: '',
 }
 
 const dataSlice = createSlice({
@@ -54,7 +63,7 @@ const dataSlice = createSlice({
     extraReducers: {
         [getCompanies.fulfilled]: (state, action) => {
             state.companyList = action.payload.data
-            // state.tableData.total = action.payload.total
+            state.tableData.total = action.payload.data.more_info.count
             state.loading = false
         },
         [getCompanies.pending]: (state) => {

@@ -1,68 +1,32 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef } from 'react'
 import { FormContainer, Button } from 'components/ui'
-import { StickyFooter, ConfirmDialog } from 'components/shared'
+import { StickyFooter } from 'components/shared'
 import { Form, Formik } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
 import cloneDeep from 'lodash/cloneDeep'
-import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
-    enName: Yup.string().test('len', 'Введите название категории', (val) => val?.length >= 3),
-    uzName: Yup.string().test('len', 'Введите название категории', (val) => val?.length >= 3),
-    ruName: Yup.string().test('len', 'Введите название категории', (val) => val?.length >= 3)
+    enName: Yup.string().test(
+        'len',
+        'Введите название категории',
+        (val) => val?.length >= 3
+    ),
+    uzName: Yup.string().test(
+        'len',
+        'Введите название категории',
+        (val) => val?.length >= 3
+    ),
+    ruName: Yup.string().test(
+        'len',
+        'Введите название категории',
+        (val) => val?.length >= 3
+    ),
 })
 
-const DeleteProductButton = ({ onDelete }) => {
-    const [dialogOpen, setDialogOpen] = useState(false)
-
-    const onConfirmDialogOpen = () => {
-        setDialogOpen(true)
-    }
-
-    const onConfirmDialogClose = () => {
-        setDialogOpen(false)
-    }
-
-    const handleConfirm = () => {
-        onDelete?.(setDialogOpen)
-    }
-
-    return (
-        <>
-            <Button
-                className="text-red-600"
-                variant="plain"
-                size="sm"
-                icon={<HiOutlineTrash />}
-                type="button"
-                onClick={onConfirmDialogOpen}
-            >
-                Удалить
-            </Button>
-            <ConfirmDialog
-                isOpen={dialogOpen}
-                onClose={onConfirmDialogClose}
-                onRequestClose={onConfirmDialogClose}
-                type="danger"
-                title="Удалить компанию"
-                onCancel={onConfirmDialogClose}
-                onConfirm={handleConfirm}
-                confirmButtonColor="red-600"
-            >
-                <p>
-                    Вы уверены, что хотите удалить эту компанию? Все записи
-                    связанные с этим компанием, также будут удалены. Это
-                    действие нельзя отменить.
-                </p>
-            </ConfirmDialog>
-        </>
-    )
-}
-
 const ProductForm = forwardRef((props, ref) => {
-    const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
+    const { type, initialData, onFormSubmit, onDiscard } = props
 
     return (
         <>
@@ -101,13 +65,7 @@ const ProductForm = forwardRef((props, ref) => {
                                         className="flex items-center justify-between py-4"
                                         stickyClass="border-t bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
                                     >
-                                        <div>
-                                            {type === 'edit' && (
-                                                <DeleteProductButton
-                                                    onDelete={onDelete}
-                                                />
-                                            )}
-                                        </div>
+                                        <div></div>
                                         <div className="md:flex items-center">
                                             <Button
                                                 size="sm"

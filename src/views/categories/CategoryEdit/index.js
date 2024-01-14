@@ -4,47 +4,53 @@ import { toast, Notification } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { getProduct, updateProduct, deleteProduct } from './store/dataSlice'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { getCategories, updateCategory } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../CategoryForm'
 
 injectReducer('salesProductEdit', reducer)
-
-const data = {
-    id: 1,
-    name: 'Cola 2.25L',
-    category: 'Mobile',
-    stock: 10,
-    status: 0,
-    dona_price: 1099,
-    blok_price: 1000,
-    disc_price: 900,
-    // img: '/assets/images/products/iphone-12-pro-max.png',
-}
 
 const ProductEdit = () => {
     const dispatch = useDispatch()
 
     const location = useLocation()
     const navigate = useNavigate()
+    const { id } = useParams()
 
-    const productData = useSelector(
-        (state) => state.salesProductEdit.data.productData
+    const categoriesData = useSelector(
+        (state) => state.salesProductEdit.data.categoryList
     )
+
+    const getCategoryById = (id) => {
+        const category = categoriesData.list?.find((item) => item.id == id)
+
+        if (category?.id) {
+            return {
+                id: category?.id,
+                enName: category?.en_name,
+                ruName: category?.ru_name,
+                uzName: category?.uz_name,
+                active: category?.in_active,
+            }
+        }
+    }
+
+    const data = getCategoryById(id)
 
     const loading = useSelector((state) => state.salesProductEdit.data.loading)
 
-    const fetchData = (data) => {
-        dispatch(getProduct(data))
+    const fetchData = () => {
+        dispatch(getCategories({}))
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
         setSubmitting(true)
-        const success = await updateProduct(values)
+        const success = await updateCategory(values)
         setSubmitting(false)
-        if (success) {
-            popNotification('updated')
+        if (success === 201) {
+            popNotification('обновлено')
+            navigate('/categories')
         }
     }
 
@@ -52,28 +58,20 @@ const ProductEdit = () => {
         navigate('/categories')
     }
 
-    const handleDelete = async (setDialogOpen) => {
-        setDialogOpen(false)
-        const success = await deleteProduct({ id: productData.id })
-        if (success) {
-            popNotification('deleted')
-        }
-    }
-
     const popNotification = (keyword) => {
         toast.push(
             <Notification
-                title={`Successfuly ${keyword}`}
+                title={`Успешно ${keyword}`}
                 type="success"
                 duration={2500}
             >
-                Product successfuly {keyword}
+                Успешно {keyword}
             </Notification>,
             {
                 placement: 'top-center',
             }
         )
-        navigate('/app/sales/product-list')
+        navigate(`/categories/edit/${id}`)
     }
 
     useEffect(() => {
@@ -95,12 +93,11 @@ const ProductEdit = () => {
                             initialData={data}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
-                            onDelete={handleDelete}
                         />
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(productData) && (
+            {!loading && isEmpty(data) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"

@@ -2,12 +2,20 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiDeleteSalesCompany,
     apiGetCategory,
+    apiInActiveCategory,
 } from 'services/SalesService'
 
 export const getCategories = createAsyncThunk(
     'categoryList/data/getCategories',
     async (data) => {
         const response = await apiGetCategory(data)
+        return response.data
+    }
+)
+export const inActiveCategory = createAsyncThunk(
+    'salesProductEdit/data/inActiveCategory',
+    async (data) => {
+        const response = await apiInActiveCategory(data)
         return response.data
     }
 )
@@ -19,10 +27,15 @@ export const deleteCompany = async (data) => {
 
 export const initialTableData = {
     total: 0,
-    page: 1,
+    pageIndex: 1,
     pageSize: 10,
     limit: 10,
     search: '',
+    status: '',
+}
+
+export const statusFilterData = {
+    status: '',
 }
 
 const dataSlice = createSlice({
@@ -31,6 +44,7 @@ const dataSlice = createSlice({
         loading: false,
         categoryList: [],
         tableData: initialTableData,
+        filterData: statusFilterData,
     },
     reducers: {
         updateCategoryList: (state, action) => {
@@ -39,16 +53,25 @@ const dataSlice = createSlice({
         setTableData: (state, action) => {
             state.tableData = action.payload
         },
+        setFilterData: (state, action) => {
+            console.log('action.payload', action.payload)
+            state.filterData = action.payload
+        },
     },
     extraReducers: {
         [getCategories.fulfilled]: (state, action) => {
             state.categoryList = action.payload.data
-            state.tableData.total = action.payload?.more_info?.pages
-            state.tableData.page = action.payload?.more_info?.page
-            state.tableData.pageSize = action.payload?.more_info?.count
+            state.tableData.total = action.payload.data.more_info.count
             state.loading = false
         },
         [getCategories.pending]: (state) => {
+            state.loading = true
+        },
+        [inActiveCategory.fulfilled]: (state, action) => {
+            state.categoryList = action.payload.data
+            state.loading = false
+        },
+        [inActiveCategory.pending]: (state) => {
             state.loading = true
         },
     },

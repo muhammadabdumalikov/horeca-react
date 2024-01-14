@@ -2,14 +2,14 @@ import React from 'react'
 import { Button } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
 import ProductTableSearch from './CompanyTableSearch'
-// import ProductFilter from './CompanyFilter'
 import { Link } from 'react-router-dom'
+import CompanyTableFilter from './CompanyTableFilter'
 
 const ProductTableTools = () => {
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
             <ProductTableSearch />
-            {/* <ProductFilter /> */}
+            <CompanyTableFilter />
 
             <Link
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"

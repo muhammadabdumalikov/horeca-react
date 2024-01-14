@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { Badge } from 'components/ui'
+import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCompanies, setTableData } from '../store/dataSlice'
-import { setSelectedCompany } from '../store/stateSlice'
-import { toggleDeleteConfirmation } from '../store/stateSlice'
+import { getCompanies, inActiveCompany, setTableData } from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import CompanyDeleteConfirmation from './CompanyDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
@@ -34,9 +32,29 @@ const ActionColumn = ({ row }) => {
         navigate(`/companies/edit/${row.id}`)
     }
 
-    const onDelete = () => {
-        dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedCompany(row.id))
+    const onEditActivity = () => {
+        dispatch(inActiveCompany({ id: row.id }))
+
+        if (row.id) {
+            popNotification('изменено активность')
+            dispatch(getCompanies({}))
+        }
+    }
+
+    const popNotification = (keyword) => {
+        toast.push(
+            <Notification
+                title={`Успешно ${keyword}`}
+                type="success"
+                duration={2500}
+            >
+                Успешно {keyword}
+            </Notification>,
+            {
+                placement: 'top-center',
+            }
+        )
+        navigate(`/companies`)
     }
 
     return (
@@ -47,12 +65,12 @@ const ActionColumn = ({ row }) => {
             >
                 <HiOutlinePencil />
             </span>
-            {/* <span
+            <span
                 className="cursor-pointer p-2 hover:text-red-500"
-                onClick={onDelete}
+                onClick={onEditActivity}
             >
-                <HiOutlineTrash />
-            </span> */}
+                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+            </span>
         </div>
     )
 }
@@ -91,7 +109,7 @@ const CompanyTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({pageIndex, query}))
+        dispatch(getCompanies({ pageIndex, query }))
     }
 
     const columns = useMemo(
@@ -178,12 +196,6 @@ const CompanyTable = () => {
         dispatch(setTableData(newTableData))
     }
 
-    const onSort = (sort, sortingColumn) => {
-        const newTableData = cloneDeep(tableData)
-        newTableData.sort = sort
-        dispatch(setTableData(newTableData))
-    }
-
     return (
         <>
             <DataTable
@@ -196,7 +208,6 @@ const CompanyTable = () => {
                 pagingData={tableData}
                 onPaginationChange={onPaginationChange}
                 onSelectChange={onSelectChange}
-                onSort={onSort}
             />
             <CompanyDeleteConfirmation />
         </>

@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 // import { Badge } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlinePencil } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCategories, setTableData } from '../store/dataSlice'
+import { getCategories, inActiveCategory, setTableData } from '../store/dataSlice'
 // import { setSelectedCompany } from '../store/stateSlice'
 // import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
@@ -11,7 +11,7 @@ import CompanyDeleteConfirmation from './CategoryDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
-import { Badge } from 'components/ui'
+import { Badge, Notification, toast } from 'components/ui'
 
 const inventoryStatusColor = {
 
@@ -31,9 +31,36 @@ const ActionColumn = ({ row }) => {
     // const dispatch = useDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
 
     const onEdit = () => {
         navigate(`/categories/edit/${row.id}`)
+    }
+    const onEditActivity = () => {
+        dispatch(inActiveCategory({ id: row.id }))
+
+        if (row.id) {
+            popNotification('изменено активность')
+            dispatch(getCategories({}))
+        }
+    }
+
+    const popNotification = (keyword) => {
+        toast.push(
+            <Notification
+                title={`Успешно ${keyword}`}
+                type="success"
+                duration={2500}
+            >
+                Успешно {keyword}
+            </Notification>,
+            {
+                placement: 'top-center',
+            }
+        )
+        navigate(`/categories`)
     }
 
     return (
@@ -43,6 +70,12 @@ const ActionColumn = ({ row }) => {
                 onClick={onEdit}
             >
                 <HiOutlinePencil />
+            </span>
+            <span
+                className={`cursor-pointer p-2 hover:${textTheme}`}
+                onClick={onEditActivity}
+            >
+                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff/>}
             </span>
        
         </div>
@@ -64,7 +97,7 @@ const CategoryTable = () => {
 
     const dispatch = useDispatch()
 
-    const { page, pageSize, sort, search, total } = useSelector(
+    const { pageSize, pageIndex, search, total } = useSelector(
         (state) => state.categoryList.data.tableData
     )
 
@@ -76,12 +109,12 @@ const CategoryTable = () => {
 
     const data = useSelector((state) => state.categoryList.data.categoryList)
 
-    // console.log(data, 'data')
+    console.log(data, 'data')
 
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, pageSize, sort])
+    }, [pageSize, pageIndex])
 
     useEffect(() => {
         if (tableRef) {
@@ -90,12 +123,12 @@ const CategoryTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ page, pageSize, search, total, }),
-        [page, pageSize, search, total]
+        () => ({ pageSize, pageIndex, search, total, }),
+        [pageSize, pageIndex, search, total]
     )
 
     const fetchData = () => {
-        dispatch(getCategories({ search, page, pageSize }))
+        dispatch(getCategories({ pageSize, page: pageIndex, search }))
     }
 
     const columns = useMemo(
@@ -143,14 +176,14 @@ const CategoryTable = () => {
 
     const onPaginationChange = (page) => {
         const newTableData = cloneDeep(tableData)
-        newTableData.page = page
+        newTableData.pageIndex = page
         dispatch(setTableData(newTableData))
     }
 
     const onSelectChange = (value) => {
         const newTableData = cloneDeep(tableData)
         newTableData.pageSize = Number(value)
-        newTableData.page = 1
+        newTableData.pageIndex = 1
         dispatch(setTableData(newTableData))
     }
 

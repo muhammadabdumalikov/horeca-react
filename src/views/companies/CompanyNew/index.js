@@ -1,25 +1,25 @@
 import React from 'react'
 import { toast, Notification } from 'components/ui'
 import { useNavigate } from 'react-router-dom'
-import { apiCreateSalesProduct } from 'services/SalesService'
+import { apiCreateCompany } from 'services/SalesService'
 import ProductForm from '../CompanyForm'
 
 const ProductNew = () => {
     const navigate = useNavigate()
 
-    const addProduct = async (data) => {
-        const response = await apiCreateSalesProduct(data)
+    const createCompany = async (data) => {
+        const response = await apiCreateCompany(data)
         return response.data
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
         setSubmitting(true)
-        const success = await addProduct(values)
+        const success = await createCompany(values)
         setSubmitting(false)
         if (success) {
             toast.push(
                 <Notification
-                    title={'Successfuly added'}
+                    title={'Компания успешно добавлен'}
                     type="success"
                     duration={2500}
                 >

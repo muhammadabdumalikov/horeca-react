@@ -84,16 +84,23 @@ export async function apiGetSalesCompany(params) {
         params,
     })
 }
-export async function apiDeleteSalesCompany(data) {
+export async function apiInactiveCompany(data) {
     return ApiService.fetchData({
-        url: '/',
-        method: 'delete',
+        url: '/company/in-active',
+        method: 'put',
         data,
     })
 }
-export async function apiCreateSalesCompany(data) {
+export async function apiDeleteSalesCompany(data) {
     return ApiService.fetchData({
-        url: '/',
+        url: '/company/in-active',
+        method: 'put',
+        data,
+    })
+}
+export async function apiCreateCompany(data) {
+    return ApiService.fetchData({
+        url: '/company/create',
         method: 'post',
         data,
     })
@@ -116,6 +123,20 @@ export async function apiCreateCategory(data) {
     return ApiService.fetchData({
         url: '/category/create',
         method: 'post',
+        data,
+    })
+}
+export async function apiInActiveCategory(data) {
+    return ApiService.fetchData({
+        url: '/category/in-active',
+        method: 'put',
+        data,
+    })
+}
+export async function apiUpdateCategory(data) {
+    return ApiService.fetchData({
+        url: '/category/update',
+        method: 'put',
         data,
     })
 }
