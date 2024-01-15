@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
-import { Avatar, Badge } from 'components/ui'
+import { Avatar, Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCustomers, setTableData } from '../store/dataSlice'
@@ -8,7 +8,7 @@ import useThemeClass from 'utils/hooks/useThemeClass'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
-import { HiOutlineEye } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 
 const statusColor = {
     active: 'bg-emerald-500',
@@ -24,23 +24,65 @@ const ActionColumn = ({ row }) => {
         dispatch(setSelectedCustomer(row))
     }
 
+    const onEditActivity = () => {
+        // dispatch(inActiveProdct({ id: row.id }))
+
+        if (row.id) {
+            popNotification('изменено активность')
+            // dispatch(getProducts({}))
+        }
+    }
+
+    const popNotification = (keyword) => {
+        toast.push(
+            <Notification
+                title={`Успешно ${keyword}`}
+                type="success"
+                duration={2500}
+            >
+                Успешно {keyword}
+            </Notification>,
+            {
+                placement: 'top-center',
+            }
+        )
+        // navigate(`/products`)
+    }
+
     return (
-        // <div className="flex justify-end text-lg">
-        //     <span
-        //         className={`cursor-pointer p-2 hover:${textTheme}`}
-        //         onClick={onEdit}
-        //     >
-        //         <HiOutlineEye />
-        //     </span>
-        // </div>
-        <Link
-            className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
-            to={`/users/${row.id}`}
-        >
-            {row.name}
-        </Link>
+        <div className="flex justify-end text-lg">
+            <Link
+                className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
+                to={`/users/${row.id}`}
+            >
+                {/* <HiOutlinePencil /> */}
+            </Link>
+            <span
+                className="cursor-pointer p-2 hover:text-red-500"
+                onClick={onEditActivity}
+            >
+                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+            </span>
+        </div>
     )
 }
+
+// return (
+//     // <div className="flex justify-end text-lg">
+//     //     <span
+//     //         className={`cursor-pointer p-2 hover:${textTheme}`}
+//     //         onClick={onEdit}
+//     //     >
+//     //         <HiOutlineEye />
+//     //     </span>
+//     // </div>
+//     <Link
+//         className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
+//         to={`/users/${row.id}`}
+//     >
+//         {row.name}
+//     </Link>
+// )
 
 const NameColumn = ({ row }) => {
     const { textTheme } = useThemeClass()

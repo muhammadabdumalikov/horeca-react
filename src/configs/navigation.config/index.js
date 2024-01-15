@@ -66,6 +66,16 @@ const navigationConfig = [
         authority: [],
         subMenu: [],
     },
+    {
+        key: 'notifications',
+        path: '/notifications',
+        title: 'Уведомления',
+        translateKey: 'nav.notifications',
+        icon: 'notification',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
     // {
     //     key: 'collapseMenu',
     //     path: '',

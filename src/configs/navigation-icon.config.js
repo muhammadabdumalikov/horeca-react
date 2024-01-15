@@ -5,7 +5,8 @@ import {
     HiOutlineViewGridAdd,
     HiOutlineColorSwatch,
     HiOutlineUserGroup,
-    HiOutlineUserCircle
+    HiOutlineUserCircle,
+    HiOutlineBell
 } from 'react-icons/hi'
 import { HiOutlineInboxStack, HiOutlineBuildingOffice2, HiOutlineArchiveBoxArrowDown } from "react-icons/hi2";
 
@@ -19,7 +20,8 @@ const navigationIcon = {
     catalog: <HiOutlineColorSwatch />,
     agents: <HiOutlineUserCircle/>,
     incomeBox: <HiOutlineArchiveBoxArrowDown/>,
-    users: <HiOutlineUserGroup/>
+    users: <HiOutlineUserGroup/>,
+    notification: <HiOutlineBell/>,
 }
 
 export default navigationIcon

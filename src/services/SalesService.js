@@ -133,6 +133,20 @@ export async function apiGetCategory(params) {
         params,
     })
 }
+export async function apiGetNotifications(params) {
+    return ApiService.fetchData({
+        url: '/ntf',
+        method: 'get',
+        params,
+    })
+}
+export async function apiInactiveNotiofication(data) {
+    return ApiService.fetchData({
+        url: '/ntf/in-active',
+        method: 'put',
+        data,
+    })
+}
 export async function apiGetAgents(params) {
     return ApiService.fetchData({
         url: '/agent',
