@@ -77,11 +77,18 @@ export async function apiGetSalesOrderDetails(params) {
         params,
     })
 }
-export async function apiGetSalesCompany(params) {
+export async function apiGetCompany(params) {
     return ApiService.fetchData({
         url: '/company',
         method: 'get',
         params,
+    })
+}
+export async function apiUpdateCompany(data) {
+    return ApiService.fetchData({
+        url: '/company/update',
+        method: 'put',
+        data,
     })
 }
 export async function apiInactiveCompany(data) {

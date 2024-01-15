@@ -7,13 +7,41 @@ import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
+import OrganizationFields from './OrganizationFields'
 
 const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    uzName: Yup.string().required('Введите название товара'),
-    ruName: Yup.string().required('Введите название товара'),
-    enName: Yup.string().required('Введите название товара'),
+    uzName: Yup.string().test(
+        'len',
+        'Введите название товара',
+        (val) => val?.length >= 3
+    ),
+    ruName: Yup.string().test(
+        'len',
+        'Введите название товара',
+        (val) => val?.length >= 3
+    ),
+    enName: Yup.string().test(
+        'len',
+        'Введите название товара',
+        (val) => val?.length >= 3
+    ),
+    uzCountry: Yup.string().test(
+        'len',
+        'Введите название регирна',
+        (val) => val?.length >= 3
+    ),
+    ruCountry: Yup.string().test(
+        'len',
+        'Введите название регирна',
+        (val) => val?.length >= 3
+    ),
+    enCountry: Yup.string().test(
+        'len',
+        'Введите название регирна',
+        (val) => val?.length >= 3
+    ),
 })
 
 const DeleteProductButton = ({ onDelete }) => {
@@ -64,7 +92,7 @@ const DeleteProductButton = ({ onDelete }) => {
 }
 
 const ProductForm = forwardRef((props, ref) => {
-    const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
+    const { type, initialData, onFormSubmit, onDiscard } = props
 
     const newId = useUniqueId('product-')
 
@@ -98,11 +126,11 @@ const ProductForm = forwardRef((props, ref) => {
                                         values={values}
                                     />
 
-                                    {/* <OrganizationFields
+                                    <OrganizationFields
                                         touched={touched}
                                         errors={errors}
                                         values={values}
-                                    /> */}
+                                    />
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -111,13 +139,7 @@ const ProductForm = forwardRef((props, ref) => {
                                         className="flex items-center justify-between py-4"
                                         stickyClass="border-t bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
                                     >
-                                        <div>
-                                            {type === 'edit' && (
-                                                <DeleteProductButton
-                                                    onDelete={onDelete}
-                                                />
-                                            )}
-                                        </div>
+                                        <div></div>
                                         <div className="md:flex items-center">
                                             <Button
                                                 size="sm"
@@ -154,9 +176,9 @@ ProductForm.defaultProps = {
         uzName: '',
         ruName: '',
         enName: '',
-        uzCountry: 'asdasd',
-        ruCountry: 'asdasd',
-        enCountry: 'asdasdads',
+        uzCountry: '',
+        ruCountry: '',
+        enCountry: '',
     },
 }
 

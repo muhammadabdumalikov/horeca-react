@@ -4,47 +4,57 @@ import { toast, Notification } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { getProduct, updateProduct, deleteProduct } from './store/dataSlice'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { getCompany, updateCompany } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../CompanyForm'
 
-injectReducer('salesProductEdit', reducer)
-
-const data = {
-    id: 1,
-    name: 'Cola 2.25L',
-    category: 'Mobile',
-    stock: 10,
-    status: 0,
-    dona_price: 1099,
-    blok_price: 1000,
-    disc_price: 900,
-    // img: '/assets/images/products/iphone-12-pro-max.png',
-}
+injectReducer('salesCompanyEdit', reducer)
 
 const ProductEdit = () => {
     const dispatch = useDispatch()
 
     const location = useLocation()
     const navigate = useNavigate()
+    const { id } = useParams()
 
-    const productData = useSelector(
-        (state) => state.salesProductEdit.data.productData
+    const companyData = useSelector(
+        (state) => state.salesCompanyEdit.data.companyData
     )
 
-    const loading = useSelector((state) => state.salesProductEdit.data.loading)
+    const getCategoryById = (id) => {
+        const data = companyData.data?.list?.find((item) => item.id == id)
 
-    const fetchData = (data) => {
-        dispatch(getProduct(data))
+        if (data?.id) {
+            return {
+                uzName: data?.uz_name,
+                ruName: data?.ru_name,
+                enName: data?.en_name,
+                uzCountry: data?.uz_country,
+                ruCountry: data?.ru_country,
+                enCountry: data?.en_country,
+                id: data?.id,
+            }
+        }
+    }
+
+    const data = getCategoryById(id)
+
+    console.log(companyData, 'companyData')
+    console.log(data, 'data')
+
+    const loading = useSelector((state) => state.salesCompanyEdit.data.loading)
+
+    const fetchData = () => {
+        dispatch(getCompany({}))
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
         setSubmitting(true)
-        const success = await updateProduct(values)
+        const success = await updateCompany(values)
         setSubmitting(false)
         if (success) {
-            popNotification('updated')
+            popNotification('изменено')
         }
     }
 
@@ -52,18 +62,10 @@ const ProductEdit = () => {
         navigate('/companies')
     }
 
-    const handleDelete = async (setDialogOpen) => {
-        setDialogOpen(false)
-        const success = await deleteProduct({ id: productData.id })
-        if (success) {
-            popNotification('deleted')
-        }
-    }
-
     const popNotification = (keyword) => {
         toast.push(
             <Notification
-                title={`Successfuly ${keyword}`}
+                title={`Успешно ${keyword}`}
                 type="success"
                 duration={2500}
             >
@@ -73,7 +75,7 @@ const ProductEdit = () => {
                 placement: 'top-center',
             }
         )
-        navigate('/app/sales/product-list')
+        navigate('/companies')
     }
 
     useEffect(() => {
@@ -95,12 +97,11 @@ const ProductEdit = () => {
                             initialData={data}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
-                            onDelete={handleDelete}
                         />
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(productData) && (
+            {!loading && isEmpty(companyData) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"

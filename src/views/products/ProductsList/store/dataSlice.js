@@ -3,7 +3,7 @@ import {
     apiGetSalesProducts,
     apiDeleteSalesProducts,
     apiGetCategory,
-    apiGetSalesCompany,
+    apiGetCompany,
 } from 'services/SalesService'
 
 export const getProducts = createAsyncThunk(
@@ -23,7 +23,7 @@ export const getCategory = createAsyncThunk(
 export const getCompany = createAsyncThunk(
     'salesProductList/data/getCompany',
     async (data) => {
-        const response = await apiGetSalesCompany(data)
+        const response = await apiGetCompany(data)
         return response.data
     }
 )
