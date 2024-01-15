@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { Avatar, Badge } from 'components/ui'
+import { Avatar, Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts, setTableData } from '../store/dataSlice'
+import { getProducts, inActiveProdct, setTableData } from '../store/dataSlice'
 import { setSelectedProduct } from '../store/stateSlice'
 import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
@@ -57,7 +57,7 @@ const inventoryStatusColor = {
 // ]
 
 const ActionColumn = ({ row }) => {
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
@@ -65,10 +65,30 @@ const ActionColumn = ({ row }) => {
         navigate(`/products/edit/${row.id}`)
     }
 
-    // const onDelete = () => {
-    //     dispatch(toggleDeleteConfirmation(true))
-    //     dispatch(setSelectedProduct(row.id))
-    // }
+    const onEditActivity = () => {
+        dispatch(inActiveProdct({ id: row.id }))
+
+        if (row.id) {
+            popNotification('изменено активность')
+            dispatch(getProducts({}))
+        }
+    }
+
+    const popNotification = (keyword) => {
+        toast.push(
+            <Notification
+                title={`Успешно ${keyword}`}
+                type="success"
+                duration={2500}
+            >
+                Успешно {keyword}
+            </Notification>,
+            {
+                placement: 'top-center',
+            }
+        )
+        navigate(`/products`)
+    }
 
     return (
         <div className="flex justify-end text-lg">
@@ -78,12 +98,12 @@ const ActionColumn = ({ row }) => {
             >
                 <HiOutlinePencil />
             </span>
-            {/* <span
+            <span
                 className="cursor-pointer p-2 hover:text-red-500"
-                onClick={onDelete}
+                onClick={onEditActivity}
             >
-                <HiOutlineTrash />
-            </span> */}
+                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+            </span>
         </div>
     )
 }

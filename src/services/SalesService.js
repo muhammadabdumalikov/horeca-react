@@ -21,6 +21,13 @@ export async function apiGetProductById({id}) {
         method: 'get',
     })
 }
+export async function apiInActiveProdct(data) {
+    return ApiService.fetchData({
+        url: `/product/in-active`,
+        method: 'put',
+        data
+    })
+}
 
 export async function apiDeleteSalesProducts(data) {
     return ApiService.fetchData({

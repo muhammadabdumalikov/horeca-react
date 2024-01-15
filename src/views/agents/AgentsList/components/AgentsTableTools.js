@@ -26,7 +26,7 @@ const ProductTableTools = () => {
                 to="/agents/add"
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
-                    Добавить компанию
+                    Добавить агента
                 </Button>
             </Link>
         </div>

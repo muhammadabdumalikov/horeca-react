@@ -142,34 +142,7 @@ const BasicInformationFields = (props) => {
                         </Field>
                     </FormItem>
                 </div>
-                <div className="col-span-1">
-                    <FormItem
-                        label="Статус"
-                        invalid={errors.in_active && touched.in_active}
-                        errorMessage={errors.in_active}
-                    >
-                        <Field name="category_id">
-                            {({ field, form }) => (
-                                <Select
-                                    field={field}
-                                    form={form}
-                                    options={in_active}
-                                    value={in_active.filter(
-                                        (category) =>
-                                            category.value ===
-                                            values.category_id
-                                    )}
-                                    onChange={(option) =>
-                                        form.setFieldValue(
-                                            field.name,
-                                            option.value
-                                        )
-                                    }
-                                />
-                            )}
-                        </Field>
-                    </FormItem>
-                </div>
+             
             </div>
         </AdaptableCard>
     )
