@@ -1,16 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import {
-    apiDeleteSalesCompany,
-    apiGetCompany,
-} from 'services/SalesService'
+import { apiDeleteSalesCompany, apiGetAgents, apiGetCompany, apiInactiveAgent } from 'services/SalesService'
 
 export const getCompanies = createAsyncThunk(
-    'salesCompanyList/data/getCompanies',
+    'agentsList/data/getCompanies',
     async (data) => {
         const response = await apiGetCompany(data)
         return response.data
     }
 )
+export const getAgents = createAsyncThunk(
+    'agentsList/data/getAgents',
+    async (data) => {
+        const response = await apiGetAgents(data)
+        return response.data
+    }
+)
+export const inActiveAgent = createAsyncThunk(
+    'agentsList/data/inActiveAgent',
+    async (data) => {
+        const response = await apiInactiveAgent(data)
+        return response.data
+    }
+)
+
+
 
 export const deleteCompany = async (data) => {
     const response = await apiDeleteSalesCompany(data)
@@ -21,11 +34,8 @@ export const initialTableData = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
-    query: '',
-    sort: {
-        order: '',
-        key: '',
-    },
+    search: '',
+   
 }
 
 export const initialFilterData = {
@@ -33,13 +43,15 @@ export const initialFilterData = {
     category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
     status: [0, 1, 2],
     productStatus: 0,
+    status: '',
 }
 
 const dataSlice = createSlice({
-    name: 'salesCompany/data',
+    name: 'agentsList/data',
     initialState: {
         loading: false,
         companyList: [],
+        agentsList: [],
         tableData: initialTableData,
         filterData: initialFilterData,
     },
@@ -63,13 +75,18 @@ const dataSlice = createSlice({
         [getCompanies.pending]: (state) => {
             state.loading = true
         },
+        [getAgents.fulfilled]: (state, action) => {
+            state.agentsList = action.payload.data
+            state.tableData.total = action.payload.data.more_info.count
+            state.loading = false
+        },
+        [getAgents.pending]: (state) => {
+            state.loading = true
+        },
     },
 })
 
-export const {
-    updateCompanyList,
-    setTableData,
-    setFilterData,
-} = dataSlice.actions
+export const { updateCompanyList, setTableData, setFilterData } =
+    dataSlice.actions
 
 export default dataSlice.reducer

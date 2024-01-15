@@ -1,54 +1,39 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { Badge } from 'components/ui'
+import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import {
+    HiOutlineEye,
+    HiOutlineEyeOff,
+    HiOutlinePencil,
+    HiOutlineTrash,
+} from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCompanies, setTableData } from '../store/dataSlice'
+import {
+    getAgents,
+    getCompanies,
+    inActiveAgent,
+    setTableData,
+} from '../store/dataSlice'
 import { setSelectedCompany } from '../store/stateSlice'
 import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import CompanyDeleteConfirmation from './AgentsDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
+import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
     0: {
-        label: 'Онлайн',
+        label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    // 1: {
-    //     label: 'Ограниченное',
-    //     dotClass: 'bg-amber-500',
-    //     textClass: 'text-amber-500',
-    // },
     1: {
-        label: 'Оффлайн',
+        label: 'Неактивныйы',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
 }
-
-const data = [
-    {
-        id: 1,
-        region_id: 1,
-        fullname: 'John Doe',
-        contact: '+998 99 999 99 99',
-        username: 'john_doe',
-        password: '123456',
-        in_active: 0,
-    },
-    {
-        id: 2,
-        region_id: 2,
-        fullname: 'Helen Keller',
-        contact: '+998 99 999 99 99',
-        username: 'helen_keller',
-        password: '123456',
-        in_active: 1,
-    },
-]
 
 const ActionColumn = ({ row }) => {
     const dispatch = useDispatch()
@@ -59,9 +44,29 @@ const ActionColumn = ({ row }) => {
         navigate(`/agents/edit/${row.id}`)
     }
 
-    const onDelete = () => {
-        dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedCompany(row.id))
+    const onEditActivity = () => {
+        dispatch(inActiveAgent({ id: row.id }))
+
+        if (row.id) {
+            popNotification('изменено активность')
+            dispatch(getAgents({}))
+        }
+    }
+
+    const popNotification = (keyword) => {
+        toast.push(
+            <Notification
+                title={`Успешно ${keyword}`}
+                type="success"
+                duration={2500}
+            >
+                Успешно {keyword}
+            </Notification>,
+            {
+                placement: 'top-center',
+            }
+        )
+        navigate(`/agents`)
     }
 
     return (
@@ -74,9 +79,9 @@ const ActionColumn = ({ row }) => {
             </span>
             <span
                 className="cursor-pointer p-2 hover:text-red-500"
-                onClick={onDelete}
+                onClick={onEditActivity}
             >
-                <HiOutlineTrash />
+                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
             </span>
         </div>
     )
@@ -92,7 +97,9 @@ const CompanyColumn = ({ row }) => {
     return (
         <div className="flex items-center">
             {/* {avatar} */}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.fullname}</span>
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>
+                {row.fullname}
+            </span>
         </div>
     )
 }
@@ -102,7 +109,7 @@ const CompanyTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, sort, query, total } = useSelector(
+    const { pageIndex, pageSize, search, total } = useSelector(
         (state) => state.agentsList.data.tableData
     )
 
@@ -110,12 +117,12 @@ const CompanyTable = () => {
 
     const loading = useSelector((state) => state.agentsList.data.loading)
 
-    // const data = useSelector((state) => state.salesProductList.data.productList)
+    const data = useSelector((state) => state.agentsList.data.agentsList.list)
 
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageIndex, pageSize, sort])
+    }, [pageIndex, pageSize])
 
     useEffect(() => {
         if (tableRef) {
@@ -124,12 +131,12 @@ const CompanyTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, sort, query, total }),
-        [pageIndex, pageSize, sort, query, total]
+        () => ({ pageIndex, pageSize, search, total }),
+        [pageIndex, pageSize, search, total]
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(getAgents({ pageIndex, pageSize, search }))
     }
 
     const columns = useMemo(
@@ -161,22 +168,22 @@ const CompanyTable = () => {
                     return <span className="capitalize">{row.username}</span>
                 },
             },
-            {
-                header: 'Пароль',
-                accessorKey: 'password',
-                width: '200px',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.password}</span>
-                },
-            },
+            // {
+            //     header: 'Пароль',
+            //     accessorKey: 'password',
+            //     width: '200px',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return <span className="capitalize">{row.password}</span>
+            //     },
+            // },
             {
                 header: 'Регион',
                 accessorKey: 'region_id',
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.region_id}</span>
+                    return <span className="capitalize">{row.ru_district}</span>
                 },
             },
             {
@@ -189,13 +196,20 @@ const CompanyTable = () => {
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[in_active].dotClass
+                                    inventoryStatusColor[isActive(in_active)]
+                                        .dotClass
                                 }
                             />
                             <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[in_active].textClass}`}
+                                className={`capitalize font-semibold ${
+                                    inventoryStatusColor[isActive(in_active)]
+                                        .textClass
+                                }`}
                             >
-                                {inventoryStatusColor[in_active].label}
+                                {
+                                    inventoryStatusColor[isActive(in_active)]
+                                        .label
+                                }
                             </span>
                         </div>
                     )
@@ -223,11 +237,7 @@ const CompanyTable = () => {
         dispatch(setTableData(newTableData))
     }
 
-    const onSort = (sort, sortingColumn) => {
-        const newTableData = cloneDeep(tableData)
-        newTableData.sort = sort
-        dispatch(setTableData(newTableData))
-    }
+
 
     return (
         <>
@@ -237,11 +247,10 @@ const CompanyTable = () => {
                 data={data}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ className: 'rounded-md' }}
-                // loading={loading}
+                loading={loading}
                 pagingData={tableData}
                 onPaginationChange={onPaginationChange}
                 onSelectChange={onSelectChange}
-                onSort={onSort}
             />
             <CompanyDeleteConfirmation />
         </>

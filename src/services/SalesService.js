@@ -126,6 +126,20 @@ export async function apiGetCategory(params) {
         params,
     })
 }
+export async function apiGetAgents(params) {
+    return ApiService.fetchData({
+        url: '/agent',
+        method: 'get',
+        params,
+    })
+}
+export async function apiInactiveAgent(data) {
+    return ApiService.fetchData({
+        url: '/agent/in-active',
+        method: 'put',
+        data,
+    })
+}
 export async function apiCreateCategory(data) {
     return ApiService.fetchData({
         url: '/category/create',
