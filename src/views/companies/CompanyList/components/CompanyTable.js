@@ -80,7 +80,7 @@ const CompanyTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, query, total } = useSelector(
+    const { pageIndex, pageSize, search, total } = useSelector(
         (state) => state.salesCompanyList.data.tableData
     )
 
@@ -104,12 +104,12 @@ const CompanyTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, query, total }),
-        [pageIndex, pageSize, query, total]
+        () => ({ pageIndex, pageSize, search, total }),
+        [pageIndex, pageSize, search, total]
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({ pageIndex, query }))
+        dispatch(getCompanies({ pageIndex, search, pageSize }))
     }
 
     const columns = useMemo(

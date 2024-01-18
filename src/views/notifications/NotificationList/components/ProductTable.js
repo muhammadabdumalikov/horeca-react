@@ -33,7 +33,7 @@ const ActionColumn = ({ row }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/products/edit/${row.id}`)
+        navigate(`/notifications/edit/${row.id}`)
     }
 
     const onEditActivity = () => {
@@ -81,7 +81,7 @@ const ActionColumn = ({ row }) => {
 
 const ProductColumn = ({ row }) => {
     const avatar = row.image ? (
-        <Avatar src={row.image} />
+        <Avatar src={`https://horecaapi.uz/${row.image}`} />
     ) : (
         <Avatar icon={<FiPackage />} />
     )
@@ -99,7 +99,7 @@ const ProductTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, search, total } = useSelector(
+    const { pageIndex, pageSize, search, total, status } = useSelector(
         (state) => state.salesNotification.data.tableData
     )
 
@@ -130,7 +130,7 @@ const ProductTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getNotifications({ search }))
+        dispatch(getNotifications({ search, pageIndex, pageSize, status }))
     }
 
     const columns = useMemo(

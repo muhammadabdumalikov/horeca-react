@@ -3,14 +3,6 @@ import { AdaptableCard, RichTextEditor } from 'components/shared'
 import { Input, FormItem } from 'components/ui'
 import { Field } from 'formik'
 
-export const categories = [
-    { label: 'Bags', value: 'bags' },
-    { label: 'Cloths', value: 'cloths' },
-    { label: 'Devices', value: 'devices' },
-    { label: 'Shoes', value: 'shoes' },
-    { label: 'Watches', value: 'watches' },
-]
-
 const BasicInformationFields = (props) => {
     const { touched, errors } = props
 
@@ -23,15 +15,15 @@ const BasicInformationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Наименование товара (рус)"
-                        invalid={errors.ruName && touched.ruName}
-                        errorMessage={errors.ruName}
+                        label="Наименование уведомления"
+                        invalid={errors.topic && touched.topic}
+                        errorMessage={errors.topic}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="ruName"
-                            placeholder="Количество"
+                            name="topic"
+                            placeholder="Введите наименование уведомления"
                             component={Input}
                         />
                     </FormItem>
@@ -41,10 +33,10 @@ const BasicInformationFields = (props) => {
             <FormItem
                 label="Описание"
                 labelClass="!justify-start"
-                invalid={errors.description && touched.description}
-                errorMessage={errors.description}
+                invalid={errors.content && touched.content}
+                errorMessage={errors.content}
             >
-                <Field name="description">
+                <Field name="content">
                     {({ field, form }) => (
                         <RichTextEditor
                             value={field.value}

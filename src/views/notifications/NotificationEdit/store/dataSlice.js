@@ -1,28 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetSalesProduct,
-    apiPutSalesProduct,
     apiDeleteSalesProducts,
-    apiGetProductById,
+    apiGetNotifications,
+    apiUpdateNotification,
 } from 'services/SalesService'
 
-export const getProduct = createAsyncThunk(
-    'salesProductEdit/data/getProducts',
+export const getNotifications = createAsyncThunk(
+    'salesNotificationEdit/data/getNotifications',
     async (data) => {
-        const response = await apiGetSalesProduct(data)
-        return response.data
-    }
-)
-export const getProductById = createAsyncThunk(
-    'salesProductEdit/data/getProductById',
-    async (data) => {
-        const response = await apiGetProductById(data)
+        const response = await apiGetNotifications(data)
         return response.data
     }
 )
 
-export const updateProduct = async (data) => {
-    const response = await apiPutSalesProduct(data)
+export const updateNotification = async (data) => {
+    const response = await apiUpdateNotification(data)
     return response.data
 }
 
@@ -32,23 +24,19 @@ export const deleteProduct = async (data) => {
 }
 
 const dataSlice = createSlice({
-    name: 'salesProductEdit/data',
+    name: 'salesNotificationEdit/data',
     initialState: {
         loading: false,
-        productData: [],
-        getProdyctById: {},
+        notificationsList: [],
     },
     reducers: {},
     extraReducers: {
-        [getProduct.fulfilled]: (state, action) => {
-            state.productData = action.payload
+        [getNotifications.fulfilled]: (state, action) => {
+            state.notificationsList = action.payload
             state.loading = false
         },
-        [getProduct.pending]: (state) => {
+        [getNotifications.pending]: (state) => {
             state.loading = true
-        },
-        [getProductById.fulfilled]: (state, action) => {
-            state.getProdyctById = action.payload.data
         },
     },
 })

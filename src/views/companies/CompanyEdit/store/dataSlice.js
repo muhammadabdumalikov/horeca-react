@@ -15,7 +15,7 @@ export const updateCompany = async (data) => {
 }
 
 const dataSlice = createSlice({
-    name: 'salesProductEdit/data',
+    name: 'salesCompanyEdit/data',
     initialState: {
         loading: false,
         companyData: [],

@@ -1,60 +1,27 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { Avatar, Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts, inActiveProdct, setTableData } from '../store/dataSlice'
-import { setSelectedProduct } from '../store/stateSlice'
-import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
-import ProductDeleteConfirmation from './ProductDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
-    0: {
-        label: 'В наличии',
+    1: {
+        label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    1: {
-        label: 'Ограниченное',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
-    },
-    2: {
-        label: 'Распродано',
+    0: {
+        label: 'Неактивный',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
 }
-
-// const data = [
-//     {
-//         id: 1,
-//         name: 'Cola 2.25L',
-//         category: 'Mobile',
-//         stock: 10,
-//         status: 0,
-//         dona_price: 1099,
-//         blok_price: 1000,
-//         disc_price: 900
-//         // img: '/assets/images/products/iphone-12-pro-max.png',
-//     },
-//     {
-//         id: 2,
-//         name: 'Pepsi 2.25L',
-//         category: 'Mobile',
-//         stock: 10,
-//         status: 2,
-//         dona_price: 1099,
-//         blok_price: 1000,
-//         disc_price: 900
-//         // img: '/assets/images/products/iphone-12-pro-max.png',
-//     }
-// ]
 
 const ActionColumn = ({ row }) => {
     const dispatch = useDispatch()
@@ -189,22 +156,25 @@ const ProductTable = () => {
                 header: 'Статус',
                 accessorKey: 'status',
                 cell: (props) => {
-                    const { status } = props.row.original
+                    const { in_active } = props.row.original
                     return (
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[isActive(status)]
+                                    inventoryStatusColor[isActive(in_active)]
                                         .dotClass
                                 }
                             />
                             <span
                                 className={`capitalize font-semibold ${
-                                    inventoryStatusColor[isActive(status)]
+                                    inventoryStatusColor[isActive(in_active)]
                                         .textClass
                                 }`}
                             >
-                                {inventoryStatusColor[isActive(status)].label}
+                                {
+                                    inventoryStatusColor[isActive(in_active)]
+                                        .label
+                                }
                             </span>
                         </div>
                     )

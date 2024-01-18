@@ -53,7 +53,7 @@ export const initialTableData = {
 }
 
 export const initialFilterData = {
-    inActive: true,
+    active: true,
     categoryId: null,
     companyId: null,
 }

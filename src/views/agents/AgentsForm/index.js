@@ -1,77 +1,29 @@
-import React, { forwardRef, useState } from 'react'
-import { FormContainer, Button, hooks } from 'components/ui'
-import { StickyFooter, ConfirmDialog } from 'components/shared'
+import React, { forwardRef } from 'react'
+import { FormContainer, Button } from 'components/ui'
+import { StickyFooter } from 'components/shared'
 import { Form, Formik } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
 import cloneDeep from 'lodash/cloneDeep'
-import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
+import { injectReducer } from 'store'
+import reducer from './store'
 
-const { useUniqueId } = hooks
+injectReducer('agentsForm', reducer)
 
 const validationSchema = Yup.object().shape({
-    region_id: Yup.string().required('Введите регион агента'),
-    fullname: Yup.string().required('Введите Ф.И.О агента'),
-    contact: Yup.string().required('Введите контакт агента'),
-    username: Yup.string().required('Введите логин агента'),
     password: Yup.string().required('Введите  пароль агента'),
+    districtId: Yup.string().required('Введите регион агента'),
+    fullname: Yup.string().required('Введите Ф.И.О агента'),
+    contact: Yup.string().matches(
+        /^[0-9]{2}[ -]?[0-9]{3}[ -]?[0-9]{4}$/,
+        'Номер телефона не действителен'
+    ),
+    username: Yup.string().required('Введите логин агента'),
 })
 
-const DelateAgentButton = ({ onDelete }) => {
-    const [dialogOpen, setDialogOpen] = useState(false)
-
-    const onConfirmDialogOpen = () => {
-        setDialogOpen(true)
-    }
-
-    const onConfirmDialogClose = () => {
-        setDialogOpen(false)
-    }
-
-    const handleConfirm = () => {
-        onDelete?.(setDialogOpen)
-    }
-
-    return (
-        <>
-            <Button
-                className="text-red-600"
-                variant="plain"
-                size="sm"
-                icon={<HiOutlineTrash />}
-                type="button"
-                onClick={onConfirmDialogOpen}
-            >
-                Удалить
-            </Button>
-            <ConfirmDialog
-                isOpen={dialogOpen}
-                onClose={onConfirmDialogClose}
-                onRequestClose={onConfirmDialogClose}
-                type="danger"
-                title="Удалить агент"
-                onCancel={onConfirmDialogClose}
-                onConfirm={handleConfirm}
-                confirmButtonColor="red-600"
-            >
-                <p>
-                    Вы уверены, что хотите удалить этот агент? Все записи
-                    связанные с этим агентом, также будут удалены. Это
-                    действие нельзя отменить.
-                </p>
-            </ConfirmDialog>
-        </>
-    )
-}
-
 const AgentsForm = forwardRef((props, ref) => {
-    const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
-
-    const newId = useUniqueId('product-')
-
-    // console.log(type, "type")
-    // console.log(ref, "ref")
+    const { initialData, onFormSubmit, onDiscard } = props
 
     return (
         <>
@@ -79,23 +31,11 @@ const AgentsForm = forwardRef((props, ref) => {
                 innerRef={ref}
                 initialValues={{
                     ...initialData,
-                    // tags: initialData?.tags
-                    //     ? initialData.tags.map((value) => ({
-                    //           label: value,
-                    //           value,
-                    //       }))
-                    //     : [],
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
                     const formData = cloneDeep(values)
-                    formData.tags = formData.tags.map((tag) => tag.value)
-                    if (type === 'new') {
-                        formData.id = newId
-                        if (formData.imgList.length > 0) {
-                            formData.img = formData.imgList[0].img
-                        }
-                    }
+
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
@@ -109,12 +49,6 @@ const AgentsForm = forwardRef((props, ref) => {
                                         errors={errors}
                                         values={values}
                                     />
-
-                                    {/* <OrganizationFields
-                                        touched={touched}
-                                        errors={errors}
-                                        values={values}
-                                    /> */}
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -123,13 +57,7 @@ const AgentsForm = forwardRef((props, ref) => {
                                         className="flex items-center justify-between py-4"
                                         stickyClass="border-t bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
                                     >
-                                        <div>
-                                            {type === 'edit' && (
-                                                <DelateAgentButton
-                                                    onDelete={onDelete}
-                                                />
-                                            )}
-                                        </div>
+                                        <div></div>
                                         <div className="md:flex items-center">
                                             <Button
                                                 size="sm"
@@ -163,12 +91,11 @@ const AgentsForm = forwardRef((props, ref) => {
 AgentsForm.defaultProps = {
     type: 'edit',
     initialData: {
-        region_id: '',
+        districtId: '',
         fullname: '',
         contact: '',
         username: '',
         password: '',
-        in_active: true,
     },
 }
 

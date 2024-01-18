@@ -125,15 +125,15 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
                         </Field>
                     </FormItem>
                         <FormItem
-                            invalid={errors.inActive && touched.inActive}
-                            errorMessage={errors.inActive}
+                            invalid={errors.active && touched.active}
+                            errorMessage={errors.active}
                         >
                             <h6 className="mb-4">Статус продукта</h6>
-                            <Field name="inActive">
+                            <Field name="active">
                                 {({ field, form }) => (
                                     <Radio.Group
                                         vertical
-                                        value={values.inActive}
+                                        value={values.active}
                                         onChange={(val) =>
                                             form.setFieldValue(field.name, val)
                                         }

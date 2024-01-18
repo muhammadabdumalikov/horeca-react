@@ -4,45 +4,70 @@ import { toast, Notification } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { getProduct, updateProduct, deleteProduct } from './store/dataSlice'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { getAgents, updateAgent } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../AgentsForm'
 
-injectReducer('salesProductEdit', reducer)
-
-const data = {
-    id: 1,
-    region_id: 1,
-    fullname: 'John Doe',
-    contact: '+998 99 999 99 99',
-    username: 'john_doe',
-    password: '123456',
-    in_active: 0,
-}
+injectReducer('salesAgentEdit', reducer)
 
 const ProductEdit = () => {
     const dispatch = useDispatch()
 
     const location = useLocation()
     const navigate = useNavigate()
+    const { id } = useParams()
 
-    const productData = useSelector(
-        (state) => state.salesProductEdit.data.productData
+    const agentsData = useSelector(
+        (state) => state.salesAgentEdit.data.agentsList
     )
 
-    const loading = useSelector((state) => state.salesProductEdit.data.loading)
+    const loading = useSelector((state) => state.salesAgentEdit.data.loading)
+
+    const getAgentById = (id) => {
+        const data = agentsData?.data?.list?.find((item) => item.id == id)
+        if (data?.id) {
+            return {
+                region_id: data?.region_id,
+                fullname: data?.fullname,
+                contact: data?.contact,
+                username: data?.username,
+                password: data?.password,
+                id: data?.id,
+            }
+        }
+    }
+
+    const data = getAgentById(id)
 
     const fetchData = (data) => {
-        dispatch(getProduct(data))
+        dispatch(getAgents(data))
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
-        setSubmitting(true)
-        const success = await updateProduct(values)
-        setSubmitting(false)
-        if (success) {
-            popNotification('updated')
+        try {
+            setSubmitting(true)
+            const success = await updateAgent(values)
+            if (success) {
+                popNotification('обновлено')
+            }
+            setSubmitting(false)
+        } catch (e) {
+            if (e.response.status === 449) {
+                toast.push(
+                    <Notification
+                        title={'Ошибка'}
+                        type="danger"
+                        duration={2500}
+                    >
+                        {e.response.data.message}
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+            }
+            setSubmitting(false)
         }
     }
 
@@ -50,28 +75,20 @@ const ProductEdit = () => {
         navigate('/agents')
     }
 
-    const handleDelete = async (setDialogOpen) => {
-        setDialogOpen(false)
-        const success = await deleteProduct({ id: productData.id })
-        if (success) {
-            popNotification('deleted')
-        }
-    }
-
     const popNotification = (keyword) => {
         toast.push(
             <Notification
-                title={`Successfuly ${keyword}`}
+                title={`Успешно ${keyword}`}
                 type="success"
                 duration={2500}
             >
-                Product successfuly {keyword}
+                Агент успешно {keyword}
             </Notification>,
             {
                 placement: 'top-center',
             }
         )
-        navigate('/app/sales/product-list')
+        navigate('/agents')
     }
 
     useEffect(() => {
@@ -93,12 +110,11 @@ const ProductEdit = () => {
                             initialData={data}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
-                            onDelete={handleDelete}
                         />
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(productData) && (
+            {!loading && isEmpty(data) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"

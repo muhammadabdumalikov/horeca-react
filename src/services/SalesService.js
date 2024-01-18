@@ -140,6 +140,13 @@ export async function apiGetNotifications(params) {
         params,
     })
 }
+export async function apiUpdateNotification(data) {
+    return ApiService.fetchData({
+        url: '/ntf/update',
+        method: 'put',
+        data,
+    })
+}
 export async function apiInactiveNotiofication(data) {
     return ApiService.fetchData({
         url: '/ntf/in-active',
@@ -150,6 +157,27 @@ export async function apiInactiveNotiofication(data) {
 export async function apiGetAgents(params) {
     return ApiService.fetchData({
         url: '/agent',
+        method: 'get',
+        params,
+    })
+}
+export async function apiUpdateAgent(data) {
+    return ApiService.fetchData({
+        url: '/agent/update',
+        method: 'put',
+        data,
+    })
+}
+export async function apiCreateAgent(data) {
+    return ApiService.fetchData({
+        url: '/agent/create',
+        method: 'post',
+        data,
+    })
+}
+export async function apiGetRegions(params) {
+    return ApiService.fetchData({
+        url: '/region',
         method: 'get',
         params,
     })

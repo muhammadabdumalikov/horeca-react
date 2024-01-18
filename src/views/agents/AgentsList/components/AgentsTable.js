@@ -5,17 +5,13 @@ import {
     HiOutlineEye,
     HiOutlineEyeOff,
     HiOutlinePencil,
-    HiOutlineTrash,
 } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     getAgents,
-    getCompanies,
     inActiveAgent,
     setTableData,
 } from '../store/dataSlice'
-import { setSelectedCompany } from '../store/stateSlice'
-import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import CompanyDeleteConfirmation from './AgentsDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
@@ -23,12 +19,12 @@ import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
-    0: {
+    1: {
         label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    1: {
+    0: {
         label: 'Неактивныйы',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
@@ -236,8 +232,6 @@ const CompanyTable = () => {
         newTableData.pageIndex = 1
         dispatch(setTableData(newTableData))
     }
-
-
 
     return (
         <>

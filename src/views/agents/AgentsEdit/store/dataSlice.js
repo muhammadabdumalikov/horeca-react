@@ -1,41 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import {
-    apiGetSalesProduct,
-    apiPutSalesProduct,
-    apiDeleteSalesProducts,
-} from 'services/SalesService'
+import { apiGetAgents, apiUpdateAgent } from 'services/SalesService'
 
-export const getProduct = createAsyncThunk(
-    'salesProductEdit/data/getProducts',
+export const getAgents = createAsyncThunk(
+    'salesAgentEdit/data/getAgents',
     async (data) => {
-        const response = await apiGetSalesProduct(data)
+        const response = await apiGetAgents(data)
         return response.data
     }
 )
 
-export const updateProduct = async (data) => {
-    const response = await apiPutSalesProduct(data)
-    return response.data
-}
-
-export const deleteProduct = async (data) => {
-    const response = await apiDeleteSalesProducts(data)
+export const updateAgent = async (data) => {
+    const response = await apiUpdateAgent(data)
     return response.data
 }
 
 const dataSlice = createSlice({
-    name: 'salesProductEdit/data',
+    name: 'salesAgentEdit/data',
     initialState: {
         loading: false,
-        productData: [],
+        agentsList: [],
     },
     reducers: {},
     extraReducers: {
-        [getProduct.fulfilled]: (state, action) => {
-            state.productData = action.payload
+        [getAgents.fulfilled]: (state, action) => {
+            state.agentsList = action.payload
             state.loading = false
         },
-        [getProduct.pending]: (state) => {
+        [getAgents.pending]: (state) => {
             state.loading = true
         },
     },

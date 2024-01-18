@@ -103,7 +103,13 @@ export const protectedRoutes = [
     {
         key: 'notifications',
         path: '/notifications/add',
-        component: React.lazy(() => import('views/notifications/NotificationForm')),
+        component: React.lazy(() => import('views/notifications/NotificationNew')),
+        authority: [],
+    },
+    {
+        key: 'notificationsEdit',
+        path: '/notifications/edit/:id',
+        component: React.lazy(() => import('views/notifications/NotificationEdit')),
         authority: [],
     },
 

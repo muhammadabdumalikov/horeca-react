@@ -1,30 +1,46 @@
-import React, { useState } from 'react'
-import { AdaptableCard, RichTextEditor } from 'components/shared'
+import React, { useEffect, useState } from 'react'
+import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
 import { Field } from 'formik'
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
+import { useDispatch, useSelector } from 'react-redux'
+import { getRegions } from './store/dataSlice'
 
-export const region_id = [
-    { label: 'Bags', value: 'bags' },
-    { label: 'Cloths', value: 'cloths' },
-    { label: 'Devices', value: 'devices' },
-    { label: 'Shoes', value: 'shoes' },
-    { label: 'Watches', value: 'watches' },
-]
-export const in_active = [
-    { label: 'Online', value: '1' },
-    { label: 'Offline', value: '0' },
-]
 
 const BasicInformationFields = (props) => {
     const { touched, errors, values } = props
 
-    const [pwInputType, setPwInputType] = useState('password')
+    const dispatch = useDispatch()
 
+    const [pwInputType, setPwInputType] = useState('password')
 
     const onPasswordVisibleClick = (e) => {
         e.preventDefault()
         setPwInputType(pwInputType === 'password' ? 'text' : 'password')
+    }
+
+    const regionsData = useSelector(
+        (state) => state.agentsForm.data.regionsList
+    )
+
+    useEffect(() => {
+        fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const fetchData = () => {
+        dispatch(getRegions({}))
+    }
+
+    //formatting data for select
+    const formatData = (data) => {
+        const formattedData = data?.map((item) => {
+            return {
+                label: item.ru_name,
+                value: item.id,
+            }
+        })
+        return formattedData
     }
 
     const passwordVisible = (
@@ -110,26 +126,25 @@ const BasicInformationFields = (props) => {
                         />
                     </FormItem>
                 </div>
-
-
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
                         label="Регион"
-                        invalid={errors.region_id && touched.region_id}
-                        errorMessage={errors.region_id}
+                        invalid={errors.districtId && touched.districtId}
+                        errorMessage={errors.districtId}
                     >
-                        <Field name="category_id">
+                        <Field name="districtId">
                             {({ field, form }) => (
                                 <Select
                                     field={field}
                                     form={form}
-                                    options={region_id}
-                                    value={region_id.filter(
+                                    options={formatData(regionsData.data?.distrs)}
+                                    value={formatData(
+                                        regionsData.data?.distrs
+                                    )?.filter(
                                         (category) =>
-                                            category.value ===
-                                            values.category_id
+                                            category.value === values.districtId
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(
@@ -142,7 +157,6 @@ const BasicInformationFields = (props) => {
                         </Field>
                     </FormItem>
                 </div>
-             
             </div>
         </AdaptableCard>
     )

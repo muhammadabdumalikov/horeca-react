@@ -24,9 +24,10 @@ export const initialTableData = {
 }
 
 export const initialFilterData = {
-    inActive: true,
+    active: true,
     categoryId: null,
     companyId: null,
+    status: '',
 }
 
 const dataSlice = createSlice({
