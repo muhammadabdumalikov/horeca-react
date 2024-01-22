@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
     ruName: Yup.string().required('Введите название товара'),
     uzName: Yup.string().required('Введите название товара'),
     barcode: Yup.string().required('Введите код товара'),
-    // measure: Yup.string().required('Введите единицу измерения товара'),
+    // // measure: Yup.string().required('Введите единицу измерения товара'),
     description: Yup.string().required('Введите описание товара'),
     discountPrice: Yup.string().required('Введите цену за скидку товара'),
     blockPrice: Yup.string().required('Введите цену за блок товара'),
@@ -29,85 +29,22 @@ const validationSchema = Yup.object().shape({
     categoryId: Yup.string().required('Выберите категорию'),
     companyId: Yup.string().required('Выберите производитель'),
     countInBlock: Yup.string().required('Введите количество товара в блоке'),
-    // image: Yup.string().required('Загрузите изображение товара'),
-    blockCount: Yup.string().required('Введите количество блоков товара'),
+    // // image: Yup.string().required('Загрузите изображение товара'),
+    // blockCount: Yup.string().required('Введите количество блоков товара'),
 })
 
-const DeleteProductButton = ({ onDelete }) => {
-    const [dialogOpen, setDialogOpen] = useState(false)
-
-    const onConfirmDialogOpen = () => {
-        setDialogOpen(true)
-    }
-
-    const onConfirmDialogClose = () => {
-        setDialogOpen(false)
-    }
-
-    const handleConfirm = () => {
-        onDelete?.(setDialogOpen)
-    }
-
-    return (
-        <>
-            <Button
-                className="text-red-600"
-                variant="plain"
-                size="sm"
-                icon={<HiOutlineTrash />}
-                type="button"
-                onClick={onConfirmDialogOpen}
-            >
-                Неактивно
-            </Button>
-            <ConfirmDialog
-                isOpen={dialogOpen}
-                onClose={onConfirmDialogClose}
-                onRequestClose={onConfirmDialogClose}
-                type="danger"
-                title="Удалить товар"
-                onCancel={onConfirmDialogClose}
-                onConfirm={handleConfirm}
-                confirmButtonColor="red-600"
-            >
-                <p>
-                    Вы уверены, что хотите удалить этот товар? Все записи
-                    связанные с этим продуктом, также будут удалены. Это
-                    действие нельзя отменить.
-                </p>
-            </ConfirmDialog>
-        </>
-    )
-}
-
 const ProductForm = forwardRef((props, ref) => {
-    const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
-
-    const newId = useUniqueId('product-')
+    const { initialData, onFormSubmit, onDiscard } = props
     return (
         <>
             <Formik
                 innerRef={ref}
                 initialValues={{
                     ...initialData,
-                    // tags: initialData?.tags
-                    //     ? initialData.tags.map((value) => ({
-                    //           label: value,
-                    //           value,
-                    //       }))
-                    //     : [],
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    console.log('values', values)
                     const formData = cloneDeep(values)
-                    // formData.tags = formData.tags.map((tag) => tag.value)
-                    // if (type === 'new') {
-                    //     formData.id = newId
-                    //     if (formData.imgList.length > 0) {
-                    //         formData.img = formData.imgList[0].img
-                    //     }
-                    // }
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
@@ -144,13 +81,7 @@ const ProductForm = forwardRef((props, ref) => {
                                 className="-mx-8 px-8 flex items-center justify-between py-4"
                                 stickyClass="border-t bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
                             >
-                                <div>
-                                    {type === 'edit' && (
-                                        <DeleteProductButton
-                                            onDelete={onDelete}
-                                        />
-                                    )}
-                                </div>
+                                <div></div>
                                 <div className="md:flex items-center">
                                     <Button
                                         size="sm"

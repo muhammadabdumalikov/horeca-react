@@ -5,23 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { getProduct, updateProduct, deleteProduct, getProductById } from './store/dataSlice'
+import {
+    updateProduct,
+    getProductById,
+} from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../ProductForm'
 
 injectReducer('salesProductEdit', reducer)
-
-const data = {
-    id: 1,
-    name: 'Cola 2.25L',
-    category: 'Mobile',
-    stock: 10,
-    status: 0,
-    dona_price: 1099,
-    blok_price: 1000,
-    disc_price: 900,
-    // img: '/assets/images/products/iphone-12-pro-max.png',
-}
 
 const ProductEdit = () => {
     const dispatch = useDispatch()
@@ -44,7 +35,7 @@ const ProductEdit = () => {
         const success = await updateProduct(values)
         setSubmitting(false)
         if (success) {
-            popNotification('updated')
+            popNotification('обновлено')
         }
     }
 
@@ -52,28 +43,20 @@ const ProductEdit = () => {
         navigate('/products')
     }
 
-    const handleDelete = async (setDialogOpen) => {
-        setDialogOpen(false)
-        const success = await deleteProduct({ id: productItem.id })
-        if (success) {
-            popNotification('deleted')
-        }
-    }
-
     const popNotification = (keyword) => {
         toast.push(
             <Notification
-                title={`Successfuly ${keyword}`}
+                title={` Успешно  ${keyword}`}
                 type="success"
                 duration={2500}
             >
-                Product successfuly {keyword}
+                Успешно {keyword}
             </Notification>,
             {
                 placement: 'top-center',
             }
         )
-        navigate('/app/sales/product-list')
+        navigate('/products')
     }
 
     useEffect(() => {
@@ -97,7 +80,6 @@ const ProductEdit = () => {
                             initialData={productItem}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
-                            onDelete={handleDelete}
                         />
                     </>
                 )}

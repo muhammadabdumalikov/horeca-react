@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { FormContainer, Button, hooks } from 'components/ui'
+import { FormContainer, Button } from 'components/ui'
 import { StickyFooter } from 'components/shared'
 import { Form, Formik } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
@@ -10,7 +10,6 @@ import * as Yup from 'yup'
 import reducer from './store'
 import { injectReducer } from 'store'
 
-const { useUniqueId } = hooks
 injectReducer('productForm', reducer)
 
 const validationSchema = Yup.object().shape({
@@ -19,7 +18,7 @@ const validationSchema = Yup.object().shape({
 })
 
 const ProductForm = forwardRef((props, ref) => {
-    const { type, initialData, onFormSubmit, onDiscard } = props
+    const { initialData, onFormSubmit, onDiscard } = props
     return (
         <>
             <Formik

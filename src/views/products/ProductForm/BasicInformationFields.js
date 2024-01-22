@@ -3,13 +3,6 @@ import { AdaptableCard, RichTextEditor } from 'components/shared'
 import { Input, FormItem } from 'components/ui'
 import { Field } from 'formik'
 
-export const categories = [
-    { label: 'Bags', value: 'bags' },
-    { label: 'Cloths', value: 'cloths' },
-    { label: 'Devices', value: 'devices' },
-    { label: 'Shoes', value: 'shoes' },
-    { label: 'Watches', value: 'watches' },
-]
 
 const BasicInformationFields = (props) => {
     const { touched, errors } = props

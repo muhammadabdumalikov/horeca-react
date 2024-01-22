@@ -99,13 +99,13 @@ const OrganizationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Количество шт. (на блоке)"
-                        invalid={errors.blockCount && touched.blockCount}
-                        errorMessage={errors.blockCount}
+                        invalid={errors.countInBlock && touched.countInBlock}
+                        errorMessage={errors.countInBlock}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="blockCount"
+                            name="countInBlock"
                             placeholder="Количество"
                             component={Input}
                         />
