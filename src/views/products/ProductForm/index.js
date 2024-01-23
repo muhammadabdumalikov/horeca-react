@@ -21,7 +21,6 @@ const validationSchema = Yup.object().shape({
     ruName: Yup.string().required('Введите название товара'),
     uzName: Yup.string().required('Введите название товара'),
     barcode: Yup.string().required('Введите код товара'),
-    // // measure: Yup.string().required('Введите единицу измерения товара'),
     description: Yup.string().required('Введите описание товара'),
     discountPrice: Yup.string().required('Введите цену за скидку товара'),
     blockPrice: Yup.string().required('Введите цену за блок товара'),
@@ -29,8 +28,6 @@ const validationSchema = Yup.object().shape({
     categoryId: Yup.string().required('Выберите категорию'),
     companyId: Yup.string().required('Выберите производитель'),
     countInBlock: Yup.string().required('Введите количество товара в блоке'),
-    // // image: Yup.string().required('Загрузите изображение товара'),
-    // blockCount: Yup.string().required('Введите количество блоков товара'),
 })
 
 const ProductForm = forwardRef((props, ref) => {
@@ -112,28 +109,13 @@ const ProductForm = forwardRef((props, ref) => {
 
 ProductForm.defaultProps = {
     type: 'edit',
-    // initialData: {
-    //     id: "",
-    //     name: "",
-    //     blokda_soni: "",
-    //     category_id: "",
-    //     company_id: "",
-    //     description: '',
-    //     blok_price: "",
-    //     dona_price: "",
-    //     disc_price: "",
-    //     type: "",
-    //     productCode: "",
-    //     img: "",
-    //     imgList: [],
-    // },
     initialData: {
         companyId: '',
         categoryId: '',
         barcode: '',
         image: '',
         countInBlock: '',
-        blockCount: '',
+        blockCount: 0,
         description: '',
         countPrice: '',
         blockPrice: '',

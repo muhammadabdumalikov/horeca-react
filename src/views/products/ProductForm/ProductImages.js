@@ -97,13 +97,11 @@ const ImageList = (props) => {
 const ProductImages = (props) => {
     const { values } = props
 
-    // console.log('values', values)
-
     const beforeUpload = (file) => {
         let valid = true
 
         const allowedFileType = ['image/jpeg', 'image/png']
-        const maxFileSize = 500000
+        const maxFileSize = 1000000
 
         for (let f of file) {
             if (!allowedFileType.includes(f.type)) {
@@ -111,7 +109,7 @@ const ProductImages = (props) => {
             }
 
             if (f.size >= maxFileSize) {
-                valid = 'Upload image cannot more then 500kb!'
+                valid = 'Upload image cannot more then 1MB!'
             }
         }
 
@@ -120,8 +118,8 @@ const ProductImages = (props) => {
 
     const onUpload = (form, field, files) => {
         let imageId = '1-img-0'
-        const latestUpload = files.length - 1
-        if (values.image.length > 0) {
+        const latestUpload = files?.length - 1
+        if (values.image?.length > 0) {
             const prevImgId = values.image[values.image.length - 1].id
             const splitImgId = prevImgId.split('-')
             const newIdNumber = parseInt(splitImgId[splitImgId.length - 1]) + 1
@@ -133,11 +131,12 @@ const ProductImages = (props) => {
         const image = URL.createObjectURL(files[latestUpload])
 
         form.setFieldValue(field.name, image)
+        form.setFieldValue('img', files[0])
     }
 
     const handleImageDelete = (form, field) => {
         let imgList = cloneDeep(values.image)
-        imgList = ""
+        imgList = ''
         form.setFieldValue(field.name, imgList)
     }
 
@@ -145,7 +144,8 @@ const ProductImages = (props) => {
         <AdaptableCard className="mb-4">
             <h5>Изображение продукта</h5>
             <p className="mb-6">Добавьте или измените изображение товара</p>
-            <FormItem>
+            <FormItem
+            >
                 <Field name="image">
                     {({ field, form }) => {
                         if (values.image?.length > 0) {
@@ -157,25 +157,6 @@ const ProductImages = (props) => {
                                             handleImageDelete(form, field, img)
                                         }
                                     />
-                                    {/* <Upload
-                                        className="min-h-fit"
-                                        beforeUpload={beforeUpload}
-                                        onChange={(files) =>
-                                            onUpload(form, field, files)
-                                        }
-                                        showList={false}
-                                        draggable
-                                    >
-                                        <div className="max-w-full flex flex-col px-4 py-2 justify-center items-center">
-                                            <DoubleSidedImage
-                                                src="/img/others/upload.png"
-                                                darkModeSrc="/img/others/upload-dark.png"
-                                            />
-                                            <p className="font-semibold text-center text-gray-800 dark:text-white">
-                                                Загрузить
-                                            </p>
-                                        </div>
-                                    </Upload> */}
                                 </div>
                             )
                         }
