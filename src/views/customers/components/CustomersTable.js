@@ -6,13 +6,21 @@ import { getCustomers, setTableData } from '../store/dataSlice'
 import { setSelectedCustomer, setDrawerOpen } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { Link } from 'react-router-dom'
-import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
-import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
+import { isActive } from 'utils/checkActive'
 
-const statusColor = {
-    active: 'bg-emerald-500',
-    blocked: 'bg-red-500',
+const inventoryStatusColor = {
+    1: {
+        label: 'Активный',
+        dotClass: 'bg-emerald-500',
+        textClass: 'text-emerald-500',
+    },
+    0: {
+        label: 'Неактивный',
+        dotClass: 'bg-red-500',
+        textClass: 'text-red-500',
+    },
 }
 
 const ActionColumn = ({ row }) => {
@@ -84,52 +92,69 @@ const ActionColumn = ({ row }) => {
 //     </Link>
 // )
 
-const NameColumn = ({ row }) => {
-    const { textTheme } = useThemeClass()
+// const NameColumn = ({ row }) => {
+//     const { textTheme } = useThemeClass()
 
-    return (
-        <div className="flex items-center">
-            <Link
-                className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
-                to={`/user?id=${row.id}`}
-            >
-                {row.name}
-            </Link>
-        </div>
-    )
-}
+//     return (
+//         <div className="flex items-center">
+//             <Link
+//                 className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
+//                 to={`/user?id=${row.id}`}
+//             >
+//                 {row.name}
+//             </Link>
+//         </div>
+//     )
+// }
 
 const columns = [
     {
         header: 'Имя',
-        accessorKey: 'name',
-        cell: (props) => {
-            const row = props.row.original
-            return <NameColumn row={row} />
-        },
+        accessorKey: 'fullname',
+        // cell: (props) => {
+        //     const row = props.row.original
+        //     return <NameColumn row={row} />
+        // },
     },
     {
-        header: 'Юзернейм',
-        accessorKey: 'username',
+        header: 'Юр. имя',
+        accessorKey: 'legal_name',
+    },
+    {
+        header: 'Адресс',
+        accessorKey: 'address',
+    },
+    {
+        header: 'Контакт',
+        accessorKey: 'contact',
     },
     {
         header: 'Статус',
         accessorKey: 'status',
+        width: '250px',
         cell: (props) => {
-            const row = props.row.original
+            const { in_active } = props.row.original
             return (
-                <div className="flex items-center">
-                    <Badge className={statusColor[row.status]} />
-                    <span className="ml-2 rtl:mr-2 capitalize">
-                        {row.status}
+                <div className="flex items-center gap-2">
+                    <Badge
+                        className={
+                            inventoryStatusColor[isActive(in_active)].dotClass
+                        }
+                    />
+                    <span
+                        className={`capitalize font-semibold ${
+                            inventoryStatusColor[isActive(in_active)].textClass
+                        }`}
+                    >
+                        {inventoryStatusColor[isActive(in_active)].label}
                     </span>
                 </div>
             )
         },
     },
     {
-        header: 'Регион',
-        accessorKey: 'region',
+        header: 'Организация',
+        accessorKey: 'organization',
     },
     {
         header: '',
@@ -140,27 +165,27 @@ const columns = [
 
 const Customers = () => {
     const dispatch = useDispatch()
-    // const data = useSelector((state) => state.crmCustomers.data.customerList)
-    // const loading = useSelector((state) => state.crmCustomers.data.loading)
-    const filterData = useSelector(
+    const data = useSelector((state) => state.crmCustomers.data.customerList)
+    const loading = useSelector((state) => state.crmCustomers.data.loading)
+    const { status } = useSelector(
         (state) => state.crmCustomers.data.filterData
     )
 
-    const { pageIndex, pageSize, sort, query, total } = useSelector(
+    const { pageIndex, pageSize, search, total } = useSelector(
         (state) => state.crmCustomers.data.tableData
     )
+    
+    const fetchData = useCallback(() => {
+        dispatch(getCustomers({ pageIndex, pageSize, search, active: status }))
+    }, [pageIndex, pageSize, search, status, dispatch])
 
-    // const fetchData = useCallback(() => {
-    //     dispatch(getCustomers({ pageIndex, pageSize, sort, query, filterData }))
-    // }, [pageIndex, pageSize, sort, query, filterData, dispatch])
-
-    // useEffect(() => {
-    //     fetchData()
-    // }, [fetchData, pageIndex, pageSize, sort, filterData])
+    useEffect(() => {
+        fetchData()
+    }, [fetchData, pageIndex, pageSize, status])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, sort, query, total }),
-        [pageIndex, pageSize, sort, query, total]
+        () => ({ pageIndex, pageSize, search, total }),
+        [pageIndex, pageSize, search, total]
     )
 
     const onPaginationChange = (page) => {
@@ -176,32 +201,17 @@ const Customers = () => {
         dispatch(setTableData(newTableData))
     }
 
-    const onSort = (sort) => {
-        const newTableData = cloneDeep(tableData)
-        newTableData.sort = sort
-        dispatch(setTableData(newTableData))
-    }
-
     return (
         <>
             <DataTable
                 columns={columns}
-                data={[
-                    {
-                        id: 1,
-                        name: 'test',
-                        username: 'username',
-                        status: 'test',
-                        region: 'region',
-                    },
-                ]}
+                data={data.list}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ width: 28, height: 28 }}
-                // loading={loading}
-                pagingData={{ pageIndex, pageSize, sort, query, total }}
+                loading={loading}
+                pagingData={{ pageIndex, pageSize, search, total }}
                 onPaginationChange={onPaginationChange}
                 onSelectChange={onSelectChange}
-                onSort={onSort}
             />
         </>
     )

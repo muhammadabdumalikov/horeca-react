@@ -15,6 +15,7 @@ const StatisticCard = (props) => {
 
     const avatarSize = 55
 
+
     return (
         <Card bordered>
             <Loading
@@ -57,6 +58,9 @@ const StatisticCard = (props) => {
 const CustomerStatistic = () => {
     const dispatch = useDispatch()
 
+    const data = useSelector((state) => state.crmCustomers.data.customerList)
+
+
     // const statisticData = useSelector(
     //     (state) => state.crmCustomers.data.statisticData
     // )
@@ -75,7 +79,7 @@ const CustomerStatistic = () => {
                 icon={<HiOutlineUserGroup />}
                 avatarClass="!bg-indigo-600"
                 label="Всего пользователей"
-                value={100}
+                value={data.data_users?.all_count}
                 growthRate={0}
                 // loading={loading}
             />
@@ -83,7 +87,7 @@ const CustomerStatistic = () => {
                 icon={<HiOutlineUsers />}
                 avatarClass="!bg-blue-500"
                 label="Активные пользователи"
-                value={10}
+                value={data.data_users?.all_count}
                 growthRate={10}
                 // loading={loading}
             />
@@ -91,7 +95,7 @@ const CustomerStatistic = () => {
                 icon={<HiOutlineUserAdd />}
                 avatarClass="!bg-emerald-500"
                 label="Новые пользователи"
-                value={70}
+                value={data.data_users?.this_month}
                 growthRate={10}
                 // loading={loading}
             />

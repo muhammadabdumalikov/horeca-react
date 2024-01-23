@@ -14,16 +14,15 @@ const ProductTableSearch = () => {
     const tableData = useSelector(
         (state) => state.salesNotification.data.tableData
     )
+    const filterData = useSelector(
+        (state) => state.salesNotification.data.filterData
+    )
 
     const debounceFn = debounce(handleDebounceFn, 500)
-
-    // console.log('tableData', tableData)
-    // console.log('debounceFn', debounceFn)
 
     function handleDebounceFn(val) {
         const newTableData = cloneDeep(tableData)
         newTableData.search = val
-        newTableData.page = 1
         if (typeof val === 'string' && val.length > 1) {
             fetchData(newTableData)
         }
@@ -35,7 +34,7 @@ const ProductTableSearch = () => {
 
     const fetchData = (data) => {
         dispatch(setTableData(data))
-        dispatch(getNotifications(data))
+        dispatch(getNotifications({...data, ...filterData}))
     }
 
     const onEdit = (e) => {

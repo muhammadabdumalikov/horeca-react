@@ -1,43 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-// import {
-//     apiGetCrmCustomers,
-//     apPutCrmCustomer,
-//     apiGetCrmCustomersStatistic,
-// } from 'services/CrmService'
+import { apiGetCustomers } from 'services/SalesService'
 
-// export const getCustomerStatistic = createAsyncThunk(
-//     'crmCustomers/data/getCustomerStatistic',
-//     async () => {
-//         const response = await apiGetCrmCustomersStatistic()
-//         return response.data
-//     }
-// )
-
-// export const getCustomers = createAsyncThunk(
-//     'crmCustomers/data/getCustomers',
-//     async (params) => {
-//         const response = await apiGetCrmCustomers(params)
-//         return response.data
-//     }
-// )
-
-// export const putCustomer = createAsyncThunk(
-//     'crmCustomers/data/putCustomer',
-//     async (data) => {
-//         const response = await apPutCrmCustomer(data)
-//         return response.data
-//     }
-// )
+export const getCustomers = createAsyncThunk(
+    'crmCustomers/data/getCustomers',
+    async (data) => {
+        const response = await apiGetCustomers(data)
+        return response.data
+    }
+)
 
 export const initialTableData = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
-    query: '',
-    sort: {
-        order: '',
-        key: '',
-    },
+    search: '',
 }
 
 export const initialFilterData = {
@@ -65,14 +41,14 @@ const dataSlice = createSlice({
         },
     },
     extraReducers: {
-        // [getCustomers.fulfilled]: (state, action) => {
-        //     state.customerList = action.payload.data
-        //     state.tableData.total = action.payload.total
-        //     state.loading = false
-        // },
-        // [getCustomers.pending]: (state) => {
-        //     state.loading = true
-        // },
+        [getCustomers.fulfilled]: (state, action) => {
+            state.customerList = action.payload.data
+            state.tableData.total = action.payload.total
+            state.loading = false
+        },
+        [getCustomers.pending]: (state) => {
+            state.loading = true
+        },
         // [getCustomerStatistic.pending]: (state) => {
         //     state.statisticLoading = true
         // },

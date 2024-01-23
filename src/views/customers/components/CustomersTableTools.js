@@ -15,28 +15,28 @@ const CustomersTableTools = () => {
 
     const handleInputChange = (val) => {
         const newTableData = cloneDeep(tableData)
-        newTableData.query = val
+        newTableData.search = val
         newTableData.pageIndex = 1
-        // if (typeof val === 'string' && val.length > 1) {
-        //     fetchData(newTableData)
-        // }
+        if (typeof val === 'string' && val.length > 1) {
+            fetchData(newTableData)
+        }
 
-        // if (typeof val === 'string' && val.length === 0) {
-        //     fetchData(newTableData)
-        // }
+        if (typeof val === 'string' && val.length === 0) {
+            fetchData(newTableData)
+        }
     }
 
-    // const fetchData = (data) => {
-    //     dispatch(setTableData(data))
-    //     dispatch(getCustomers(data))
-    // }
+    const fetchData = (data) => {
+        dispatch(setTableData(data))
+        dispatch(getCustomers(data))
+    }
 
     const onClearAll = () => {
         const newTableData = cloneDeep(tableData)
-        newTableData.query = ''
+        newTableData.search = ''
         inputRef.current.value = ''
         dispatch(setFilterData({ status: '' }))
-        // fetchData(newTableData)
+        fetchData(newTableData)
     }
 
     return (

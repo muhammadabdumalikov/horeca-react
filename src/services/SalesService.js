@@ -15,7 +15,7 @@ export async function apiGetSalesProducts(params) {
         params,
     })
 }
-export async function apiGetProductById({id}) {
+export async function apiGetProductById({ id }) {
     return ApiService.fetchData({
         url: `/product/find/${id}`,
         method: 'get',
@@ -25,7 +25,7 @@ export async function apiInActiveProdct(data) {
     return ApiService.fetchData({
         url: `/product/in-active`,
         method: 'put',
-        data
+        data,
     })
 }
 
@@ -84,6 +84,15 @@ export async function apiGetSalesOrderDetails(params) {
         params,
     })
 }
+
+export async function apiGetCustomers(params) {
+    return ApiService.fetchData({
+        url: '/a-user',
+        method: 'get',
+        params,
+    })
+}
+
 export async function apiGetCompany(params) {
     return ApiService.fetchData({
         url: '/company',
