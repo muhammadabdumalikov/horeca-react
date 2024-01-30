@@ -77,7 +77,8 @@ const ActionColumn = ({ row }) => {
 
 const ProductColumn = ({ row }) => {
     const avatar = row.image ? (
-        <Avatar src={`https://horecaapi.uz/${row.image}`} />
+        // <Avatar src={`https://horecaapi.uz/${row.image}`} />
+        <Avatar src={`${row.image}`} />
     ) : (
         <Avatar icon={<FiPackage />} />
     )
