@@ -11,12 +11,12 @@ import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
-    1: {
+    0: {
         label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    0: {
+    1: {
         label: 'Неактивный',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
@@ -92,6 +92,7 @@ const CompanyTable = () => {
 
     const data = useSelector((state) => state.salesCompanyList.data.companyList)
 
+    console.log(data, 'data')
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,57 +117,37 @@ const CompanyTable = () => {
         () => [
             {
                 header: 'Название компании',
-                accessorKey: 'ru_name',
+                accessorKey: 'name_ru',
                 width: '250px',
-                cell: (props) => {
-                    const row = props.row.original.ru_name
-                    return (
-                        <div className="flex items-center">
-                            <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                                {row}
-                            </span>
-                        </div>
-                    )
-                },
             },
             {
                 header: 'Регион',
-                accessorKey: 'region',
+                accessorKey: 'country_ru',
                 width: '200px',
-                cell: (props) => {
-                    const row = props.row.original.ru_country
-                    return (
-                        <div className="flex items-center">
-                            <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                                {row}
-                            </span>
-                        </div>
-                    )
-                },
             },
 
             {
                 header: 'Статус',
-                accessorKey: 'in_active',
+                accessorKey: 'is_deleted',
                 width: '200px',
                 cell: (props) => {
-                    const { in_active } = props.row.original
+                    const { is_deleted } = props.row.original
                     return (
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .dotClass
                                 }
                             />
                             <span
                                 className={`capitalize font-semibold ${
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .textClass
                                 }`}
                             >
                                 {
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .label
                                 }
                             </span>
@@ -201,7 +182,7 @@ const CompanyTable = () => {
             <DataTable
                 ref={tableRef}
                 columns={columns}
-                data={data.list}
+                data={data}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ className: 'rounded-md' }}
                 loading={loading}

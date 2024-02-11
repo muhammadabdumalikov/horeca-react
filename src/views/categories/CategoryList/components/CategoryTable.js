@@ -15,12 +15,12 @@ import { Badge, Notification, toast } from 'components/ui'
 
 const inventoryStatusColor = {
 
-    1: {
+    0: {
         label: 'Активный',
         dotClass: 'bg-green-500',
         textClass: 'text-green-500',
     },
-    0: {
+    1: {
         label: 'Неактивный',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
@@ -145,21 +145,21 @@ const CategoryTable = () => {
 
             {
                 header: 'Статус',
-                accessorKey: 'in_active',
+                accessorKey: 'is_deleted',
                 width: "200px",
                 cell: (props) => {
-                    const { in_active } = props.row.original
+                    const { is_deleted } = props.row.original
                     return (
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[isActive(in_active)].dotClass
+                                    inventoryStatusColor[isActive(is_deleted)].dotClass
                                 }
                             />
                             <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[isActive(in_active)].textClass}`}
+                                className={`capitalize font-semibold ${inventoryStatusColor[isActive(is_deleted)].textClass}`}
                             >
-                                {inventoryStatusColor[isActive(in_active)].label}
+                                {inventoryStatusColor[isActive(is_deleted)].label}
                             </span>
                         </div>
                     )
@@ -192,7 +192,7 @@ const CategoryTable = () => {
             <DataTable
                 ref={tableRef}
                 columns={columns}
-                data={data.list}
+                data={data}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ className: 'rounded-md' }}
                 loading={loading}

@@ -61,7 +61,7 @@ const dataSlice = createSlice({
     extraReducers: {
         [getCategories.fulfilled]: (state, action) => {
             state.categoryList = action.payload.data
-            state.tableData.total = action.payload.data.more_info.count
+            state.tableData.total = action.payload.total_count
             state.loading = false
         },
         [getCategories.pending]: (state) => {

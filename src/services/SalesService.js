@@ -95,7 +95,7 @@ export async function apiGetCustomers(params) {
 
 export async function apiGetCompany(params) {
     return ApiService.fetchData({
-        url: '/company',
+        url: '/company/all',
         method: 'get',
         params,
     })
@@ -137,7 +137,7 @@ export async function apiPutSalesCompany(data) {
 }
 export async function apiGetCategory(params) {
     return ApiService.fetchData({
-        url: '/category',
+        url: '/category/all',
         method: 'get',
         params,
     })

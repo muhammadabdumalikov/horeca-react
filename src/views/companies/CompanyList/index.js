@@ -7,7 +7,7 @@ import reducer from './store'
 
 injectReducer('salesCompanyList', reducer)
 
-const Products = () => {
+const Company = () => {
 
     return (
         <AdaptableCard className="h-full" bodyClass="h-full">
@@ -20,4 +20,4 @@ const Products = () => {
     )
 }
 
-export default Products
+export default Company

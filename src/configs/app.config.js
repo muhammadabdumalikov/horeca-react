@@ -1,5 +1,5 @@
 const appConfig = {
-    apiPrefix: 'https://horecaapi.uz/api/',
+    apiPrefix: 'http://194.163.142.231:3000/',
     authenticatedEntryPath: '/products',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',

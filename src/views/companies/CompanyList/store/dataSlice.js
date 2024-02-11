@@ -36,7 +36,6 @@ export const initialTableData = {
 export const initialFilterData = {
     name: '',
     category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
-    status: [0, 1, 2],
     productStatus: 0,
     status: '',
 }
@@ -63,7 +62,7 @@ const dataSlice = createSlice({
     extraReducers: {
         [getCompanies.fulfilled]: (state, action) => {
             state.companyList = action.payload.data
-            state.tableData.total = action.payload.data.more_info.count
+            state.tableData.total = action.payload.total_count
             state.loading = false
         },
         [getCompanies.pending]: (state) => {
