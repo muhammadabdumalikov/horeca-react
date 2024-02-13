@@ -11,12 +11,12 @@ import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
-    1: {
+    0: {
         label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    0: {
+    1: {
         label: 'Неактивный',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
@@ -86,7 +86,7 @@ const ProductColumn = ({ row }) => {
     return (
         <div className="flex items-center">
             {avatar}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.ru_name}</span>
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.name_ru}</span>
         </div>
     )
 }
@@ -134,7 +134,7 @@ const ProductTable = () => {
         () => [
             {
                 header: 'Название товара',
-                accessorKey: 'name',
+                accessorKey: 'name_ru',
                 cell: (props) => {
                     const row = props.row.original
                     return <ProductColumn row={row} />
@@ -238,7 +238,7 @@ const ProductTable = () => {
             <DataTable
                 ref={tableRef}
                 columns={columns}
-                data={data.list}
+                data={data}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ className: 'rounded-md' }}
                 loading={loading}

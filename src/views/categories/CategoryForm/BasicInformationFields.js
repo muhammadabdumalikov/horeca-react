@@ -16,13 +16,13 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование категории (рус)"
-                        invalid={errors.ruName && touched.ruName}
-                        errorMessage={errors.ruName}
+                        invalid={errors.name_ru && touched.name_ru}
+                        errorMessage={errors.name_ru}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="ruName"
+                            name="name_ru"
                             placeholder="Наименование категории (рус)"
                             component={Input}
                         />
@@ -31,20 +31,20 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование категории (узб)"
-                        invalid={errors.uzName && touched.uzName}
-                        errorMessage={errors.uzName}
+                        invalid={errors.name_uz && touched.name_uz}
+                        errorMessage={errors.name_uz}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="uzName"
+                            name="name_uz"
                             placeholder="Наименование категории (узб)"
                             component={Input}
                         />
                     </FormItem>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование категории (анг)"
@@ -60,7 +60,7 @@ const BasicInformationFields = (props) => {
                         />
                     </FormItem>
                 </div>
-            </div>
+            </div> */}
         </AdaptableCard>
     )
 }

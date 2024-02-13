@@ -56,7 +56,7 @@ const CustomerTableFilter = () => {
 
     const onStatusFilterChange = (selected) => {
         dispatch(setFilterData({ status: selected?.value }))
-        dispatch(getCategories({active: selected?.value}))
+        dispatch(getCategories({is_deleted: selected?.value}))
     }
 
     return (

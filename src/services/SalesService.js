@@ -10,7 +10,7 @@ export async function apiGetSalesDashboardData(data) {
 
 export async function apiGetSalesProducts(params) {
     return ApiService.fetchData({
-        url: '/product',
+        url: '/product/all',
         method: 'get',
         params,
     })
@@ -140,6 +140,12 @@ export async function apiGetCategory(params) {
         url: '/category/all',
         method: 'get',
         params,
+    })
+}
+export async function apiGetCategoryById({id}) {
+    return ApiService.fetchData({
+        url: `/category/${id}`,
+        method: 'get',
     })
 }
 export async function apiGetNotifications(params) {

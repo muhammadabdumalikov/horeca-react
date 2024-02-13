@@ -87,7 +87,7 @@ const CompanyColumn = ({ row }) => {
     return (
         <div className="flex items-center">
             {/* {avatar} */}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.ru_name}</span>
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.name_ru}</span>
         </div>
     )
 }
@@ -135,7 +135,7 @@ const CategoryTable = () => {
         () => [
             {
                 header: 'Категория товара',
-                accessorKey: 'ru_name',
+                accessorKey: 'name_ru',
                 width: "300px",
                 cell: (props) => {
                     const row = props.row.original

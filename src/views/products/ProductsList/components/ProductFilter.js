@@ -24,8 +24,6 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
         (state) => state.salesProductList.data.filterData
     )
 
-    console.log(filterData, 'filterData')
-
     const handleSubmit = (values) => {
         console.log(values, 'values')
         onSubmitComplete?.()
@@ -50,13 +48,13 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
         dispatch(getCompany({}))
     }
 
-    const categoryOptions = categoryList.list?.map((category) => ({
-        label: category.ru_name,
+    const categoryOptions = categoryList?.map((category) => ({
+        label: category.name_ru,
         value: category.id,
     }))
 
-    const companyOptions = companyList.list?.map((company) => ({
-        label: company.ru_name,
+    const companyOptions = companyList?.map((company) => ({
+        label: company.name_ru,
         value: company.id,
     }))
 
@@ -77,7 +75,7 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
                             invalid={errors.categoryId && touched.categoryId}
                             errorMessage={errors.categoryId}
                         >
-                            <Field name="categoryId">
+                            <Field name="category_id">
                                 {({ field, form }) => (
                                     <Select
                                         field={field}
@@ -103,7 +101,7 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
                         invalid={errors.companyId && touched.companyId}
                         errorMessage={errors.companyId}
                     >
-                        <Field name="companyId">
+                        <Field name="company_id">
                             {({ field, form }) => {
                                 return (
                                     <Select
@@ -129,7 +127,7 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
                             errorMessage={errors.active}
                         >
                             <h6 className="mb-4">Статус продукта</h6>
-                            <Field name="active">
+                            <Field name="is_deleted">
                                 {({ field, form }) => (
                                     <Radio.Group
                                         vertical

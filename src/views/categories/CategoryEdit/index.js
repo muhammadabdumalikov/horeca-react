@@ -4,8 +4,8 @@ import { toast, Notification } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { getCategories, updateCategory } from './store/dataSlice'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getCategoryById, updateCategory } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../CategoryForm'
 
@@ -14,35 +14,19 @@ injectReducer('salesProductEdit', reducer)
 const ProductEdit = () => {
     const dispatch = useDispatch()
 
-    const location = useLocation()
     const navigate = useNavigate()
     const { id } = useParams()
 
-    const categoriesData = useSelector(
-        (state) => state.salesProductEdit.data.categoryList
+    const categoryItem = useSelector(
+        (state) => state.salesProductEdit.data.categoryItem
     )
-
-    const getCategoryById = (id) => {
-        const category = categoriesData.list?.find((item) => item.id == id)
-
-        if (category?.id) {
-            return {
-                id: category?.id,
-                enName: category?.en_name,
-                ruName: category?.ru_name,
-                uzName: category?.uz_name,
-                active: category?.in_active,
-            }
-        }
-    }
-
-    const data = getCategoryById(id)
 
     const loading = useSelector((state) => state.salesProductEdit.data.loading)
 
-    const fetchData = () => {
-        dispatch(getCategories({}))
-    }
+    useEffect(() => {
+        dispatch(getCategoryById({id})) 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id])
 
     const handleFormSubmit = async (values, setSubmitting) => {
         setSubmitting(true)
@@ -74,30 +58,23 @@ const ProductEdit = () => {
         navigate(`/categories/edit/${id}`)
     }
 
-    useEffect(() => {
-        const path = location.pathname.substring(
-            location.pathname.lastIndexOf('/') + 1
-        )
-        const rquestParam = { id: path }
-        fetchData(rquestParam)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname])
+    console.log(categoryItem, 'categoryItem')
 
     return (
         <>
-            <Loading loading={false}>
-                {!isEmpty(data) && (
+            <Loading loading={loading}>
+                {!isEmpty(categoryItem) && (
                     <>
                         <ProductForm
                             type="edit"
-                            initialData={data}
+                            initialData={categoryItem}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
                         />
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(data) && (
+            {!loading && isEmpty(categoryItem) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"

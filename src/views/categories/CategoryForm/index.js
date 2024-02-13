@@ -8,17 +8,17 @@ import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
-    enName: Yup.string().test(
+    // enName: Yup.string().test(
+    //     'len',
+    //     'Введите название категории',
+    //     (val) => val?.length >= 3
+    // ),
+    name_uz: Yup.string().test(
         'len',
         'Введите название категории',
         (val) => val?.length >= 3
     ),
-    uzName: Yup.string().test(
-        'len',
-        'Введите название категории',
-        (val) => val?.length >= 3
-    ),
-    ruName: Yup.string().test(
+    name_ru: Yup.string().test(
         'len',
         'Введите название категории',
         (val) => val?.length >= 3
@@ -26,8 +26,8 @@ const validationSchema = Yup.object().shape({
 })
 
 const ProductForm = forwardRef((props, ref) => {
-    const { type, initialData, onFormSubmit, onDiscard } = props
-
+    const { initialData, onFormSubmit, onDiscard } = props
+console.log(initialData, 'initialData')
     return (
         <>
             <Formik
@@ -99,9 +99,9 @@ const ProductForm = forwardRef((props, ref) => {
 ProductForm.defaultProps = {
     type: 'edit',
     initialData: {
-        ruName: '',
-        uzName: '',
-        enName: '',
+        name_ru: '',
+        name_uz: '',
+        // enName: '',
     },
 }
 
