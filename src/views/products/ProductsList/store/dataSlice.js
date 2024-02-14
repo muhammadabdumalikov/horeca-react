@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiGetSalesProducts,
-    apiDeleteSalesProducts,
     apiGetCategory,
     apiGetCompany,
     apiInActiveProdct,
@@ -35,11 +34,6 @@ export const inActiveProdct = createAsyncThunk(
         return response.data
     }
 )
-
-export const deleteProduct = async (data) => {
-    const response = await apiDeleteSalesProducts(data)
-    return response.data
-}
 
 export const initialTableData = {
     total: 0,

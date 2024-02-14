@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiGetSalesProduct,
-    apiDeleteSalesProducts,
     apiUpdateCategory,
     apiGetCategoryById,
 } from 'services/SalesService'
@@ -24,11 +23,6 @@ export const getCategoryById = createAsyncThunk(
 export const updateCategory = async (data) => {
     const response = await apiUpdateCategory(data)
     return response.status
-}
-
-export const deleteProduct = async (data) => {
-    const response = await apiDeleteSalesProducts(data)
-    return response.data
 }
 
 const dataSlice = createSlice({

@@ -17,13 +17,13 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование товара (рус)"
-                        invalid={errors.ruName && touched.ruName}
-                        errorMessage={errors.ruName}
+                        invalid={errors.name_ru && touched.name_ru}
+                        errorMessage={errors.name_ru}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="ruName"
+                            name="name_ru"
                             placeholder="Количество"
                             component={Input}
                         />
@@ -32,19 +32,19 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование товара (узб)"
-                        invalid={errors.uzName && touched.uzName}
-                        errorMessage={errors.uzName}
+                        invalid={errors.name_uz && touched.name_uz}
+                        errorMessage={errors.name_uz}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="uzName"
+                            name="name_uz"
                             placeholder="Количество"
                             component={Input}
                         />
                     </FormItem>
                 </div>
-                <div className="col-span-1">
+                {/* <div className="col-span-1">
                     <FormItem
                         label="Наименование товара (анг)"
                         invalid={errors.enName && touched.enName}
@@ -58,7 +58,7 @@ const BasicInformationFields = (props) => {
                             component={Input}
                         />
                     </FormItem>
-                </div>
+                </div> */}
             </div>
             <FormItem
                 label="Код продукта"

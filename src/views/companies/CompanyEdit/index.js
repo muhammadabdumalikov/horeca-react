@@ -4,8 +4,8 @@ import { toast, Notification } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { getCompany, updateCompany } from './store/dataSlice'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getCompanyById, updateCompany } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../CompanyForm'
 
@@ -13,41 +13,14 @@ injectReducer('salesCompanyEdit', reducer)
 
 const ProductEdit = () => {
     const dispatch = useDispatch()
-
-    const location = useLocation()
     const navigate = useNavigate()
     const { id } = useParams()
 
-    const companyData = useSelector(
-        (state) => state.salesCompanyEdit.data.companyData
+    const companyItem = useSelector(
+        (state) => state.salesCompanyEdit.data.companyItem
     )
 
-    const getCategoryById = (id) => {
-        const data = companyData.data?.list?.find((item) => item.id == id)
-
-        if (data?.id) {
-            return {
-                uzName: data?.uz_name,
-                ruName: data?.ru_name,
-                enName: data?.en_name,
-                uzCountry: data?.uz_country,
-                ruCountry: data?.ru_country,
-                enCountry: data?.en_country,
-                id: data?.id,
-            }
-        }
-    }
-
-    const data = getCategoryById(id)
-
-    console.log(companyData, 'companyData')
-    console.log(data, 'data')
-
     const loading = useSelector((state) => state.salesCompanyEdit.data.loading)
-
-    const fetchData = () => {
-        dispatch(getCompany({}))
-    }
 
     const handleFormSubmit = async (values, setSubmitting) => {
         setSubmitting(true)
@@ -55,6 +28,7 @@ const ProductEdit = () => {
         setSubmitting(false)
         if (success) {
             popNotification('изменено')
+            navigate('/companies')
         }
     }
 
@@ -69,7 +43,7 @@ const ProductEdit = () => {
                 type="success"
                 duration={2500}
             >
-                Успешно добавлен {keyword}
+                Успешно {keyword}
             </Notification>,
             {
                 placement: 'top-center',
@@ -79,29 +53,25 @@ const ProductEdit = () => {
     }
 
     useEffect(() => {
-        const path = location.pathname.substring(
-            location.pathname.lastIndexOf('/') + 1
-        )
-        const rquestParam = { id: path }
-        fetchData(rquestParam)
+        dispatch(getCompanyById({ id }))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname])
+    }, [id])
 
     return (
         <>
-            <Loading loading={false}>
-                {!isEmpty(data) && (
+            <Loading loading={loading}>
+                {!isEmpty(companyItem) && (
                     <>
                         <ProductForm
                             type="edit"
-                            initialData={data}
+                            initialData={companyItem}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
                         />
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(companyData) && (
+            {!loading && isEmpty(companyItem) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"

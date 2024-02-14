@@ -27,7 +27,6 @@ const validationSchema = Yup.object().shape({
 
 const ProductForm = forwardRef((props, ref) => {
     const { initialData, onFormSubmit, onDiscard } = props
-console.log(initialData, 'initialData')
     return (
         <>
             <Formik

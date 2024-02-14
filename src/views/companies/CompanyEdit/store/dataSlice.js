@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCompany, apiUpdateCompany } from 'services/SalesService'
+import { apiGetCompanyById, apiUpdateCompany } from 'services/SalesService'
 
-export const getCompany = createAsyncThunk(
-    'salesCompanyEdit/data/apiGetCompany',
+export const getCompanyById = createAsyncThunk(
+    'salesCompanyEdit/data/getCompanyById',
     async (data) => {
-        const response = await apiGetCompany(data)
+        const response = await apiGetCompanyById(data)
         return response.data
     }
 )
@@ -18,15 +18,15 @@ const dataSlice = createSlice({
     name: 'salesCompanyEdit/data',
     initialState: {
         loading: false,
-        companyData: [],
+        companyItem: [],
     },
     reducers: {},
     extraReducers: {
-        [getCompany.fulfilled]: (state, action) => {
-            state.companyData = action.payload
+        [getCompanyById.fulfilled]: (state, action) => {
+            state.companyItem = action.payload
             state.loading = false
         },
-        [getCompany.pending]: (state) => {
+        [getCompanyById.pending]: (state) => {
             state.loading = true
         },
     },

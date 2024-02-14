@@ -32,7 +32,7 @@ const ProductEdit = () => {
         setSubmitting(true)
         const success = await updateCategory(values)
         setSubmitting(false)
-        if (success === 201) {
+        if (success === 200) {
             popNotification('обновлено')
             navigate('/categories')
         }
@@ -57,8 +57,6 @@ const ProductEdit = () => {
         )
         navigate(`/categories/edit/${id}`)
     }
-
-    console.log(categoryItem, 'categoryItem')
 
     return (
         <>

@@ -128,8 +128,6 @@ const ProductTable = () => {
         dispatch(getProducts({search}))
     }
 
-    // console.log(search, 'search')
-
     const columns = useMemo(
         () => [
             {
@@ -140,19 +138,6 @@ const ProductTable = () => {
                     return <ProductColumn row={row} />
                 },
             },
-            // {
-            //     header: 'Категория',
-            //     accessorKey: 'category',
-            //     cell: (props) => {
-            //         const row = props.row.original
-            //         return <span className="capitalize">{row.category}</span>
-            //     },
-            // },
-            // {
-            //     header: 'Остаток',
-            //     accessorKey: 'stock',
-            //     sortable: true,
-            // },
             {
                 header: 'Статус',
                 accessorKey: 'status',

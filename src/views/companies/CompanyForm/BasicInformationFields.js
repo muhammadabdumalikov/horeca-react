@@ -5,7 +5,7 @@ import { Field } from 'formik'
 
 
 const BasicInformationFields = (props) => {
-    const { touched, errors, values } = props
+    const { touched, errors } = props
 
     return (
         <AdaptableCard className="mb-4" divider>
@@ -17,13 +17,13 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование компании (рус)"
-                        invalid={errors.ruName && touched.ruName}
-                        errorMessage={errors.ruName}
+                        invalid={errors.name_ru && touched.name_ru}
+                        errorMessage={errors.name_ru}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="ruName"
+                            name="name_ru"
                             placeholder="Наименование компании (рус)"
                             component={Input}
                         />
@@ -32,20 +32,20 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование компании (узб)"
-                        invalid={errors.uzName && touched.uzName}
-                        errorMessage={errors.uzName}
+                        invalid={errors.name_uz && touched.name_uz}
+                        errorMessage={errors.name_uz}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="uzName"
+                            name="name_uz"
                             placeholder="Наименование компании (узб)"
                             component={Input}
                         />
                     </FormItem>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование компании (анг)"
@@ -61,7 +61,7 @@ const BasicInformationFields = (props) => {
                         />
                     </FormItem>
                 </div>
-            </div>
+            </div> */}
         </AdaptableCard>
     )
 }

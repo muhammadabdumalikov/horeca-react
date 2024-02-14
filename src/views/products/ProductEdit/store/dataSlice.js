@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiGetSalesProduct,
     apiPutSalesProduct,
-    apiDeleteSalesProducts,
     apiGetProductById,
 } from 'services/SalesService'
 
@@ -26,11 +25,6 @@ export const updateProduct = async (data) => {
     return response.data
 }
 
-export const deleteProduct = async (data) => {
-    const response = await apiDeleteSalesProducts(data)
-    return response.data
-}
-
 const dataSlice = createSlice({
     name: 'salesProductEdit/data',
     initialState: {
@@ -48,7 +42,11 @@ const dataSlice = createSlice({
             state.loading = true
         },
         [getProductById.fulfilled]: (state, action) => {
-            state.getProdyctById = action.payload.data
+            state.productItem = action.payload
+        },
+        [getProductById.pending]: (state) => {
+            state.loading = true
+
         },
     },
 })

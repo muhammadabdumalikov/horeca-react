@@ -21,8 +21,10 @@ const ProductEdit = () => {
     const navigate = useNavigate()
 
     const productItem = useSelector(
-        (state) => state.salesProductEdit.data.getProdyctById
+        (state) => state.salesProductEdit.data.productItem
     )
+
+    console.log(productItem, 'productItem')
 
     const loading = useSelector((state) => state.salesProductEdit.data.loading)
 

@@ -1,13 +1,5 @@
 import ApiService from './ApiService'
 
-export async function apiGetSalesDashboardData(data) {
-    return ApiService.fetchData({
-        url: '/sales/dashboard',
-        method: 'post',
-        data,
-    })
-}
-
 export async function apiGetSalesProducts(params) {
     return ApiService.fetchData({
         url: '/product/all',
@@ -17,7 +9,7 @@ export async function apiGetSalesProducts(params) {
 }
 export async function apiGetProductById({ id }) {
     return ApiService.fetchData({
-        url: `/product/find/${id}`,
+        url: `/product/${id}`,
         method: 'get',
     })
 }
@@ -25,14 +17,6 @@ export async function apiInActiveProdct(data) {
     return ApiService.fetchData({
         url: `/product/in-active`,
         method: 'put',
-        data,
-    })
-}
-
-export async function apiDeleteSalesProducts(data) {
-    return ApiService.fetchData({
-        url: '/sales/products/delete',
-        method: 'delete',
         data,
     })
 }
@@ -47,15 +31,15 @@ export async function apiGetSalesProduct(params) {
 
 export async function apiPutSalesProduct(data) {
     return ApiService.fetchData({
-        url: '/sales/products/update',
-        method: 'put',
+        url: `/admin/product/${data.id}`,
+        method: 'patch',
         data,
     })
 }
 
 export async function apiCreateSalesProduct(data) {
     return ApiService.fetchData({
-        url: '/product/create',
+        url: 'admin/product',
         method: 'post',
         data,
     })
@@ -100,10 +84,16 @@ export async function apiGetCompany(params) {
         params,
     })
 }
+export async function apiGetCompanyById({id}) {
+    return ApiService.fetchData({
+        url: `/company/${id}`,
+        method: 'get'
+    })
+}
 export async function apiUpdateCompany(data) {
     return ApiService.fetchData({
-        url: '/company/update',
-        method: 'put',
+        url: `admin/company/${data.id}`,
+        method: 'patch',
         data,
     })
 }
@@ -123,7 +113,7 @@ export async function apiDeleteSalesCompany(data) {
 }
 export async function apiCreateCompany(data) {
     return ApiService.fetchData({
-        url: '/company/create',
+        url: '/admin/company',
         method: 'post',
         data,
     })
@@ -206,7 +196,7 @@ export async function apiInactiveAgent(data) {
 }
 export async function apiCreateCategory(data) {
     return ApiService.fetchData({
-        url: '/category/create',
+        url: 'admin/category',
         method: 'post',
         data,
     })
@@ -219,9 +209,10 @@ export async function apiInActiveCategory(data) {
     })
 }
 export async function apiUpdateCategory(data) {
+    console.log(data, 'data')
     return ApiService.fetchData({
-        url: '/category/update',
-        method: 'put',
+        url: `/admin/category/${data?.id}`,
+        method: 'patch',
         data,
     })
 }

@@ -1,100 +1,40 @@
-import React, { forwardRef, useState } from 'react'
-import { FormContainer, Button, hooks } from 'components/ui'
-import { StickyFooter, ConfirmDialog } from 'components/shared'
+import React, { forwardRef } from 'react'
+import { FormContainer, Button } from 'components/ui'
+import { StickyFooter } from 'components/shared'
 import { Form, Formik } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
 import cloneDeep from 'lodash/cloneDeep'
-import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
 import OrganizationFields from './OrganizationFields'
 
-const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    uzName: Yup.string().test(
+    name_ru: Yup.string().test(
         'len',
-        'Введите название товара',
+        'Введите название компании',
         (val) => val?.length >= 3
     ),
-    ruName: Yup.string().test(
+    name_uz: Yup.string().test(
         'len',
-        'Введите название товара',
+        'Введите название компании',
         (val) => val?.length >= 3
     ),
-    enName: Yup.string().test(
+    country_uz: Yup.string().test(
         'len',
-        'Введите название товара',
+        'Введите название страны компании',
         (val) => val?.length >= 3
     ),
-    uzCountry: Yup.string().test(
+    country_ru: Yup.string().test(
         'len',
-        'Введите название регирна',
-        (val) => val?.length >= 3
-    ),
-    ruCountry: Yup.string().test(
-        'len',
-        'Введите название регирна',
-        (val) => val?.length >= 3
-    ),
-    enCountry: Yup.string().test(
-        'len',
-        'Введите название регирна',
+        'Введите название страны компании',
         (val) => val?.length >= 3
     ),
 })
 
-const DeleteProductButton = ({ onDelete }) => {
-    const [dialogOpen, setDialogOpen] = useState(false)
-
-    const onConfirmDialogOpen = () => {
-        setDialogOpen(true)
-    }
-
-    const onConfirmDialogClose = () => {
-        setDialogOpen(false)
-    }
-
-    const handleConfirm = () => {
-        onDelete?.(setDialogOpen)
-    }
-
-    return (
-        <>
-            <Button
-                className="text-red-600"
-                variant="plain"
-                size="sm"
-                icon={<HiOutlineTrash />}
-                type="button"
-                onClick={onConfirmDialogOpen}
-            >
-                Удалить
-            </Button>
-            <ConfirmDialog
-                isOpen={dialogOpen}
-                onClose={onConfirmDialogClose}
-                onRequestClose={onConfirmDialogClose}
-                type="danger"
-                title="Удалить компанию"
-                onCancel={onConfirmDialogClose}
-                onConfirm={handleConfirm}
-                confirmButtonColor="red-600"
-            >
-                <p>
-                    Вы уверены, что хотите удалить эту компанию? Все записи
-                    связанные с этим компанием, также будут удалены. Это
-                    действие нельзя отменить.
-                </p>
-            </ConfirmDialog>
-        </>
-    )
-}
 
 const ProductForm = forwardRef((props, ref) => {
-    const { type, initialData, onFormSubmit, onDiscard } = props
-
-    const newId = useUniqueId('product-')
+    const { initialData, onFormSubmit, onDiscard } = props
 
     return (
         <>
@@ -102,12 +42,6 @@ const ProductForm = forwardRef((props, ref) => {
                 innerRef={ref}
                 initialValues={{
                     ...initialData,
-                    // tags: initialData?.tags
-                    //     ? initialData.tags.map((value) => ({
-                    //           label: value,
-                    //           value,
-                    //       }))
-                    //     : [],
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
@@ -173,12 +107,10 @@ const ProductForm = forwardRef((props, ref) => {
 ProductForm.defaultProps = {
     type: 'edit',
     initialData: {
-        uzName: '',
-        ruName: '',
-        enName: '',
-        uzCountry: '',
-        ruCountry: '',
-        enCountry: '',
+        name_ru: '',
+        name_uz: '',
+        country_ru: '',
+        country_uz: '',
     },
 }
 

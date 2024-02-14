@@ -4,7 +4,7 @@ import { Input, FormItem } from 'components/ui'
 import { Field } from 'formik'
 
 const OrganizationFields = (props) => {
-    const { values, touched, errors } = props
+    const { touched, errors } = props
 
     return (
         <AdaptableCard className="mb-4" divider isLastChild>
@@ -14,13 +14,13 @@ const OrganizationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Регион (рус)"
-                        invalid={errors.ruCountry && touched.ruCountry}
-                        errorMessage={errors.ruCountry}
+                        invalid={errors.country_ru && touched.country_ru}
+                        errorMessage={errors.country_ru}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="ruCountry"
+                            name="country_ru"
                             placeholder="Количество"
                             component={Input}
                         />
@@ -29,20 +29,20 @@ const OrganizationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Регион (узб)"
-                        invalid={errors.uzCountry && touched.uzCountry}
-                        errorMessage={errors.uzCountry}
+                        invalid={errors.country_uz && touched.country_uz}
+                        errorMessage={errors.country_uz}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="uzCountry"
+                            name="country_uz"
                             placeholder="Количество"
                             component={Input}
                         />
                     </FormItem>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
                         label="Регион (енг)"
@@ -58,7 +58,7 @@ const OrganizationFields = (props) => {
                         />
                     </FormItem>
                 </div>
-            </div>
+            </div> */}
         </AdaptableCard>
     )
 }

@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiDeleteSalesProducts,
     apiGetNotifications,
     apiUpdateNotification,
 } from 'services/SalesService'
@@ -15,11 +14,6 @@ export const getNotifications = createAsyncThunk(
 
 export const updateNotification = async (data) => {
     const response = await apiUpdateNotification(data)
-    return response.data
-}
-
-export const deleteProduct = async (data) => {
-    const response = await apiDeleteSalesProducts(data)
     return response.data
 }
 

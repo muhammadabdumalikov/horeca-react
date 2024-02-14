@@ -92,7 +92,7 @@ const CompanyTable = () => {
 
     const data = useSelector((state) => state.salesCompanyList.data.companyList)
 
-    console.log(data, 'data')
+    // console.log(data, 'data')
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -26,13 +26,13 @@ const OrganizationFields = (props) => {
         dispatch(getCompany({}))
     }
 
-    const categoryOptions = categoryList.list?.map((category) => ({
-        label: category.ru_name,
+    const categoryOptions = categoryList?.map((category) => ({
+        label: category.name_ru,
         value: category.id,
     }))
 
-    const companyOptions = companyList.list?.map((company) => ({
-        label: company.ru_name,
+    const companyOptions = companyList?.map((company) => ({
+        label: company.name_ru,
         value: company.id,
     }))
 
@@ -45,9 +45,9 @@ const OrganizationFields = (props) => {
                     <FormItem
                         label="Категория товара"
                         invalid={errors.categoryId && touched.categoryId}
-                        errorMessage={errors.categoryId}
+                        errorMessage={errors.category_id}
                     >
-                        <Field name="categoryId">
+                        <Field name="category_id">
                             {({ field, form }) => (
                                 <Select
                                     field={field}
@@ -55,7 +55,7 @@ const OrganizationFields = (props) => {
                                     options={categoryOptions}
                                     value={categoryOptions?.filter(
                                         (category) =>
-                                            category.value === values.categoryId
+                                            category.value === values.category_id
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(
@@ -71,17 +71,17 @@ const OrganizationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Производитель"
-                        invalid={errors.companyId && touched.companyId}
-                        errorMessage={errors.companyId}
+                        invalid={errors.company_id && touched.company_id}
+                        errorMessage={errors.company_id}
                     >
-                        <Field name="companyId">
+                        <Field name="company_id">
                             {({ field, form }) => (
                                 <Select
                                     field={field}
                                     form={form}
                                     options={companyOptions}
                                     value={companyOptions?.filter(
-                                        (tag) => tag.value === values.companyId
+                                        (tag) => tag.value === values.company_id
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(
@@ -99,13 +99,13 @@ const OrganizationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Количество шт. (на блоке)"
-                        invalid={errors.countInBlock && touched.countInBlock}
-                        errorMessage={errors.countInBlock}
+                        invalid={errors.count_in_block && touched.count_in_block}
+                        errorMessage={errors.count_in_block}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="countInBlock"
+                            name="count_in_block"
                             placeholder="Количество"
                             component={Input}
                         />

@@ -1,33 +1,31 @@
-import React, { forwardRef, useState } from 'react'
-import { FormContainer, Button, hooks } from 'components/ui'
-import { StickyFooter, ConfirmDialog } from 'components/shared'
+import React, { forwardRef } from 'react'
+import { FormContainer, Button } from 'components/ui'
+import { StickyFooter } from 'components/shared'
 import { Form, Formik } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
 import PricingFields from './PricingFields'
 import OrganizationFields from './OrganizationFields'
 import ProductImages from './ProductImages'
 import cloneDeep from 'lodash/cloneDeep'
-import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
 import reducer from './store'
 import { injectReducer } from 'store'
 
-const { useUniqueId } = hooks
 injectReducer('productForm', reducer)
 
 const validationSchema = Yup.object().shape({
-    enName: Yup.string().required('Введите название товара'),
-    ruName: Yup.string().required('Введите название товара'),
-    uzName: Yup.string().required('Введите название товара'),
+    name_ru: Yup.string().required('Введите название товара'),
+    name_uz: Yup.string().required('Введите название товара'),
     barcode: Yup.string().required('Введите код товара'),
     description: Yup.string().required('Введите описание товара'),
-    discountPrice: Yup.string().required('Введите цену за скидку товара'),
-    blockPrice: Yup.string().required('Введите цену за блок товара'),
-    countPrice: Yup.string().required('Введите цену за единицу товара'),
-    categoryId: Yup.string().required('Выберите категорию'),
-    companyId: Yup.string().required('Выберите производитель'),
-    countInBlock: Yup.string().required('Введите количество товара в блоке'),
+    discount_price: Yup.string().required('Введите цену за скидку товара'),
+    block_price: Yup.string().required('Введите цену за блок товара'),
+    count_price: Yup.string().required('Введите цену за единицу товара'),
+    category_id: Yup.string().required('Выберите категорию'),
+    company_id: Yup.string().required('Выберите производитель'),
+    count_in_block: Yup.string().required('Введите количество товара в блоке'),
+    image: Yup.string().required(' Загрузите изображение товара'),
 })
 
 const ProductForm = forwardRef((props, ref) => {
@@ -110,19 +108,19 @@ const ProductForm = forwardRef((props, ref) => {
 ProductForm.defaultProps = {
     type: 'edit',
     initialData: {
-        companyId: '',
-        categoryId: '',
+        company_id: '',
+        category_id: '',
+        name_uz: '',
+        name_ru: '',
+        measure: 0,
         barcode: '',
         image: '',
-        countInBlock: '',
-        blockCount: 0,
+        count_in_block: 0,
+        product_count: 0,
         description: '',
-        countPrice: '',
-        blockPrice: '',
-        discountPrice: '',
-        uzName: '',
-        ruName: '',
-        enName: '',
+        count_price: 0,
+        discount_price: 0,
+        block_price: 0,
     },
 }
 
