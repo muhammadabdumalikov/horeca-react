@@ -99,8 +99,8 @@ export async function apiUpdateCompany(data) {
 }
 export async function apiInactiveCompany(data) {
     return ApiService.fetchData({
-        url: '/company/in-active',
-        method: 'put',
+        url: 'admin/company/set-status',
+        method: 'post',
         data,
     })
 }

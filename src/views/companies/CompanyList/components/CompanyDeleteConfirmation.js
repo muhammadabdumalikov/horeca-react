@@ -1,45 +1,22 @@
 import React from 'react'
-import { toast, Notification } from 'components/ui'
 import { ConfirmDialog } from 'components/shared'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleDeleteConfirmation } from '../store/stateSlice'
-import { deleteCompany, getCompanies } from '../store/dataSlice'
 
 const ProductDeleteConfirmation = () => {
     const dispatch = useDispatch()
     const dialogOpen = useSelector(
         (state) => state.salesCompanyList.state.deleteConfirmation
     )
-    const selectedCompany = useSelector(
-        (state) => state.salesCompanyList.state.selectedCompany
-    )
-    const tableData = useSelector(
-        (state) => state.salesCompanyList.data.tableData
-    )
+    // const selectedCompany = useSelector(
+    //     (state) => state.salesCompanyList.state.selectedCompany
+    // )
+    // const tableData = useSelector(
+    //     (state) => state.salesCompanyList.data.tableData
+    // )
 
     const onDialogClose = () => {
         dispatch(toggleDeleteConfirmation(false))
-    }
-
-    const onDelete = async () => {
-        dispatch(toggleDeleteConfirmation(false))
-        const success = await deleteCompany({ id: selectedCompany })
-
-        if (success) {
-            dispatch(getCompanies(tableData))
-            toast.push(
-                <Notification
-                    title={'Successfuly Deleted'}
-                    type="success"
-                    duration={2500}
-                >
-                    Product successfuly deleted
-                </Notification>,
-                {
-                    placement: 'top-center',
-                }
-            )
-        }
     }
 
     return (
@@ -50,7 +27,7 @@ const ProductDeleteConfirmation = () => {
             type="danger"
             title="Удалить товар"
             onCancel={onDialogClose}
-            onConfirm={onDelete}
+            // onConfirm={onDelete}
             confirmButtonColor="red-600"
         >
             <p>

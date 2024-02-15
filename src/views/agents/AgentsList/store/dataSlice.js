@@ -35,7 +35,6 @@ export const initialTableData = {
 export const initialFilterData = {
     name: '',
     category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
-    status: [0, 1, 2],
     productStatus: 0,
     status: '',
 }

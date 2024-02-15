@@ -33,7 +33,7 @@ const ActionColumn = ({ row }) => {
     }
 
     const onEditActivity = () => {
-        dispatch(inActiveCompany({ id: row.id }))
+        dispatch(inActiveCompany({ company_id: row.id, is_deleted: `${!row.is_deleted}`}))
 
         if (row.id) {
             popNotification('изменено активность')
@@ -69,7 +69,7 @@ const ActionColumn = ({ row }) => {
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
-                {row.in_active ? <HiOutlineEyeOff /> : <HiOutlineEye />}
+                {row.is_deleted ? <HiOutlineEyeOff /> : <HiOutlineEye />}
             </span>
         </div>
     )
@@ -80,7 +80,7 @@ const CompanyTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, search, total } = useSelector(
+    const { pageIndex, pageSize, search } = useSelector(
         (state) => state.salesCompanyList.data.tableData
     )
 
