@@ -69,7 +69,7 @@ const ActionColumn = ({ row }) => {
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
-                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+                {row.in_active ? <HiOutlineEyeOff /> : <HiOutlineEye />}
             </span>
         </div>
     )
@@ -105,12 +105,12 @@ const CompanyTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, search, total }),
-        [pageIndex, pageSize, search, total]
+        () => ({ pageIndex,  pageSize, search }),
+        [pageIndex, pageSize, search]
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({ pageIndex, search, pageSize }))
+        dispatch(getCompanies({ offset: pageIndex,  search, limit: pageSize }))
     }
 
     const columns = useMemo(

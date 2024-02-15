@@ -3,7 +3,11 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { DataTable } from 'components/shared'
 import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCategories, inActiveCategory, setTableData } from '../store/dataSlice'
+import {
+    getCategories,
+    inActiveCategory,
+    setTableData,
+} from '../store/dataSlice'
 // import { setSelectedCompany } from '../store/stateSlice'
 // import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
@@ -14,7 +18,6 @@ import { isActive } from 'utils/checkActive'
 import { Badge, Notification, toast } from 'components/ui'
 
 const inventoryStatusColor = {
-
     0: {
         label: 'Активный',
         dotClass: 'bg-green-500',
@@ -33,17 +36,24 @@ const ActionColumn = ({ row }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-
+    const { pageSize, pageIndex, search } = useSelector(
+        (state) => state.categoryList.data.tableData
+    )
 
     const onEdit = () => {
         navigate(`/categories/edit/${row.id}`)
     }
     const onEditActivity = () => {
-        dispatch(inActiveCategory({ id: row.id }))
+        dispatch(
+            inActiveCategory({
+                category_id: row.id,
+                is_deleted: `${!row?.is_deleted}`,
+            })
+        )
 
-        if (row.id) {
+        if( row.id ){
             popNotification('изменено активность')
-            dispatch(getCategories({}))
+            dispatch(getCategories({limit: pageSize, offset: pageIndex, search})) 
         }
     }
 
@@ -75,15 +85,13 @@ const ActionColumn = ({ row }) => {
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEditActivity}
             >
-                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff/>}
+                {row.is_deleted ? <HiOutlineEyeOff /> : <HiOutlineEye />}
             </span>
-       
         </div>
     )
 }
 
 const CompanyColumn = ({ row }) => {
-
     return (
         <div className="flex items-center">
             {/* {avatar} */}
@@ -109,7 +117,7 @@ const CategoryTable = () => {
 
     const data = useSelector((state) => state.categoryList.data.categoryList)
 
-    console.log(data, 'data')
+    // console.log(data, 'data')
 
     useEffect(() => {
         fetchData()
@@ -123,12 +131,12 @@ const CategoryTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ pageSize, pageIndex, search, total, }),
+        () => ({ pageSize, pageIndex, search, total }),
         [pageSize, pageIndex, search, total]
     )
 
     const fetchData = () => {
-        dispatch(getCategories({ pageSize, pageIndex, search }))
+        dispatch(getCategories({ limit: pageSize, offset: pageIndex, search }))
     }
 
     const columns = useMemo(
@@ -136,7 +144,7 @@ const CategoryTable = () => {
             {
                 header: 'Категория товара',
                 accessorKey: 'name_ru',
-                width: "300px",
+                width: '300px',
                 cell: (props) => {
                     const row = props.row.original
                     return <CompanyColumn row={row} />
@@ -146,20 +154,27 @@ const CategoryTable = () => {
             {
                 header: 'Статус',
                 accessorKey: 'is_deleted',
-                width: "200px",
+                width: '200px',
                 cell: (props) => {
                     const { is_deleted } = props.row.original
                     return (
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[isActive(is_deleted)].dotClass
+                                    inventoryStatusColor[isActive(is_deleted)]
+                                        .dotClass
                                 }
                             />
                             <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[isActive(is_deleted)].textClass}`}
+                                className={`capitalize font-semibold ${
+                                    inventoryStatusColor[isActive(is_deleted)]
+                                        .textClass
+                                }`}
                             >
-                                {inventoryStatusColor[isActive(is_deleted)].label}
+                                {
+                                    inventoryStatusColor[isActive(is_deleted)]
+                                        .label
+                                }
                             </span>
                         </div>
                     )

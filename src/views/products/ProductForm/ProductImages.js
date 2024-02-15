@@ -4,10 +4,14 @@ import {
     ConfirmDialog,
     DoubleSidedImage,
 } from 'components/shared'
-import { FormItem, Dialog, Upload } from 'components/ui'
+import { FormItem, Dialog, Upload, Notification, toast } from 'components/ui'
 import { HiEye, HiTrash } from 'react-icons/hi'
 import { Field } from 'formik'
 import cloneDeep from 'lodash/cloneDeep'
+import { PERSIST_STORE_NAME } from 'constants/app.constant'
+import deepParseJson from 'utils/deepParseJson'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const ImageList = (props) => {
     const { image, onImageDelete } = props
@@ -97,6 +101,8 @@ const ImageList = (props) => {
 const ProductImages = (props) => {
     const { values } = props
 
+    const navigate = useNavigate()
+
     const beforeUpload = (file) => {
         let valid = true
 
@@ -116,7 +122,69 @@ const ProductImages = (props) => {
         return valid
     }
 
+    const handleFormSubmit = async (values, setSubmitting) => {
+        const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
+        const persistData = deepParseJson(rawPersistData)
+
+        let accessToken = persistData.auth.session.token
+        setSubmitting(true)
+
+        try {
+            const formData = new FormData()
+            formData.append('file', values.img)
+
+            const response = await axios.put(
+                'http://194.163.142.231:3000/file-router/upload',
+                formData,
+                {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'multipart/form-data',
+                        token: accessToken,
+                    },
+                }
+            )
+
+            if (response.status === 201) {
+                toast.push(
+                    <Notification
+                        title={'Успешно добавлено'}
+                        type="success"
+                        duration={2500}
+                    >
+                         Файл успешно добавлен
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+                navigate('/products')
+            }
+
+            setSubmitting(false)
+        } catch (error) {
+            if (error.response.status === 449) {
+                toast.push(
+                    <Notification
+                        title={'Ошибка'}
+                        type="danger"
+                        duration={2500}
+                    >
+                        Пожалуйста, заполните все поля
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+            }
+            setSubmitting(false)
+        }
+    }
+
     const onUpload = (form, field, files) => {
+        console.log(files, 'files')
+        console.log(field, 'field')
+
         let imageId = '1-img-0'
         const latestUpload = files?.length - 1
         if (values.image?.length > 0) {
@@ -131,7 +199,7 @@ const ProductImages = (props) => {
         const image = URL.createObjectURL(files[latestUpload])
 
         form.setFieldValue(field.name, image)
-        form.setFieldValue('img', files[0])
+        form.setFieldValue('img', 'qwdqwd')
     }
 
     const handleImageDelete = (form, field) => {
@@ -139,6 +207,8 @@ const ProductImages = (props) => {
         imgList = ''
         form.setFieldValue(field.name, imgList)
     }
+
+  
 
     return (
         <AdaptableCard className="mb-4">

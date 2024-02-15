@@ -15,8 +15,8 @@ export async function apiGetProductById({ id }) {
 }
 export async function apiInActiveProdct(data) {
     return ApiService.fetchData({
-        url: `/product/in-active`,
-        method: 'put',
+        url: `admin/product/set-status`,
+        method: 'post',
         data,
     })
 }
@@ -79,7 +79,7 @@ export async function apiGetCustomers(params) {
 
 export async function apiGetCompany(params) {
     return ApiService.fetchData({
-        url: '/company/all',
+        url: 'admin/company/list',
         method: 'get',
         params,
     })
@@ -104,13 +104,7 @@ export async function apiInactiveCompany(data) {
         data,
     })
 }
-export async function apiDeleteSalesCompany(data) {
-    return ApiService.fetchData({
-        url: '/company/in-active',
-        method: 'put',
-        data,
-    })
-}
+
 export async function apiCreateCompany(data) {
     return ApiService.fetchData({
         url: '/admin/company',
@@ -127,7 +121,7 @@ export async function apiPutSalesCompany(data) {
 }
 export async function apiGetCategory(params) {
     return ApiService.fetchData({
-        url: '/category/all',
+        url: '/admin/category/list/',
         method: 'get',
         params,
     })
@@ -196,15 +190,15 @@ export async function apiInactiveAgent(data) {
 }
 export async function apiCreateCategory(data) {
     return ApiService.fetchData({
-        url: 'admin/category',
+        url: '/admin/category',
         method: 'post',
         data,
     })
 }
 export async function apiInActiveCategory(data) {
     return ApiService.fetchData({
-        url: '/category/in-active',
-        method: 'put',
+        url: '/admin/category/set-status',
+        method: 'post',
         data,
     })
 }

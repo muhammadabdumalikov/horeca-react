@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { getNotifications, updateNotification } from './store/dataSlice'
+import { getNotifications } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../NotificationForm'
 import { PERSIST_STORE_NAME } from 'constants/app.constant'
@@ -54,8 +54,6 @@ const ProductEdit = () => {
 
         let accessToken = persistData.auth.session.token
         setSubmitting(true)
-
-        console.log('values', values)
 
         try {
             const formData = new FormData()
@@ -113,22 +111,6 @@ const ProductEdit = () => {
     }
 
     const handleDiscard = () => {
-        navigate('/notifications')
-    }
-
-    const popNotification = (keyword) => {
-        toast.push(
-            <Notification
-                title={`Успешно ${keyword}`}
-                type="success"
-                duration={2500}
-            >
-                Успешно добавлен {keyword}
-            </Notification>,
-            {
-                placement: 'top-center',
-            }
-        )
         navigate('/notifications')
     }
 

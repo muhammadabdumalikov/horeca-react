@@ -33,8 +33,7 @@ const ActionColumn = ({ row }) => {
     }
 
     const onEditActivity = () => {
-        dispatch(inActiveProdct({ id: row.id }))
-
+        dispatch(inActiveProdct({ product_id: row.id, status: row.is_deleted ? 0 : 1}))
         if (row.id) {
             popNotification('изменено активность')
             dispatch(getProducts({}))
@@ -69,7 +68,7 @@ const ActionColumn = ({ row }) => {
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
-                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+                {row.is_deleted ? <HiOutlineEyeOff /> : <HiOutlineEye /> }
             </span>
         </div>
     )

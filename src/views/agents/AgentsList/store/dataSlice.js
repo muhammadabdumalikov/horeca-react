@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiDeleteSalesCompany, apiGetAgents, apiGetCompany, apiInactiveAgent } from 'services/SalesService'
+import { apiGetAgents, apiGetCompany, apiInactiveAgent } from 'services/SalesService'
 
 export const getCompanies = createAsyncThunk(
     'agentsList/data/getCompanies',
@@ -23,12 +23,6 @@ export const inActiveAgent = createAsyncThunk(
     }
 )
 
-
-
-export const deleteCompany = async (data) => {
-    const response = await apiDeleteSalesCompany(data)
-    return response.data
-}
 
 export const initialTableData = {
     total: 0,
