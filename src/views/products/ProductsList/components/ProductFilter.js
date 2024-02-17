@@ -142,6 +142,7 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
                                                 )
                                             }
                                         >
+                                            <Radio value={null}>Все</Radio>
                                             <Radio value={true}>Неактивно</Radio>
                                             <Radio value={false}>
                                                 Активно

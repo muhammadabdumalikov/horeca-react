@@ -33,7 +33,7 @@ const ActionColumn = ({ row }) => {
     }
 
     const onEditActivity = () => {
-        dispatch(inActiveProdct({ product_id: row.id, status: row.is_deleted ? 0 : 1}))
+        dispatch(inActiveProdct({ product_id: row.id, is_deleted: `${!row.is_deleted}`}))
         if (row.id) {
             popNotification('изменено активность')
             dispatch(getProducts({}))
@@ -141,23 +141,23 @@ const ProductTable = () => {
                 header: 'Статус',
                 accessorKey: 'status',
                 cell: (props) => {
-                    const { in_active } = props.row.original
+                    const { is_deleted } = props.row.original
                     return (
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .dotClass
                                 }
                             />
                             <span
                                 className={`capitalize font-semibold ${
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .textClass
                                 }`}
                             >
                                 {
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .label
                                 }
                             </span>
