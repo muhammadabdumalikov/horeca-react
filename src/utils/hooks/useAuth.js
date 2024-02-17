@@ -23,12 +23,11 @@ function useAuth() {
 
         try {
             const resp = await apiSignIn(values)
-            // console.log('resp', resp)
+            console.log('resp', resp)
             if (resp.data) {
-                const { accessToken } = resp.data
-                dispatch(onSignInSuccess(accessToken))
+                const { token } = resp.data
+                dispatch(onSignInSuccess(token))
                 if (resp.data.admin) {
-                    // console.log('resp.data.admin', resp.data.admin)
                     dispatch(
                         setUser(
                             resp.data.admin || {

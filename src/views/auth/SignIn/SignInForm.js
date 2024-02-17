@@ -15,7 +15,7 @@ import useAuth from 'utils/hooks/useAuth'
 // import { setToken } from 'store/auth/sessionSlice'
 
 const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Please enter your user name'),
+    login: Yup.string().required('Please enter your user name'),
     password: Yup.string().required('Please enter your password'),
     rememberMe: Yup.bool(),
 })
@@ -35,11 +35,11 @@ const SignInForm = (props) => {
     // console.log('signIn', signIn)
     const onSignIn = async (values, setSubmitting) => {
 
-        const { username, password } = values
+        const { login, password } = values
         setSubmitting(true)
         // console.log( 'values', values)
 
-        const result = await signIn({ username, password })
+        const result = await signIn({ login, password })
         
         // console.log('result', result)
 
@@ -60,8 +60,8 @@ const SignInForm = (props) => {
             <Formik
                 // Remove this initial value
                 initialValues={{
-                    username: 'admin',
-                    password: '12345',
+                    login: '',
+                    password: '',
                     rememberMe: true,
                 }}
                 validationSchema={validationSchema}
@@ -78,13 +78,13 @@ const SignInForm = (props) => {
                         <FormContainer>
                             <FormItem
                                 label="User Name"
-                                invalid={errors.username && touched.username}
-                                errorMessage={errors.username}
+                                invalid={errors.login && touched.login}
+                                errorMessage={errors.login}
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
-                                    name="username"
+                                    name="login"
                                     placeholder="User Name"
                                     component={Input}
                                 />
