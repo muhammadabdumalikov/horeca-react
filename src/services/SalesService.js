@@ -2,7 +2,7 @@ import ApiService from './ApiService'
 
 export async function apiGetSalesProducts(params) {
     return ApiService.fetchData({
-        url: '/product/all',
+        url: 'admin/product/list',
         method: 'get',
         params,
     })

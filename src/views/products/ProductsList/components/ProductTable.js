@@ -95,7 +95,7 @@ const ProductTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, search, total } = useSelector(
+    const { pageIndex, pageSize, search } = useSelector(
         (state) => state.salesProductList.data.tableData
     )
 
@@ -119,12 +119,12 @@ const ProductTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, search, total }),
-        [pageIndex, pageSize, search, total]
+        () => ({ pageIndex, pageSize, search }),
+        [pageIndex, pageSize, search]
     )
 
     const fetchData = () => {
-        dispatch(getProducts({search}))
+        dispatch(getProducts({search, limit: pageSize, offset: pageIndex}))
     }
 
     const columns = useMemo(
@@ -167,27 +167,15 @@ const ProductTable = () => {
             },
             {
                 header: 'Цена за шт.',
-                accessorKey: 'dona_price',
-                cell: (props) => {
-                    const { discount_price } = props.row.original
-                    return <span>{discount_price}</span>
-                },
+                accessorKey: 'count_price',
             },
             {
                 header: 'Цена за блок',
-                accessorKey: 'blok_price',
-                cell: (props) => {
-                    const { block_price } = props.row.original
-                    return <span>{block_price}</span>
-                },
+                accessorKey: 'block_price'
             },
             {
                 header: 'Цена в акции',
-                accessorKey: 'disc_price',
-                cell: (props) => {
-                    const { discount_price } = props.row.original
-                    return <span>{discount_price}</span>
-                },
+                accessorKey: 'discount_price'
             },
             {
                 header: '',

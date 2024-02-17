@@ -112,7 +112,7 @@ ProductForm.defaultProps = {
         category_id: '',
         name_uz: '',
         name_ru: '',
-        measure: 0,
+        measure: 1,
         barcode: '',
         image: '',
         count_in_block: 0,

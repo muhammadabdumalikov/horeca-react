@@ -4,6 +4,25 @@ import { Input, FormItem, Select } from 'components/ui'
 import { Field } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategory, getCompany } from './store/dataSlice'
+import NumberFormat from 'react-number-format'
+
+
+const NumberInput = (props) => {
+    return <Input {...props} value={Number(props.field.value)} />
+}
+
+
+const NumberFormatInput = ({ onValueChange, ...rest }) => {
+    return (
+        <NumberFormat
+            customInput={Input}
+            type="text"
+            onValueChange={onValueChange}
+            autoComplete="off"
+            {...rest}
+        />
+    )
+}
 
 const OrganizationFields = (props) => {
     const { values, touched, errors } = props
@@ -102,13 +121,24 @@ const OrganizationFields = (props) => {
                         invalid={errors.count_in_block && touched.count_in_block}
                         errorMessage={errors.count_in_block}
                     >
-                        <Field
-                            type="text"
-                            autoComplete="off"
-                            name="count_in_block"
-                            placeholder="Количество"
-                            component={Input}
-                        />
+                          <Field name="count_in_block">
+                            {({ field, form }) => {
+                                return (
+                                    <NumberFormatInput
+                                        form={form}
+                                        field={field}
+                                        placeholder="Количество"
+                                        customInput={NumberInput}
+                                        onValueChange={(e) => {
+                                            form.setFieldValue(
+                                                field.name,
+                                                parseInt(e.value)
+                                            )
+                                        }}
+                                    />
+                                )
+                            }}
+                        </Field>
                     </FormItem>
                 </div>
                 <div className="col-span-1">

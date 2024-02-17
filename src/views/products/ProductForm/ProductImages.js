@@ -13,6 +13,7 @@ import deepParseJson from 'utils/deepParseJson'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
+
 const ImageList = (props) => {
     const { image, onImageDelete } = props
 
@@ -122,18 +123,78 @@ const ProductImages = (props) => {
         return valid
     }
 
-    const handleFormSubmit = async (values, setSubmitting) => {
+    // const handleFormSubmit = async (values, setSubmitting) => {
+    //     const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
+    //     const persistData = deepParseJson(rawPersistData)
+
+    //     let accessToken = persistData.auth.session.token
+    //     setSubmitting(true)
+
+    //     try {
+    //         const formData = new FormData()
+    //         formData.append('file', values.img)
+
+    //         const response = await axios.put(
+    //             'http://194.163.142.231:3000/file-router/upload',
+    //             formData,
+    //             {
+    //                 headers: {
+    //                     Accept: 'application/json',
+    //                     'Content-Type': 'multipart/form-data',
+    //                     token: accessToken,
+    //                 },
+    //             }
+    //         )
+
+    //         if (response.status === 201) {
+    //             toast.push(
+    //                 <Notification
+    //                     title={'Успешно добавлено'}
+    //                     type="success"
+    //                     duration={2500}
+    //                 >
+    //                      Файл успешно добавлен
+    //                 </Notification>,
+    //                 {
+    //                     placement: 'top-center',
+    //                 }
+    //             )
+    //             navigate('/products')
+    //         }
+
+    //         setSubmitting(false)
+    //     } catch (error) {
+    //         if (error.response.status === 449) {
+    //             toast.push(
+    //                 <Notification
+    //                     title={'Ошибка'}
+    //                     type="danger"
+    //                     duration={2500}
+    //                 >
+    //                     Пожалуйста, заполните все поля
+    //                 </Notification>,
+    //                 {
+    //                     placement: 'top-center',
+    //                 }
+    //             )
+    //         }
+    //         setSubmitting(false)
+    //     }
+    // }
+
+    const onUpload = async (form, field, files) => {
+
         const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
         const persistData = deepParseJson(rawPersistData)
 
         let accessToken = persistData.auth.session.token
-        setSubmitting(true)
+        // setSubmitting(true)
 
         try {
             const formData = new FormData()
-            formData.append('file', values.img)
+            formData.append('file', files[0])
 
-            const response = await axios.put(
+            const response = await axios.post(
                 'http://194.163.142.231:3000/file-router/upload',
                 formData,
                 {
@@ -145,6 +206,8 @@ const ProductImages = (props) => {
                 }
             )
 
+            form.setFieldValue(field.name, response?.data.file_url)
+
             if (response.status === 201) {
                 toast.push(
                     <Notification
@@ -152,16 +215,15 @@ const ProductImages = (props) => {
                         type="success"
                         duration={2500}
                     >
-                         Файл успешно добавлен
+                        Файл успешно добавлен
                     </Notification>,
                     {
                         placement: 'top-center',
                     }
                 )
-                navigate('/products')
             }
 
-            setSubmitting(false)
+            // setSubmitting(false)
         } catch (error) {
             if (error.response.status === 449) {
                 toast.push(
@@ -177,29 +239,11 @@ const ProductImages = (props) => {
                     }
                 )
             }
-            setSubmitting(false)
-        }
-    }
-
-    const onUpload = (form, field, files) => {
-        console.log(files, 'files')
-        console.log(field, 'field')
-
-        let imageId = '1-img-0'
-        const latestUpload = files?.length - 1
-        if (values.image?.length > 0) {
-            const prevImgId = values.image[values.image.length - 1].id
-            const splitImgId = prevImgId.split('-')
-            const newIdNumber = parseInt(splitImgId[splitImgId.length - 1]) + 1
-            splitImgId.pop()
-            const newIdArr = [...splitImgId, ...[newIdNumber]]
-            imageId = newIdArr.join('-')
+            // setSubmitting(false)
         }
 
-        const image = URL.createObjectURL(files[latestUpload])
+        
 
-        form.setFieldValue(field.name, image)
-        form.setFieldValue('img', 'qwdqwd')
     }
 
     const handleImageDelete = (form, field) => {
@@ -208,14 +252,11 @@ const ProductImages = (props) => {
         form.setFieldValue(field.name, imgList)
     }
 
-  
-
     return (
         <AdaptableCard className="mb-4">
             <h5>Изображение продукта</h5>
             <p className="mb-6">Добавьте или измените изображение товара</p>
-            <FormItem
-            >
+            <FormItem>
                 <Field name="image">
                     {({ field, form }) => {
                         if (values.image?.length > 0) {

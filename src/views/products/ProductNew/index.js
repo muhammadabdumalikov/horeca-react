@@ -13,25 +13,36 @@ const ProductNew = () => {
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
-        setSubmitting(true)
+        try {
+            setSubmitting(true)
 
-        const success = await CreateProduct(values)
-        setSubmitting(false)
+            const success = await CreateProduct(values)
+            setSubmitting(false)
 
-        if (success) {
+            if (success) {
+                toast.push(
+                    <Notification
+                        title={'Продукт успешно добавлен'}
+                        type="success"
+                        duration={2500}
+                    >
+                        Продукт успешно добавлен
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+                navigate('/products')
+            }
+        } catch (e) {
             toast.push(
-                <Notification
-                    title={'Продукт успешно добавлен'}
-                    type="success"
-                    duration={2500}
-                >
-                    Продукт успешно добавлен
+                <Notification title={'Ошибка'} type="danger" duration={2500}>
+                    {e.response.data.message}
                 </Notification>,
                 {
                     placement: 'top-center',
                 }
             )
-            navigate('/companies')
         }
     }
 

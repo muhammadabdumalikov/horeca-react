@@ -5,8 +5,9 @@ import NumberFormat from 'react-number-format'
 import { Field } from 'formik'
 
 
+
 const NumberInput = (props) => {
-    return <Input {...props} value={props.field.value} />
+    return <Input {...props} value={Number(props.field.value)} />
 }
 
 
@@ -49,7 +50,8 @@ const PricingFields = (props) => {
                                         onValueChange={(e) => {
                                             form.setFieldValue(
                                                 field.name,
-                                                e.value
+                                                parseInt(e.value)
+
                                             )
                                         }}
                                     />
@@ -75,7 +77,8 @@ const PricingFields = (props) => {
                                         onValueChange={(e) => {
                                             form.setFieldValue(
                                                 field.name,
-                                                e.value
+                                                parseInt(e.value)
+
                                             )
                                         }}
                                     />
@@ -103,7 +106,8 @@ const PricingFields = (props) => {
                                         onValueChange={(e) => {
                                             form.setFieldValue(
                                                 field.name,
-                                                e.value
+                                                parseInt(e.value)
+
                                             )
                                         }}
                                     />
