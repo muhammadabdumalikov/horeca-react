@@ -102,7 +102,7 @@ function useAuth() {
     }
 
     return {
-        authenticated: token,
+        authenticated: token && signedIn,
         signIn,
         signUp,
         signOut,

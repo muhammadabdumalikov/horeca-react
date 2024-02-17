@@ -112,6 +112,12 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/notifications/NotificationEdit')),
         authority: [],
     },
+    {
+        key: 'customerDetail',
+        path: '/customer-details/:id',
+        component: React.lazy(() => import('views/customers/CustomerDetail')),
+        authority: [],
+    },
 
     // {
     //     key: 'collapseMenu.item1',

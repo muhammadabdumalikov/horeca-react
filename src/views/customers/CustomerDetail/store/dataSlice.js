@@ -1,17 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-// import {
-//     apiGetCrmCustomerDetails,
-//     apiDeleteCrmCustomer,
-//     apPutCrmCustomer,
-// } from 'services/CrmService'
+import { apiGetCustomerById } from 'services/SalesService'
 
-// export const getCustomer = createAsyncThunk(
-//     'crmCustomerDetails/data/getCustomer',
-//     async (data) => {
-//         const response = await apiGetCrmCustomerDetails(data)
-//         return response.data
-//     }
-// )
+
+export const getCustomerById = createAsyncThunk(
+    'crmCustomerDetails/data/getCustomerById',
+    async (data) => {
+        const response = await apiGetCustomerById(data)
+        return response.data
+    }
+)
 
 // export const deleteCustomer = createAsyncThunk(
 //     'crmCustomerDetails/data/deleteCustomer',
@@ -47,18 +44,20 @@ const dataSlice = createSlice({
         },
     },
     extraReducers: {
-        // [getCustomer.fulfilled]: (state, action) => {
-        //     state.loading = false
-        //     state.profileData = action.payload
-        //     state.subscriptionData = action.payload?.subscription || []
-        //     state.paymentHistoryData = action.payload?.orderHistory || []
-        //     state.paymentMethodData = action.payload?.paymentMethod || []
-        // },
+        [getCustomerById.fulfilled]: (state, action) => {
+            console.log(action.payload, 'action.payload')
+            state.loading = false
+            state.profileData = action.payload
+            // state.subscriptionData = action.payload?.subscription || []
+            // state.paymentHistoryData = action.payload?.orderHistory || []
+            // state.paymentMethodData = action.payload?.paymentMethod || []
+        },
+        [getCustomerById.pending]: (state) => {
+            state.loading = true
+        },
         // [deleteCustomer.fulfilled]: () => {},
         // [putCustomer.fulfilled]: () => {},
-        // [getCustomer.pending]: (state) => {
-        //     state.loading = true
-        // },
+       
     },
 })
 

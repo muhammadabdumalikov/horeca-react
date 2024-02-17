@@ -9,7 +9,7 @@ export async function apiGetSalesProducts(params) {
 }
 export async function apiGetProductById({ id }) {
     return ApiService.fetchData({
-        url: `/product/${id}`,
+        url: `admin/product/${id}`,
         method: 'get',
     })
 }
@@ -71,15 +71,28 @@ export async function apiGetSalesOrderDetails(params) {
 
 export async function apiGetCustomers(params) {
     return ApiService.fetchData({
-        url: '/a-user',
+        url: 'admin/users/list',
         method: 'get',
         params,
+    })
+}
+export async function apiGetCustomerById({id}) {
+    return ApiService.fetchData({
+        url: `admin/users/${id}`,
+        method: 'get',
+    })
+}
+export async function apiSeActivityCustomers(data) {
+    return ApiService.fetchData({
+        url: 'admin/users/set-status',
+        method: 'post',
+        data,
     })
 }
 
 export async function apiGetCompany(params) {
     return ApiService.fetchData({
-        url: 'admin/company/list',
+        url: '/admin/company/list',
         method: 'get',
         params,
     })
@@ -92,14 +105,14 @@ export async function apiGetCompanyById({id}) {
 }
 export async function apiUpdateCompany(data) {
     return ApiService.fetchData({
-        url: `admin/company/${data.id}`,
+        url: `/admin/company/${data.id}`,
         method: 'patch',
         data,
     })
 }
 export async function apiInactiveCompany(data) {
     return ApiService.fetchData({
-        url: 'admin/company/set-status',
+        url: '/admin/company/set-status',
         method: 'post',
         data,
     })

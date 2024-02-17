@@ -1,10 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCustomers } from 'services/SalesService'
+import { apiGetCustomers, apiSeActivityCustomers } from 'services/SalesService'
 
 export const getCustomers = createAsyncThunk(
     'crmCustomers/data/getCustomers',
     async (data) => {
         const response = await apiGetCustomers(data)
+        return response.data
+    }
+)
+export const inActiveUser = createAsyncThunk(
+    'crmCustomers/data/inActiveUser',
+    async (data) => {
+        const response = await apiSeActivityCustomers(data)
         return response.data
     }
 )
@@ -47,6 +54,12 @@ const dataSlice = createSlice({
             state.loading = false
         },
         [getCustomers.pending]: (state) => {
+            state.loading = true
+        },
+        [inActiveUser.fulfilled]: (state) => {
+            state.loading = false
+        },
+        [inActiveUser.pending]: (state) => {
             state.loading = true
         },
         // [getCustomerStatistic.pending]: (state) => {

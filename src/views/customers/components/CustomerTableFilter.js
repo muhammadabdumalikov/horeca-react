@@ -9,8 +9,8 @@ const { Control } = components
 
 const options = [
     { value: '', label: 'Все', color: 'bg-gray-500' },
-    { value: 'true', label: 'Активные', color: 'bg-emerald-500' },
-    { value: 'false', label: 'Неактивные', color: 'bg-red-500' },
+    { value: 'false', label: 'Активные', color: 'bg-emerald-500' },
+    { value: 'true', label: 'Неактивные', color: 'bg-red-500' },
 ]
 
 const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {

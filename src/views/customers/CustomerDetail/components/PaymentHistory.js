@@ -100,7 +100,7 @@ const PaymentHistory = () => {
 
     return (
         <div className="mb-8">
-            <h6 className="mb-4">Payment History</h6>
+            <h6 className="mb-4">История покупок</h6>
             <Table>
                 <THead>
                     {table.getHeaderGroups().map((headerGroup) => (

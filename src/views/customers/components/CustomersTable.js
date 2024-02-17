@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
-import { Avatar, Badge, Notification, toast } from 'components/ui'
+import {  Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCustomers, setTableData } from '../store/dataSlice'
+import { getCustomers, inActiveUser, setTableData } from '../store/dataSlice'
 import { setSelectedCustomer, setDrawerOpen } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { Link } from 'react-router-dom'
@@ -11,12 +11,12 @@ import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
-    1: {
+    0: {
         label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    0: {
+    1: {
         label: 'Неактивный',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
@@ -33,11 +33,11 @@ const ActionColumn = ({ row }) => {
     }
 
     const onEditActivity = () => {
-        // dispatch(inActiveProdct({ id: row.id }))
+        dispatch(inActiveUser({ user_id: row.id, is_deleted: `${!row.is_deleted}`, is_block: 'false'}))
 
         if (row.id) {
             popNotification('изменено активность')
-            // dispatch(getProducts({}))
+            dispatch(getCustomers({}))
         }
     }
 
@@ -69,7 +69,7 @@ const ActionColumn = ({ row }) => {
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
-                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+                {row.is_deleted ?  <HiOutlineEyeOff />: <HiOutlineEye />}
             </span>
         </div>
     )
@@ -97,11 +97,12 @@ const ActionColumn = ({ row }) => {
 
 //     return (
 //         <div className="flex items-center">
+//             <Avatar size={28} shape="circle" src={row.img} />
 //             <Link
 //                 className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
-//                 to={`/user?id=${row.id}`}
+//                 to={`/customer-details/${row.id}`}
 //             >
-//                 {row.name}
+//                 {row.first_name}
 //             </Link>
 //         </div>
 //     )
@@ -110,11 +111,16 @@ const ActionColumn = ({ row }) => {
 const columns = [
     {
         header: 'Имя',
-        accessorKey: 'fullname',
+        accessorKey: 'first_name',
         // cell: (props) => {
         //     const row = props.row.original
         //     return <NameColumn row={row} />
         // },
+      
+    },
+    {
+        header: 'Фамилия',
+        accessorKey: 'last_name',
     },
     {
         header: 'Юр. имя',
@@ -126,27 +132,27 @@ const columns = [
     },
     {
         header: 'Контакт',
-        accessorKey: 'contact',
+        accessorKey: 'phone',
     },
     {
         header: 'Статус',
         accessorKey: 'status',
         width: '250px',
         cell: (props) => {
-            const { in_active } = props.row.original
+            const { is_deleted } = props.row.original
             return (
                 <div className="flex items-center gap-2">
                     <Badge
                         className={
-                            inventoryStatusColor[isActive(in_active)].dotClass
+                            inventoryStatusColor[isActive(is_deleted)].dotClass
                         }
                     />
                     <span
                         className={`capitalize font-semibold ${
-                            inventoryStatusColor[isActive(in_active)].textClass
+                            inventoryStatusColor[isActive(is_deleted)].textClass
                         }`}
                     >
-                        {inventoryStatusColor[isActive(in_active)].label}
+                        {inventoryStatusColor[isActive(is_deleted)].label}
                     </span>
                 </div>
             )
@@ -167,6 +173,8 @@ const Customers = () => {
     const dispatch = useDispatch()
     const data = useSelector((state) => state.crmCustomers.data.customerList)
     const loading = useSelector((state) => state.crmCustomers.data.loading)
+
+
     const { status } = useSelector(
         (state) => state.crmCustomers.data.filterData
     )
@@ -176,7 +184,7 @@ const Customers = () => {
     )
     
     const fetchData = useCallback(() => {
-        dispatch(getCustomers({ pageIndex, pageSize, search, active: status }))
+        dispatch(getCustomers({ offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1), limit: pageSize, search, is_deleted: status }))
     }, [pageIndex, pageSize, search, status, dispatch])
 
     useEffect(() => {
@@ -205,7 +213,7 @@ const Customers = () => {
         <>
             <DataTable
                 columns={columns}
-                data={data.list}
+                data={data}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ width: 28, height: 28 }}
                 loading={loading}
