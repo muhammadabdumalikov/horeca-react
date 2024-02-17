@@ -92,7 +92,6 @@ const CompanyTable = () => {
 
     const data = useSelector((state) => state.salesCompanyList.data.companyList)
 
-    // console.log(data, 'data')
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,7 +109,7 @@ const CompanyTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({ offset: pageIndex,  search, limit: pageSize }))
+        dispatch(getCompanies({ offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1),  search, limit: pageSize }))
     }
 
     const columns = useMemo(

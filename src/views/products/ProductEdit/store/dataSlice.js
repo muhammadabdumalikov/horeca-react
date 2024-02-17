@@ -43,6 +43,8 @@ const dataSlice = createSlice({
         },
         [getProductById.fulfilled]: (state, action) => {
             state.productItem = action.payload
+            state.loading = false
+
         },
         [getProductById.pending]: (state) => {
             state.loading = true

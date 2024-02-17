@@ -60,13 +60,13 @@ const dataSlice = createSlice({
         [getCategories.pending]: (state) => {
             state.loading = true
         },
-        // [inActiveCategory.fulfilled]: (state, action) => {
-        //     state.categoryList = action.payload.data
-        //     state.loading = false
-        // },
-        // [inActiveCategory.pending]: (state) => {
-        //     state.loading = true
-        // },
+        [inActiveCategory.fulfilled]: (state, action) => {
+            state.categoryList = action.payload.data
+            state.loading = false
+        },
+        [inActiveCategory.pending]: (state) => {
+            state.loading = true
+        },
     },
 })
 

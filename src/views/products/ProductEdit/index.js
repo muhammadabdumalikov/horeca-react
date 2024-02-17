@@ -4,7 +4,7 @@ import { toast, Notification } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
     updateProduct,
     getProductById,
@@ -17,20 +17,15 @@ injectReducer('salesProductEdit', reducer)
 const ProductEdit = () => {
     const dispatch = useDispatch()
 
-    const location = useLocation()
+    const {id} = useParams()
     const navigate = useNavigate()
 
     const productItem = useSelector(
         (state) => state.salesProductEdit.data.productItem
     )
 
-    console.log(productItem, 'productItem')
 
     const loading = useSelector((state) => state.salesProductEdit.data.loading)
-
-    const fetchData = (data) => {
-        dispatch(getProductById(data))
-    }
 
     const handleFormSubmit = async (values, setSubmitting) => {
         setSubmitting(true)
@@ -62,19 +57,13 @@ const ProductEdit = () => {
     }
 
     useEffect(() => {
-        const path = location.pathname.substring(
-            location.pathname.lastIndexOf('/') + 1
-        )
-        const rquestParam = { id: path }
-        fetchData(rquestParam)
+        dispatch(getProductById({id}))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname])
-
-    console.log(productItem, 'productItem')
+    }, [id])
 
     return (
         <>
-            <Loading loading={false}>
+            <Loading loading={loading}>
                 {!isEmpty(productItem) && (
                     <>
                         <ProductForm
