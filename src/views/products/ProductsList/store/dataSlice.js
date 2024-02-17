@@ -37,19 +37,15 @@ export const inActiveProdct = createAsyncThunk(
 
 export const initialTableData = {
     total: 0,
-    page: 1,
+    pageIndex: 1,
     pageSize: 10,
     search: '',
-    // sort: {
-    //     order: '',
-    //     key: '',
-    // },
 }
 
 export const initialFilterData = {
-    active: true,
-    categoryId: null,
-    companyId: null,
+    is_deleted: false,
+    category_id: null,
+    company_id: null,
 }
 
 const dataSlice = createSlice({

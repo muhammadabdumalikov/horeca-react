@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { Input } from 'components/ui'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts, setTableData } from '../store/dataSlice'
+import { getProducts } from '../store/dataSlice'
 import debounce from 'lodash/debounce'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -11,19 +11,15 @@ const ProductTableSearch = () => {
 
     const searchInput = useRef()
 
-    const tableData = useSelector(
+    const { pageIndex, pageSize, search } = useSelector(
         (state) => state.salesProductList.data.tableData
     )
 
     const debounceFn = debounce(handleDebounceFn, 500)
 
-    // console.log('tableData', tableData)
-    // console.log('debounceFn', debounceFn)
-
     function handleDebounceFn(val) {
-        const newTableData = cloneDeep(tableData)
+        const newTableData = cloneDeep({pageIndex, pageSize, search})
         newTableData.search = val
-        newTableData.page = 1
         if (typeof val === 'string' && val.length > 1) {
             fetchData(newTableData)
         }
@@ -34,8 +30,10 @@ const ProductTableSearch = () => {
     }
 
     const fetchData = (data) => {
-        dispatch(setTableData(data))
-        dispatch(getProducts(data))
+        const { pageIndex, pageSize, search } = data
+        // dispatch(setTableData(data))
+
+        dispatch(getProducts({search: search, limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1)}))
     }
 
     const onEdit = (e) => {
