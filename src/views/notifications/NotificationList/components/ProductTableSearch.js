@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { Input } from 'components/ui'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getNotifications, getProducts, setTableData } from '../store/dataSlice'
+import { getNotifications, setTableData } from '../store/dataSlice'
 import debounce from 'lodash/debounce'
 import cloneDeep from 'lodash/cloneDeep'
 

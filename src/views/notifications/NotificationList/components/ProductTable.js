@@ -15,12 +15,12 @@ import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
-    1: {
+    0: {
         label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    0: {
+    1: {
         label: 'Неактивный',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
@@ -73,7 +73,7 @@ const ActionColumn = ({ row }) => {
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
-                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+                {row.in_active ? <HiOutlineEyeOff /> : <HiOutlineEye />}
             </span>
         </div>
     )
@@ -81,7 +81,7 @@ const ActionColumn = ({ row }) => {
 
 const ProductColumn = ({ row }) => {
     const avatar = row.image ? (
-        <Avatar src={`https://horecaapi.uz/${row.image}`} />
+        <Avatar src={row.image} />
     ) : (
         <Avatar icon={<FiPackage />} />
     )
@@ -89,7 +89,7 @@ const ProductColumn = ({ row }) => {
     return (
         <div className="flex items-center">
             {avatar}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.topic}</span>
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.title}</span>
         </div>
     )
 }
@@ -99,7 +99,7 @@ const ProductTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, search, total, status } = useSelector(
+    const { pageIndex, pageSize, search, total } = useSelector(
         (state) => state.salesNotification.data.tableData
     )
 
@@ -130,14 +130,14 @@ const ProductTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getNotifications({ search, pageIndex, pageSize, status }))
+        dispatch(getNotifications({ search, offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1), limit: pageSize }))
     }
 
     const columns = useMemo(
         () => [
             {
                 header: 'Название уведомления',
-                accessorKey: 'notification',
+                accessorKey: 'title',
                 width: '250px',
                 cell: (props) => {
                     const row = props.row.original
@@ -149,23 +149,23 @@ const ProductTable = () => {
                 accessorKey: 'status',
                 width: '250px',
                 cell: (props) => {
-                    const { in_active } = props.row.original
+                    const { is_deleted } = props.row.original
                     return (
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .dotClass
                                 }
                             />
                             <span
                                 className={`capitalize font-semibold ${
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .textClass
                                 }`}
                             >
                                 {
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .label
                                 }
                             </span>
@@ -175,11 +175,11 @@ const ProductTable = () => {
             },
             {
                 header: 'Содержание',
-                accessorKey: 'content',
-                cell: (props) => {
-                    const { content } = props.row.original
-                    return <span>{content}</span>
-                },
+                accessorKey: 'body',
+                // cell: (props) => {
+                //     const { content } = props.row.original
+                //     return <span>{content}</span>
+                // },
             },
             {
                 header: '',
@@ -208,7 +208,7 @@ const ProductTable = () => {
             <DataTable
                 ref={tableRef}
                 columns={columns}
-                data={data.list}
+                data={data}
                 skeletonAvatarColumns={[0]}
                 skeletonAvatarProps={{ className: 'rounded-md' }}
                 loading={loading}

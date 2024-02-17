@@ -16,13 +16,13 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Наименование уведомления"
-                        invalid={errors.topic && touched.topic}
-                        errorMessage={errors.topic}
+                        invalid={errors.title && touched.title}
+                        errorMessage={errors.title}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="topic"
+                            name="title"
                             placeholder="Введите наименование уведомления"
                             component={Input}
                         />
@@ -33,10 +33,10 @@ const BasicInformationFields = (props) => {
             <FormItem
                 label="Описание"
                 labelClass="!justify-start"
-                invalid={errors.content && touched.content}
-                errorMessage={errors.content}
+                invalid={errors.body && touched.body}
+                errorMessage={errors.body}
             >
-                <Field name="content">
+                <Field name="body">
                     {({ field, form }) => (
                         <RichTextEditor
                             value={field.value}

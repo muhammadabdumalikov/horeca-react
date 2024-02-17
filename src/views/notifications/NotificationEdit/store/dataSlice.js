@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetNotifications,
+    apiGetNotificationById,
     apiUpdateNotification,
 } from 'services/SalesService'
 
-export const getNotifications = createAsyncThunk(
-    'salesNotificationEdit/data/getNotifications',
+export const getNotificationById = createAsyncThunk(
+    'salesNotificationEdit/data/getNotificationById',
     async (data) => {
-        const response = await apiGetNotifications(data)
+        const response = await apiGetNotificationById(data)
         return response.data
     }
 )
@@ -25,11 +25,11 @@ const dataSlice = createSlice({
     },
     reducers: {},
     extraReducers: {
-        [getNotifications.fulfilled]: (state, action) => {
+        [getNotificationById.fulfilled]: (state, action) => {
             state.notificationsList = action.payload
             state.loading = false
         },
-        [getNotifications.pending]: (state) => {
+        [getNotificationById.pending]: (state) => {
             state.loading = true
         },
     },

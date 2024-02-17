@@ -13,8 +13,8 @@ import { injectReducer } from 'store'
 injectReducer('productForm', reducer)
 
 const validationSchema = Yup.object().shape({
-    topic: Yup.string().required('Введите название уведомления'),
-    content: Yup.string().required('Введите содержание уведомления'),
+    title: Yup.string().required('Введите название уведомления'),
+    body: Yup.string().required('Введите содержание уведомления'),
 })
 
 const ProductForm = forwardRef((props, ref) => {
@@ -87,9 +87,8 @@ const ProductForm = forwardRef((props, ref) => {
 ProductForm.defaultProps = {
     type: 'edit',
     initialData: {
-        topic: '',
-        content: '',
-        form: '',
+        title: '',
+        body: '',
     },
 }
 

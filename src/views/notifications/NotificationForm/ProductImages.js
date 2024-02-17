@@ -4,10 +4,13 @@ import {
     ConfirmDialog,
     DoubleSidedImage,
 } from 'components/shared'
-import { FormItem, Dialog, Upload } from 'components/ui'
+import { FormItem, Dialog, Upload, toast, Notification } from 'components/ui'
 import { HiEye, HiTrash } from 'react-icons/hi'
 import { Field } from 'formik'
 import cloneDeep from 'lodash/cloneDeep'
+import { PERSIST_STORE_NAME } from 'constants/app.constant'
+import deepParseJson from 'utils/deepParseJson'
+import axios from 'axios'
 
 const ImageList = (props) => {
     const { image, onImageDelete } = props
@@ -116,22 +119,68 @@ const ProductImages = (props) => {
         return valid
     }
 
-    const onUpload = (form, field, files) => {
-        let imageId = '1-img-0'
-        const latestUpload = files?.length - 1
-        if (values.image?.length > 0) {
-            const prevImgId = values.image[values.image.length - 1].id
-            const splitImgId = prevImgId.split('-')
-            const newIdNumber = parseInt(splitImgId[splitImgId.length - 1]) + 1
-            splitImgId.pop()
-            const newIdArr = [...splitImgId, ...[newIdNumber]]
-            imageId = newIdArr.join('-')
+    const onUpload = async (form, field, files) => {
+
+        const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
+        const persistData = deepParseJson(rawPersistData)
+
+        let accessToken = persistData.auth.session.token
+        // setSubmitting(true)
+
+        try {
+            const formData = new FormData()
+            formData.append('file', files[0])
+
+            const response = await axios.post(
+                'http://194.163.142.231:3000/file-router/upload',
+                formData,
+                {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'multipart/form-data',
+                        token: accessToken,
+                    },
+                }
+            )
+
+            form.setFieldValue(field.name, response?.data.file_url)
+
+            if (response.status === 201) {
+                toast.push(
+                    <Notification
+                        title={'Успешно добавлено'}
+                        type="success"
+                        duration={2500}
+                    >
+                        Файл успешно добавлен
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+            }
+
+            // setSubmitting(false)
+        } catch (error) {
+            if (error.response.status === 449) {
+                toast.push(
+                    <Notification
+                        title={'Ошибка'}
+                        type="danger"
+                        duration={2500}
+                    >
+                        Пожалуйста, заполните все поля
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+            }
+            // setSubmitting(false)
         }
 
-        const image = URL.createObjectURL(files[latestUpload])
+        
 
-        form.setFieldValue(field.name, image)
-        form.setFieldValue('img', files[0])
     }
 
     const handleImageDelete = (form, field) => {

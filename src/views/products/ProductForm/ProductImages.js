@@ -11,7 +11,6 @@ import cloneDeep from 'lodash/cloneDeep'
 import { PERSIST_STORE_NAME } from 'constants/app.constant'
 import deepParseJson from 'utils/deepParseJson'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 
 
 const ImageList = (props) => {
@@ -101,8 +100,6 @@ const ImageList = (props) => {
 
 const ProductImages = (props) => {
     const { values } = props
-
-    const navigate = useNavigate()
 
     const beforeUpload = (file) => {
         let valid = true

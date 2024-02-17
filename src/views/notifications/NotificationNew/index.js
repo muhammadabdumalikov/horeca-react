@@ -2,46 +2,31 @@ import React from 'react'
 import { toast, Notification } from 'components/ui'
 import { useNavigate } from 'react-router-dom'
 import ProductForm from '../NotificationForm'
-import axios from 'axios'
-import { PERSIST_STORE_NAME } from 'constants/app.constant'
-import deepParseJson from 'utils/deepParseJson'
+import { apiCreateNotification } from 'services/SalesService'
 
 const ProductNew = () => {
     const navigate = useNavigate()
 
+    const CreateProduct = async (data) => {
+        const response = await apiCreateNotification(data)
+        return response.data
+    }
+
     const handleFormSubmit = async (values, setSubmitting) => {
-        const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
-        const persistData = deepParseJson(rawPersistData)
-
-        let accessToken = persistData.auth.session.token
-        setSubmitting(true)
-
         try {
-            const formData = new FormData()
-            formData.append('topic', values.topic)
-            formData.append('content', values.content)
-            formData.append('file', values.img)
+            setSubmitting(true)
 
-            const response = await axios.post(
-                'https://horecaapi.uz/api/ntf/create',
-                formData,
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'multipart/form-data',
-                        token: accessToken,
-                    },
-                }
-            )
+            const success = await CreateProduct(values)
+            setSubmitting(false)
 
-            if (response.status === 201) {
+            if (success) {
                 toast.push(
                     <Notification
-                        title={'Успешно добавлено'}
+                        title={'Уведомления успешно добавлено'}
                         type="success"
                         duration={2500}
                     >
-                        Уведомления успешно добавлены
+                        Уведомления успешно добавлно
                     </Notification>,
                     {
                         placement: 'top-center',
@@ -49,24 +34,15 @@ const ProductNew = () => {
                 )
                 navigate('/notifications')
             }
-
-            setSubmitting(false)
-        } catch (error) {
-            if (error.response.status === 449) {
-                toast.push(
-                    <Notification
-                        title={'Ошибка'}
-                        type="danger"
-                        duration={2500}
-                    >
-                        Пожалуйста, заполните все поля
-                    </Notification>,
-                    {
-                        placement: 'top-center',
-                    }
-                )
-            }
-            setSubmitting(false)
+        } catch (e) {
+            toast.push(
+                <Notification title={'Ошибка'} type="danger" duration={2500}>
+                    {e.response.data.message}
+                </Notification>,
+                {
+                    placement: 'top-center',
+                }
+            )
         }
     }
 

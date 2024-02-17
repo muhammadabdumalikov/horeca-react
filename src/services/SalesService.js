@@ -134,15 +134,28 @@ export async function apiGetCategoryById({id}) {
 }
 export async function apiGetNotifications(params) {
     return ApiService.fetchData({
-        url: '/ntf',
+        url: '/notification/list',
         method: 'get',
         params,
     })
 }
+export async function apiGetNotificationById({id}) {
+    return ApiService.fetchData({
+        url: `/notification/${id}`,
+        method: 'get',
+    })
+}
 export async function apiUpdateNotification(data) {
     return ApiService.fetchData({
-        url: '/ntf/update',
-        method: 'put',
+        url: `/notification/${data?.id}`,
+        method: 'patch',
+        data,
+    })
+}
+export async function apiCreateNotification(data) {
+    return ApiService.fetchData({
+        url: `/notification`,
+        method: 'post',
         data,
     })
 }

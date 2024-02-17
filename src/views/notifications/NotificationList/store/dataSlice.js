@@ -18,7 +18,7 @@ export const inActiveNotification = createAsyncThunk(
 
 export const initialTableData = {
     total: 0,
-    page: 1,
+    pageIndex: 1,
     pageSize: 10,
     search: '',
 }
