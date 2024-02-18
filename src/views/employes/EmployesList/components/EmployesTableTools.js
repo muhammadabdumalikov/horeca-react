@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
-import ProductTableSearch from './AgentsTableSearch'
+import ProductTableSearch from './EmployesTableSearch'
 import { Link } from 'react-router-dom'
-import AgentsTableFilter from './AgentsTableFilter'
+import AgentsTableFilter from './EmployesTableFilter'
 
 const ProductTableTools = () => {
     return (

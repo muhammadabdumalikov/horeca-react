@@ -4,17 +4,15 @@ import { toast, Notification } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { getAgents, updateAgent } from './store/dataSlice'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getEmployesById, updateAgent } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
-import ProductForm from '../AgentsForm'
+import ProductForm from '../EmployesForm'
 
 injectReducer('salesAgentEdit', reducer)
 
 const ProductEdit = () => {
     const dispatch = useDispatch()
-
-    const location = useLocation()
     const navigate = useNavigate()
     const { id } = useParams()
 
@@ -24,25 +22,6 @@ const ProductEdit = () => {
 
     const loading = useSelector((state) => state.salesAgentEdit.data.loading)
 
-    const getAgentById = (id) => {
-        const data = agentsData?.data?.list?.find((item) => item.id == id)
-        if (data?.id) {
-            return {
-                region_id: data?.region_id,
-                fullname: data?.fullname,
-                contact: data?.contact,
-                username: data?.username,
-                password: data?.password,
-                id: data?.id,
-            }
-        }
-    }
-
-    const data = getAgentById(id)
-
-    const fetchData = (data) => {
-        dispatch(getAgents(data))
-    }
 
     const handleFormSubmit = async (values, setSubmitting) => {
         try {
@@ -92,29 +71,25 @@ const ProductEdit = () => {
     }
 
     useEffect(() => {
-        const path = location.pathname.substring(
-            location.pathname.lastIndexOf('/') + 1
-        )
-        const rquestParam = { id: path }
-        fetchData(rquestParam)
+        dispatch(getEmployesById({id}))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname])
+    }, [id])
 
     return (
         <>
-            <Loading loading={false}>
-                {!isEmpty(data) && (
+            <Loading loading={loading}>
+                {!isEmpty(agentsData) && (
                     <>
                         <ProductForm
                             type="edit"
-                            initialData={data}
+                            initialData={agentsData}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
                         />
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(data) && (
+            {!loading && isEmpty(agentsData) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"

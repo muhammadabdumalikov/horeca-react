@@ -207,13 +207,6 @@ export async function apiGetRegions(params) {
         params,
     })
 }
-export async function apiInactiveAgent(data) {
-    return ApiService.fetchData({
-        url: '/agent/in-active',
-        method: 'put',
-        data,
-    })
-}
 export async function apiCreateCategory(data) {
     return ApiService.fetchData({
         url: '/admin/category',
@@ -233,6 +226,29 @@ export async function apiUpdateCategory(data) {
     return ApiService.fetchData({
         url: `/admin/category/${data?.id}`,
         method: 'patch',
+        data,
+    })
+}
+
+//employes
+
+export async function apiGetEmployes(params) {
+    return ApiService.fetchData({
+        url: '/root/worker-list',
+        method: 'get',
+        params,
+    })
+}
+export async function apiGetEmployesById({id}) {
+    return ApiService.fetchData({
+        url: `admin/users/${id}`,
+        method: 'get',
+    })
+}
+export async function apiPatchActivityEmployes(data) {
+    return ApiService.fetchData({
+        url: '/root/worker-list/set-status',
+        method: 'post',
         data,
     })
 }

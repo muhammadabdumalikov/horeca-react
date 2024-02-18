@@ -130,7 +130,7 @@ const ProductTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getNotifications({ search, offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1), limit: pageSize }))
+        dispatch(getNotifications({ search, offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), limit: pageSize }))
     }
 
     const columns = useMemo(

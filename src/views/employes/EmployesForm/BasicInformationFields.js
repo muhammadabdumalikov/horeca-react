@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
 import { Field } from 'formik'
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
-import { useDispatch, useSelector } from 'react-redux'
-import { getRegions } from './store/dataSlice'
 
+const rolesOptions = [
+    { value: '2', label: 'Администратор' },
+    { value: '4', label: 'Доставщик' },
+]
 
 const BasicInformationFields = (props) => {
     const { touched, errors, values } = props
-
-    const dispatch = useDispatch()
 
     const [pwInputType, setPwInputType] = useState('password')
 
@@ -19,29 +19,6 @@ const BasicInformationFields = (props) => {
         setPwInputType(pwInputType === 'password' ? 'text' : 'password')
     }
 
-    const regionsData = useSelector(
-        (state) => state.agentsForm.data.regionsList
-    )
-
-    useEffect(() => {
-        fetchData()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    const fetchData = () => {
-        dispatch(getRegions({}))
-    }
-
-    //formatting data for select
-    const formatData = (data) => {
-        const formattedData = data?.map((item) => {
-            return {
-                label: item.ru_name,
-                value: item.id,
-            }
-        })
-        return formattedData
-    }
 
     const passwordVisible = (
         <span
@@ -65,14 +42,29 @@ const BasicInformationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="ФИО"
-                        invalid={errors.fullname && touched.fullname}
-                        errorMessage={errors.fullname}
+                        label="Фамилия"
+                        invalid={errors.first_name && touched.first_name}
+                        errorMessage={errors.first_name}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="fullname"
+                            name="first_name"
+                            placeholder="ФИО"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+                <div className="col-span-1">
+                    <FormItem
+                        label="Имя"
+                        invalid={errors.last_name && touched.last_name}
+                        errorMessage={errors.last_name}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="last_name"
                             placeholder="ФИО"
                             component={Input}
                         />
@@ -81,13 +73,13 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Контактный номер (телефон)"
-                        invalid={errors.contact && touched.contact}
-                        errorMessage={errors.contact}
+                        invalid={errors.phone && touched.phone}
+                        errorMessage={errors.phone}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="contact"
+                            name="phone"
                             placeholder="Контактный номер (телефон)"
                             component={Input}
                         />
@@ -98,13 +90,13 @@ const BasicInformationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Логин"
-                        invalid={errors.username && touched.username}
-                        errorMessage={errors.username}
+                        invalid={errors.login && touched.login}
+                        errorMessage={errors.login}
                     >
                         <Field
                             type="text"
                             autoComplete="off"
-                            name="username"
+                            name="login"
                             placeholder="Логин"
                             component={Input}
                         />
@@ -130,21 +122,20 @@ const BasicInformationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Регион"
-                        invalid={errors.districtId && touched.districtId}
-                        errorMessage={errors.districtId}
+                        label="Роль"
+                        invalid={errors.role && touched.role}
+                        errorMessage={errors.role}
                     >
-                        <Field name="districtId">
+                        <Field name="role">
                             {({ field, form }) => (
                                 <Select
                                     field={field}
                                     form={form}
-                                    options={formatData(regionsData.data?.distrs)}
-                                    value={formatData(
-                                        regionsData.data?.distrs
-                                    )?.filter(
-                                        (category) =>
-                                            category.value === values.districtId
+                                    options={rolesOptions}
+                                    value={
+                                        rolesOptions?.filter(
+                                        (roles) =>
+                                            roles.value == values.role
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(

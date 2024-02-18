@@ -2,16 +2,16 @@ import React, { useRef } from 'react'
 import { Input } from 'components/ui'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAgents, getCompanies, setTableData } from '../store/dataSlice'
 import debounce from 'lodash/debounce'
 import cloneDeep from 'lodash/cloneDeep'
+import { getEmployes } from '../store/dataSlice'
 
 const ProductTableSearch = () => {
     const dispatch = useDispatch()
 
     const searchInput = useRef()
 
-    const tableData = useSelector((state) => state.agentsList.data.tableData)
+    const tableData = useSelector((state) => state.employesStore.data.tableData)
 
     const debounceFn = debounce(handleDebounceFn, 500)
 
@@ -29,8 +29,8 @@ const ProductTableSearch = () => {
     }
 
     const fetchData = (data) => {
-        dispatch(setTableData(data))
-        dispatch(getAgents(data))
+        // dispatch(setTableData(data))
+        dispatch(getEmployes(data))
     }
 
     const onEdit = (e) => {

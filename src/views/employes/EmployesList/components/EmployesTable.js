@@ -1,30 +1,22 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
-import {
-    HiOutlineEye,
-    HiOutlineEyeOff,
-    HiOutlinePencil,
-} from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-    getAgents,
-    inActiveAgent,
-    setTableData,
-} from '../store/dataSlice'
+import { getEmployes, setTableData } from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
-import CompanyDeleteConfirmation from './AgentsDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
+import { apiPatchActivityEmployes } from 'services/SalesService'
 
 const inventoryStatusColor = {
-    1: {
+    0: {
         label: 'Активный',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    0: {
+    1: {
         label: 'Неактивныйы',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
@@ -37,15 +29,15 @@ const ActionColumn = ({ row }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/agents/edit/${row.id}`)
+        navigate(`/employes/edit/${row.id}`)
     }
 
     const onEditActivity = () => {
-        dispatch(inActiveAgent({ id: row.id }))
+        dispatch(apiPatchActivityEmployes({ user_id: row.id, is_deleted: `${!row.is_deleted}`}))
 
         if (row.id) {
             popNotification('изменено активность')
-            dispatch(getAgents({}))
+            dispatch(getEmployes({}))
         }
     }
 
@@ -62,7 +54,7 @@ const ActionColumn = ({ row }) => {
                 placement: 'top-center',
             }
         )
-        navigate(`/agents`)
+        navigate(`/employes`)
     }
 
     return (
@@ -77,7 +69,7 @@ const ActionColumn = ({ row }) => {
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
-                {row.in_active ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+                {row.in_active ? <HiOutlineEyeOff /> : <HiOutlineEye />}
             </span>
         </div>
     )
@@ -94,7 +86,7 @@ const CompanyColumn = ({ row }) => {
         <div className="flex items-center">
             {/* {avatar} */}
             <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                {row.fullname}
+                {row.first_name} {row.last_name}
             </span>
         </div>
     )
@@ -106,14 +98,16 @@ const CompanyTable = () => {
     const dispatch = useDispatch()
 
     const { pageIndex, pageSize, search, total } = useSelector(
-        (state) => state.agentsList.data.tableData
+        (state) => state.employesStore.data.tableData
     )
 
-    const filterData = useSelector((state) => state.agentsList.data.filterData)
+    const filterData = useSelector(
+        (state) => state.employesStore.data.filterData
+    )
 
-    const loading = useSelector((state) => state.agentsList.data.loading)
+    const loading = useSelector((state) => state.employesStore.data.loading)
 
-    const data = useSelector((state) => state.agentsList.data.agentsList.list)
+    const data = useSelector((state) => state.employesStore.data.employesList)
 
     useEffect(() => {
         fetchData()
@@ -132,14 +126,20 @@ const CompanyTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getAgents({ pageIndex, pageSize, search }))
+        dispatch(
+            getEmployes({
+                offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
+                limit: pageSize,
+                search,
+            })
+        )
     }
 
     const columns = useMemo(
         () => [
             {
                 header: 'И.Ф.О.',
-                accessorKey: 'fullname',
+                accessorKey: 'first_name',
                 width: '250px',
                 cell: (props) => {
                     const row = props.row.original
@@ -148,62 +148,53 @@ const CompanyTable = () => {
             },
             {
                 header: 'Контакт',
-                accessorKey: 'contact',
+                accessorKey: 'phone',
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.contact}</span>
+                    return <span className="capitalize">{row.phone}</span>
                 },
             },
             {
                 header: 'Логин',
-                accessorKey: 'username',
+                accessorKey: 'login',
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.username}</span>
+                    return <span className="capitalize">{row.login}</span>
                 },
             },
             // {
-            //     header: 'Пароль',
-            //     accessorKey: 'password',
+            //     header: 'Регион',
+            //     accessorKey: 'region_id',
             //     width: '200px',
             //     cell: (props) => {
             //         const row = props.row.original
-            //         return <span className="capitalize">{row.password}</span>
+            //         return <span className="capitalize">{row.ru_district}</span>
             //     },
             // },
-            {
-                header: 'Регион',
-                accessorKey: 'region_id',
-                width: '200px',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.ru_district}</span>
-                },
-            },
             {
                 header: 'Статус',
                 accessorKey: 'in_active',
                 width: '200px',
                 cell: (props) => {
-                    const { in_active } = props.row.original
+                    const { is_deleted } = props.row.original
                     return (
                         <div className="flex items-center gap-2">
                             <Badge
                                 className={
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .dotClass
                                 }
                             />
                             <span
                                 className={`capitalize font-semibold ${
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .textClass
                                 }`}
                             >
                                 {
-                                    inventoryStatusColor[isActive(in_active)]
+                                    inventoryStatusColor[isActive(is_deleted)]
                                         .label
                                 }
                             </span>
@@ -246,7 +237,6 @@ const CompanyTable = () => {
                 onPaginationChange={onPaginationChange}
                 onSelectChange={onSelectChange}
             />
-            <CompanyDeleteConfirmation />
         </>
     )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { toast, Notification } from 'components/ui'
 import { useNavigate } from 'react-router-dom'
 import { apiCreateAgent } from 'services/SalesService'
-import AgentsForm from '../AgentsForm'
+import AgentsForm from '../EmployesForm'
 
 const AgentsNew = () => {
     const navigate = useNavigate()

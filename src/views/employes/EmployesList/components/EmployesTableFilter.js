@@ -1,6 +1,6 @@
 import React from 'react'
 import { Select, Badge } from 'components/ui'
-import { getAgents, getCategories, setFilterData } from '../store/dataSlice'
+import { getEmployes, setFilterData } from '../store/dataSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { components } from 'react-select'
 import { HiCheck } from 'react-icons/hi'
@@ -9,8 +9,8 @@ const { Control } = components
 
 const options = [
     { value: '', label: 'Все', color: 'bg-gray-500' },
-    { value: 'true', label: 'Активные', color: 'bg-emerald-500' },
-    { value: 'false', label: 'Неактивные', color: 'bg-red-500' },
+    { value: 'false', label: 'Активные', color: 'bg-emerald-500' },
+    { value: 'true', label: 'Неактивные', color: 'bg-red-500' },
 ]
 
 const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {
@@ -47,18 +47,17 @@ const CustomControl = ({ children, ...props }) => {
     )
 }
 
-const AgentsTableFilter = () => {
+const NotificationTableFIlter = () => {
     const dispatch = useDispatch()
 
-    const {status} = useSelector(
-        (state) => state.agentsList.data.filterData
+    const { status } = useSelector(
+        (state) => state.employesStore.data.filterData
     )
 
     const onStatusFilterChange = (selected) => {
         dispatch(setFilterData({ status: selected?.value }))
-        dispatch(getAgents({active: selected?.value}))
+        dispatch(getEmployes({is_deleted: selected?.value}))
     }
-    
 
     return (
         <Select
@@ -75,4 +74,4 @@ const AgentsTableFilter = () => {
     )
 }
 
-export default AgentsTableFilter
+export default NotificationTableFIlter
