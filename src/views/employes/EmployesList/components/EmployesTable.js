@@ -3,7 +3,7 @@ import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getEmployes, setTableData } from '../store/dataSlice'
+import { getEmployes, patchActivityEmployes, setTableData } from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
@@ -33,8 +33,13 @@ const ActionColumn = ({ row }) => {
     }
 
     const onEditActivity = () => {
-        dispatch(apiPatchActivityEmployes({ user_id: row.id, is_deleted: `${!row.is_deleted}`}))
-
+        dispatch(
+            patchActivityEmployes({
+                user_id: row.id,
+                is_deleted: `${!row.is_deleted}`,
+                is_block: 'false',
+            })
+        )
         if (row.id) {
             popNotification('изменено активность')
             dispatch(getEmployes({}))
@@ -69,7 +74,7 @@ const ActionColumn = ({ row }) => {
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
-                {row.in_active ? <HiOutlineEyeOff /> : <HiOutlineEye />}
+                {row.is_deleted ? <HiOutlineEyeOff /> : <HiOutlineEye />}
             </span>
         </div>
     )
@@ -108,6 +113,8 @@ const CompanyTable = () => {
     const loading = useSelector((state) => state.employesStore.data.loading)
 
     const data = useSelector((state) => state.employesStore.data.employesList)
+
+    // console.log('data', data)
 
     useEffect(() => {
         fetchData()

@@ -46,11 +46,17 @@ const dataSlice = createSlice({
     },
     extraReducers: {
         [getEmployes.fulfilled]: (state, action) => {
-            state.employesList = action.payload
+            state.employesList = action.payload.data
             state.tableData.total = action.payload.total_count
             state.loading = false
         },
         [getEmployes.pending]: (state) => {
+            state.loading = true
+        },
+        [patchActivityEmployes.fulfilled]: (state, action) => {
+            state.loading = false
+        },
+        [patchActivityEmployes.pending]: (state) => {
             state.loading = true
         },
     },

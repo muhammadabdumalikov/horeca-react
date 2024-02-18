@@ -9,13 +9,13 @@ export const protectedRoutes = [
         key: 'products',
         path: '/products',
         component: React.lazy(() => import('views/products/ProductsList')),
-        authority: [ADMIN],
+        authority: [ADMIN, DELIVERY],
     },
     {
         key: 'products',
         path: '/products/add',
         component: React.lazy(() => import('views/products/ProductNew')),
-        authority: [ADMIN],
+        authority: [ADMIN, DELIVERY],
     },
     {
         key: 'products',
@@ -33,13 +33,13 @@ export const protectedRoutes = [
         key: 'companies',
         path: '/companies/add',
         component: React.lazy(() => import('views/companies/CompanyNew')),
-        authority: [],
+        authority: [DELIVERY],
     },
     {
         key: 'companies',
         path: '/companies/edit/:id',
         component: React.lazy(() => import('views/companies/CompanyEdit')),
-        authority: [],
+        authority: [DELIVERY],
     },
     {
         key: 'categories',

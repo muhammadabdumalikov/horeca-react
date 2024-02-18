@@ -2,8 +2,11 @@ import { useMemo } from 'react'
 import isEmpty from 'lodash/isEmpty'
 
 function useAuthority(userAuthority = [], authority = [], emptyCheck = false) {
+
+    // console.log('userAuthority', userAuthority, authority)
+
     const roleMatched = useMemo(() => {
-        return authority.some((role) => userAuthority.includes(role))
+        return authority.some((role) => [userAuthority].includes(role))
     }, [authority, userAuthority])
 
     if (
@@ -13,8 +16,6 @@ function useAuthority(userAuthority = [], authority = [], emptyCheck = false) {
     ) {
         return !emptyCheck
     }
-
-    console.log('roleMatched', roleMatched)
 
     return roleMatched
 }

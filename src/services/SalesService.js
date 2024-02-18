@@ -248,7 +248,7 @@ export async function apiUpdateEmploye(data) {
 }
 export async function apiPatchActivityEmployes(data) {
     return ApiService.fetchData({
-        url: '/root/worker-list/set-status',
+        url: '/admin/users/set-status',
         method: 'post',
         data,
     })

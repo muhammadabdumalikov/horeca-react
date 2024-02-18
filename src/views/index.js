@@ -13,8 +13,8 @@ import AppRoute from 'components/route/AppRoute'
 const { authenticatedEntryPath } = appConfig
 
 const AllRoutes = (props) => {
-    const userAuthority = useSelector((state) => state.auth.user.username)
-
+    const userAuthority = useSelector((state) => state.auth.user.userInfo?.role)
+    // console.log(protectedRoutes, "protectedRoutes")
     return (
         <Routes>
             <Route path="/" element={<ProtectedRoute />}>
