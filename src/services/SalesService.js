@@ -193,13 +193,7 @@ export async function apiUpdateAgent(data) {
         data,
     })
 }
-export async function apiCreateAgent(data) {
-    return ApiService.fetchData({
-        url: '/agent/create',
-        method: 'post',
-        data,
-    })
-}
+
 export async function apiGetRegions(params) {
     return ApiService.fetchData({
         url: '/region',
@@ -245,9 +239,23 @@ export async function apiGetEmployesById({id}) {
         method: 'get',
     })
 }
+export async function apiUpdateEmploye(data) {
+    return ApiService.fetchData({
+        url: `admin/users/${data.id}`,
+        method: 'patch',
+        data
+    })
+}
 export async function apiPatchActivityEmployes(data) {
     return ApiService.fetchData({
         url: '/root/worker-list/set-status',
+        method: 'post',
+        data,
+    })
+}
+export async function apiCreateEmployes(data) {
+    return ApiService.fetchData({
+        url: '/root/create-worker',
         method: 'post',
         data,
     })

@@ -40,3 +40,10 @@ export async function apiResetPassword(data) {
         data,
     })
 }
+export async function apiGetUserInfoByToken(params) {
+    return ApiService.fetchData({
+        url: `/user/profile`,
+        method: 'get',
+        params,
+    })
+}

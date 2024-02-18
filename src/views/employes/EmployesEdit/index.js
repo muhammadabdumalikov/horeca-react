@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getEmployesById, updateAgent } from './store/dataSlice'
+import { getEmployesById, updateEmploye } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
 import ProductForm from '../EmployesForm'
 
@@ -26,7 +26,7 @@ const ProductEdit = () => {
     const handleFormSubmit = async (values, setSubmitting) => {
         try {
             setSubmitting(true)
-            const success = await updateAgent(values)
+            const success = await updateEmploye(values)
             if (success) {
                 popNotification('обновлено')
             }
@@ -51,7 +51,7 @@ const ProductEdit = () => {
     }
 
     const handleDiscard = () => {
-        navigate('/agents')
+        navigate('/employes')
     }
 
     const popNotification = (keyword) => {
@@ -67,7 +67,7 @@ const ProductEdit = () => {
                 placement: 'top-center',
             }
         )
-        navigate('/agents')
+        navigate('/employes')
     }
 
     useEffect(() => {

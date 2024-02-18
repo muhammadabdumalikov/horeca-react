@@ -5,8 +5,8 @@ import { Field } from 'formik'
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
 const rolesOptions = [
-    { value: '2', label: 'Администратор' },
-    { value: '4', label: 'Доставщик' },
+    { value: 2, label: 'Администратор' },
+    { value: 4, label: 'Доставщик' },
 ]
 
 const BasicInformationFields = (props) => {

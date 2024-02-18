@@ -1,5 +1,6 @@
 import React from 'react'
 import authRoute from './authRoute'
+import { ADMIN, DELIVERY } from 'constants/roles.constant'
 
 export const publicRoutes = [...authRoute]
 
@@ -8,25 +9,25 @@ export const protectedRoutes = [
         key: 'products',
         path: '/products',
         component: React.lazy(() => import('views/products/ProductsList')),
-        authority: [],
+        authority: [ADMIN],
     },
     {
         key: 'products',
         path: '/products/add',
         component: React.lazy(() => import('views/products/ProductNew')),
-        authority: [],
+        authority: [ADMIN],
     },
     {
         key: 'products',
         path: '/products/edit/:id',
         component: React.lazy(() => import('views/products/ProductEdit')),
-        authority: [],
+        authority: [ADMIN],
     },
     {
         key: 'companies',
         path: '/companies',
         component: React.lazy(() => import('views/companies/CompanyList')),
-        authority: [],
+        authority: [DELIVERY],
     },
     {
         key: 'companies',

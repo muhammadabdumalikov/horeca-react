@@ -1,21 +1,21 @@
 import React from 'react'
 import { toast, Notification } from 'components/ui'
 import { useNavigate } from 'react-router-dom'
-import { apiCreateAgent } from 'services/SalesService'
+import { apiCreateEmployes } from 'services/SalesService'
 import AgentsForm from '../EmployesForm'
 
 const AgentsNew = () => {
     const navigate = useNavigate()
 
-    const addAgent = async (data) => {
-        const response = await apiCreateAgent(data)
+    const addEmployes = async (data) => {
+        const response = await apiCreateEmployes(data)
         return response.data
     }
 
     const handleFormSubmit = async (values, setSubmitting) => {
         try {
             setSubmitting(true)
-            const success = await addAgent(values)
+            const success = await addEmployes(values)
 
             if (success) {
                 toast.push(
@@ -24,13 +24,13 @@ const AgentsNew = () => {
                         type="success"
                         duration={2500}
                     >
-                        Агент успешно добавлен
+                        Сотрудник успешно добавлен
                     </Notification>,
                     {
                         placement: 'top-center',
                     }
                 )
-                navigate('/agents')
+                navigate('/employes')
             }
             setSubmitting(false)
         } catch (e) {
@@ -53,7 +53,7 @@ const AgentsNew = () => {
     }
 
     const handleDiscard = () => {
-        navigate('/agents')
+        navigate('/employes')
     }
 
     return (

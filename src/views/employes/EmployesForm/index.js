@@ -12,14 +12,14 @@ import reducer from './store'
 injectReducer('agentsForm', reducer)
 
 const validationSchema = Yup.object().shape({
-    password: Yup.string().required('Введите  пароль агента'),
-    districtId: Yup.string().required('Введите регион агента'),
-    fullname: Yup.string().required('Введите Ф.И.О агента'),
-    contact: Yup.string().matches(
-        /^[0-9]{2}[ -]?[0-9]{3}[ -]?[0-9]{4}$/,
+    password: Yup.string().required('Введите  пароль'),
+    first_name: Yup.string().required('Введите Фамилию'),
+    last_name: Yup.string().required('Введите Имя'),
+    phone: Yup.string().required(
         'Номер телефона не действителен'
     ),
-    username: Yup.string().required('Введите логин агента'),
+    login: Yup.string().required('Введите логин агента'),
+    role: Yup.string().required('Выберите роль'),
 })
 
 const AgentsForm = forwardRef((props, ref) => {
@@ -91,11 +91,12 @@ const AgentsForm = forwardRef((props, ref) => {
 AgentsForm.defaultProps = {
     type: 'edit',
     initialData: {
-        districtId: '',
-        fullname: '',
-        contact: '',
+        phone: '',
+        first_name: '',
+        last_name: '',
         username: '',
         password: '',
+        role: '',
     },
 }
 

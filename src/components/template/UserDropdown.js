@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Avatar, Dropdown } from 'components/ui'
 import withHeaderItem from 'utils/hoc/withHeaderItem'
 import useAuth from 'utils/hooks/useAuth'
@@ -6,12 +6,26 @@ import useAuth from 'utils/hooks/useAuth'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { HiOutlineUser, HiOutlineLogout } from 'react-icons/hi'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUserInfoByToken } from 'store/auth/userSlice'
 
 const dropdownItemList = []
 
+const roles = {
+    2: 'Администратор',
+    4: 'Доставщик',
+}
+
 export const UserDropdown = ({ className }) => {
+    const dispatch = useDispatch()
+
     // bind this
-    // const userInfo = useSelector((state) => state.auth.user)
+    const userInfo = useSelector((state) => state.auth.user.userInfo)
+    const { token } = useSelector((state) => state.auth.session)
+
+    useEffect(() => {
+        dispatch(getUserInfoByToken(token))
+    }, [token])
 
     const { signOut } = useAuth()
 
@@ -19,8 +33,8 @@ export const UserDropdown = ({ className }) => {
         <div className={classNames(className, 'flex items-center gap-2')}>
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
-                <div className="text-xs capitalize">admin</div>
-                <div className="font-bold">User01</div>
+                <div className="text-xs capitalize">{roles[userInfo?.role]}</div>
+                <div className="font-bold">{`${userInfo?.first_name} ${userInfo?.last_name}`}</div>
             </div>
         </div>
     )
@@ -37,9 +51,9 @@ export const UserDropdown = ({ className }) => {
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
                             <div className="font-bold text-gray-900 dark:text-gray-100">
-                                User01
+                                {`${userInfo?.first_name} ${userInfo?.last_name}`}
                             </div>
-                            <div className="text-xs">user01@mail.com</div>
+                            {/* <div className="text-xs">user01@mail.com</div> */}
                         </div>
                     </div>
                 </Dropdown.Item>

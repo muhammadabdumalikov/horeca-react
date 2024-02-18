@@ -23,7 +23,7 @@ const ProductTableTools = () => {
             </Link>
             <Link
                 className="block lg:inline-block md:mb-0 mb-4"
-                to="/agents/add"
+                to="/employes/add"
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
                     Добавить агента

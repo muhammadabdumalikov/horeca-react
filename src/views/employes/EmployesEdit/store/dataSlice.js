@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import {  apiGetEmployesById, apiUpdateAgent } from 'services/SalesService'
+import {  apiGetEmployesById, apiUpdateEmploye } from 'services/SalesService'
 
 export const getEmployesById = createAsyncThunk(
     'employesStore/data/getEmployesById',
@@ -9,8 +9,8 @@ export const getEmployesById = createAsyncThunk(
     }
 )
 
-export const updateAgent = async (data) => {
-    const response = await apiUpdateAgent(data)
+export const updateEmploye = async (data) => {
+    const response = await apiUpdateEmploye(data)
     return response.data
 }
 

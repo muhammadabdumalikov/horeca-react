@@ -16,8 +16,8 @@ function useAuth() {
 
     const { token, signedIn } = useSelector((state) => state.auth.session)
 
-    // console.log('token', token)
-    // console.log('signedIn', signedIn)
+    const {userInfo} = useSelector((state) => state.auth.user)
+
 
     const signIn = async (values) => {
 
@@ -65,7 +65,7 @@ function useAuth() {
                 if (resp.data.user) {
                     dispatch(
                         setUser(
-                            resp.data.user || {
+                            userInfo || {
                                 avatar: '',
                                 userName: 'Anonymous',
                                 authority: ['USER'],
@@ -93,7 +93,7 @@ function useAuth() {
 
     const handleSignOut = () => {
         dispatch(onSignOutSuccess())
-        // dispatch(setUser(initialState))
+        dispatch(setUser(initialState))
         navigate(appConfig.unAuthenticatedEntryPath)
     }
 
