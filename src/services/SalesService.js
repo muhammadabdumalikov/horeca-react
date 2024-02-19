@@ -260,3 +260,12 @@ export async function apiCreateEmployes(data) {
         data,
     })
 }
+
+//orders
+export async function apiGetOrders(params) {
+    return ApiService.fetchData({
+        url: '/admin/order/list',
+        method: 'get',
+        params,
+    })
+}
