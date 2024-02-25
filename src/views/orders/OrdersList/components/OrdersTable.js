@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
+import { HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import {  getOrders, patchActivityEmployes, setTableData } from '../store/dataSlice'
+import {  getOrders, setTableData } from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { Link, useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
@@ -35,21 +35,7 @@ const ActionColumn = ({ row }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/employes/edit/${row.id}`)
-    }
-
-    const onEditActivity = () => {
-        dispatch(
-            patchActivityEmployes({
-                user_id: row.id,
-                is_deleted: `${!row.is_deleted}`,
-                is_block: 'false',
-            })
-        )
-        if (row.id) {
-            popNotification('изменено активность')
-            dispatch(getOrders({}))
-        }
+        navigate(`/orders/edit/${row.id}`)
     }
 
     const popNotification = (keyword) => {
@@ -76,12 +62,7 @@ const ActionColumn = ({ row }) => {
             >
                 <HiOutlinePencil />
             </span>
-            <span
-                className="cursor-pointer p-2 hover:text-red-500"
-                onClick={onEditActivity}
-            >
-                {row.is_deleted ? <HiOutlineEyeOff /> : <HiOutlineEye />}
-            </span>
+          
         </div>
     )
 }

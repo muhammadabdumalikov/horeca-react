@@ -96,6 +96,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'orderEdit',
+        path: '/orders/edit/:id',
+        component: React.lazy(() => import('views/orders/OrdersEdit')),
+        authority: [],
+    },
+    {
         key: 'notifications',
         path: '/notifications',
         component: React.lazy(() => import('views/notifications/NotificationList')),

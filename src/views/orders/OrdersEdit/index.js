@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getEmployesById, updateEmploye } from './store/dataSlice'
+import { getOrderById, updateEmploye } from './store/dataSlice'
 import isEmpty from 'lodash/isEmpty'
-import ProductForm from '../EmployesForm'
+// import ProductForm from '../EmployesForm'
 
-injectReducer('salesAgentEdit', reducer)
+injectReducer('ordersStoreEdit', reducer)
 
 const ProductEdit = () => {
     const dispatch = useDispatch()
@@ -17,10 +17,10 @@ const ProductEdit = () => {
     const { id } = useParams()
 
     const agentsData = useSelector(
-        (state) => state.salesAgentEdit.data.agentsList
+        (state) => state.ordersStoreEdit.data.ordersItem
     )
 
-    const loading = useSelector((state) => state.salesAgentEdit.data.loading)
+    const loading = useSelector((state) => state.ordersStoreEdit.data.loading)
 
 
     const handleFormSubmit = async (values, setSubmitting) => {
@@ -51,7 +51,7 @@ const ProductEdit = () => {
     }
 
     const handleDiscard = () => {
-        navigate('/employes')
+        navigate('/orders')
     }
 
     const popNotification = (keyword) => {
@@ -67,11 +67,11 @@ const ProductEdit = () => {
                 placement: 'top-center',
             }
         )
-        navigate('/employes')
+        navigate('/orders')
     }
 
     useEffect(() => {
-        dispatch(getEmployesById({id}))
+        dispatch(getOrderById({id}))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
@@ -80,12 +80,12 @@ const ProductEdit = () => {
             <Loading loading={loading}>
                 {!isEmpty(agentsData) && (
                     <>
-                        <ProductForm
+                        {/* <ProductForm
                             type="edit"
                             initialData={agentsData}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
-                        />
+                        /> */}
                     </>
                 )}
             </Loading>

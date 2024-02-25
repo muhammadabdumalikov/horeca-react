@@ -269,3 +269,11 @@ export async function apiGetOrders(params) {
         params,
     })
 }
+
+
+export async function apiGetOrderById({id}) {
+    return ApiService.fetchData({
+        url: `admin/order/${id}`,
+        method: 'get',
+    })
+}
