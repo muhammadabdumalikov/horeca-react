@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Card, Avatar } from 'components/ui'
 import { GrowShrinkTag, MediaSkeleton, Loading } from 'components/shared'
-import { getCustomerStatistic } from '../store/dataSlice'
 import {
     HiOutlineUserGroup,
-    HiOutlineUserAdd,
-    HiOutlineUsers,
 } from 'react-icons/hi'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import NumberFormat from 'react-number-format'
 
 const StatisticCard = (props) => {
@@ -56,7 +53,7 @@ const StatisticCard = (props) => {
 }
 
 const CustomerStatistic = () => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const data = useSelector((state) => state.crmCustomers.data.customerList)
 
@@ -79,11 +76,11 @@ const CustomerStatistic = () => {
                 icon={<HiOutlineUserGroup />}
                 avatarClass="!bg-indigo-600"
                 label="Всего пользователей"
-                value={data.data_users?.all_count}
-                growthRate={0}
+                value={data.length}
+                growthRate={data.length}
                 // loading={loading}
             />
-            <StatisticCard
+            {/* <StatisticCard
                 icon={<HiOutlineUsers />}
                 avatarClass="!bg-blue-500"
                 label="Активные пользователи"
@@ -98,7 +95,7 @@ const CustomerStatistic = () => {
                 value={data.data_users?.this_month}
                 growthRate={10}
                 // loading={loading}
-            />
+            /> */}
         </div>
     )
 }
