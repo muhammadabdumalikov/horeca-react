@@ -41,7 +41,7 @@ const SideNav = () => {
     const sideNavCollapse = useSelector(
         (state) => state.theme.layout.sideNavCollapse
     )
-    const userAuthority = useSelector((state) => state.auth.user.authority)
+    const userAuthority = useSelector((state) => state.auth.user.userInfo?.role)
 
     const { larger } = useResponsive()
 
@@ -64,13 +64,14 @@ const SideNav = () => {
         return navMode
     }
 
+
     const menuContent = (
         <VerticalMenuContent
             navMode={navMode}
             collapsed={sideNavCollapse}
             navigationTree={navigationConfig}
             routeKey={currentRouteKey}
-            userAuthority={userAuthority}
+            userAuthority={[userAuthority]}
             direction={direction}
         />
     )

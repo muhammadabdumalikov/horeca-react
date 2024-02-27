@@ -34,7 +34,7 @@ const StackedSideNav = () => {
     const currentRouteKey = useSelector(
         (state) => state.base.common.currentRouteKey
     )
-    const userAuthority = useSelector((state) => state.auth.user.authority)
+    const userAuthority = useSelector((state) => state.auth.user.userInfo?.role)
 
     const { larger } = useResponsive()
 

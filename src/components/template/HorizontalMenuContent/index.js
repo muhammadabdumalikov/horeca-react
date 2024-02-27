@@ -13,10 +13,11 @@ import { useTranslation } from 'react-i18next'
 
 const HorizontalMenuContent = ({ manuVariant, userAuthority = [] }) => {
     const { t } = useTranslation()
-
+console.log(userAuthority, "userAuthority")
     return (
         <span className="flex items-center">
             {navigationConfig.map((nav) => {
+                console.log(nav)
                 if (
                     nav.type === NAV_ITEM_TYPE_TITLE ||
                     nav.type === NAV_ITEM_TYPE_COLLAPSE

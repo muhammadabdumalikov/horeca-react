@@ -42,7 +42,7 @@ const MobileNav = () => {
     const sideNavCollapse = useSelector(
         (state) => state.theme.layout.sideNavCollapse
     )
-    const userAuthority = useSelector((state) => state.auth.user.authority)
+    const userAuthority = useSelector((state) => state.auth.user.userInfo?.role)
 
     const { smaller } = useResponsive()
 

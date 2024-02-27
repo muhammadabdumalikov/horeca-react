@@ -13,7 +13,7 @@ const SecondaryHeader = (props) => {
     const primaryColorLevel = useSelector(
         (state) => state.theme.primaryColorLevel
     )
-    const userAuthority = useSelector((state) => state.auth.user.authority)
+    const userAuthority = useSelector((state) => state.auth.user.userInfo?.role)
 
     const { larger } = useResponsive()
 

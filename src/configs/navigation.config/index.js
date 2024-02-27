@@ -13,7 +13,7 @@ const navigationConfig = [
         translateKey: 'nav.products',
         icon: 'products',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [ADMIN, DELIVERY],
+        authority: [ADMIN],
         subMenu: [],
     },
     {
@@ -23,7 +23,7 @@ const navigationConfig = [
         translateKey: 'nav.companies',
         icon: 'buildings',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [DELIVERY],
+        authority: [ADMIN],
         subMenu: [],
     },
     {
@@ -33,7 +33,7 @@ const navigationConfig = [
         translateKey: 'nav.categories',
         icon: 'catalog',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ADMIN],
         subMenu: [],
     },
     {
@@ -43,7 +43,7 @@ const navigationConfig = [
         translateKey: 'nav.employes',
         icon: 'agents',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ADMIN],
         subMenu: [],
     },
     {
@@ -53,7 +53,17 @@ const navigationConfig = [
         translateKey: 'nav.orders',
         icon: 'incomeBox',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ADMIN],
+        subMenu: [],
+    },
+    {
+        key: 'deliveryOrders',
+        path: '/delivery-orders',
+        title: 'Заказы',
+        translateKey: 'nav.orders',
+        icon: 'incomeBox',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [DELIVERY],
         subMenu: [],
     },
     {
@@ -63,7 +73,7 @@ const navigationConfig = [
         translateKey: 'nav.users',
         icon: 'users',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ADMIN],
         subMenu: [],
     },
     {
@@ -73,7 +83,7 @@ const navigationConfig = [
         translateKey: 'nav.notifications',
         icon: 'notification',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ADMIN],
         subMenu: [],
     },
 
