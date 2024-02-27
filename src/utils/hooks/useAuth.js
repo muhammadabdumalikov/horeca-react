@@ -18,7 +18,6 @@ function useAuth() {
 
     const {userInfo} = useSelector((state) => state.auth.user)
 
-
     const signIn = async (values) => {
 
         try {
@@ -39,7 +38,8 @@ function useAuth() {
                         )
                     )
                 }
-                const redirectUrl = query.get(REDIRECT_URL_KEY)
+                const redirectUrl = userInfo.role === 2 ? "/products" : "/delivery-orders"
+
                 navigate(
                     redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath
                 )
