@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetOrders, apiPatchActivityEmployes } from 'services/SalesService'
+import { apiGetOrders, apiUpdateOrderStatus } from 'services/SalesService'
 
 export const getOrders = createAsyncThunk(
     'employesStore/data/getOrders',
@@ -9,10 +9,10 @@ export const getOrders = createAsyncThunk(
     }
 )
 
-export const patchActivityEmployes = createAsyncThunk(
-    'employesStore/data/patchActivityEmployes',
+export const updateOrderStatus = createAsyncThunk(
+    'employesStore/data/updateStatus',
     async (data) => {
-        const response = await apiPatchActivityEmployes(data)
+        const response = await apiUpdateOrderStatus(data)
         return response.data
     }
 )
@@ -57,10 +57,10 @@ const dataSlice = createSlice({
         [getOrders.pending]: (state) => {
             state.loading = true
         },
-        [patchActivityEmployes.fulfilled]: (state, action) => {
+        [updateOrderStatus.fulfilled]: (state, action) => {
             state.loading = false
         },
-        [patchActivityEmployes.pending]: (state) => {
+        [updateOrderStatus.pending]: (state) => {
             state.loading = true
         },
     },

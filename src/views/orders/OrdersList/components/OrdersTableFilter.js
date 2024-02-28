@@ -9,8 +9,10 @@ const { Control } = components
 
 const options = [
     { value: '', label: 'Все', color: 'bg-gray-500' },
-    { value: 'false', label: 'Активные', color: 'bg-emerald-500' },
-    { value: 'true', label: 'Неактивные', color: 'bg-red-500' },
+    { value: 1, label: 'Принял', color: 'bg-emerald-500' },
+    { value: 2, label: 'Доставка', color: 'bg-emerald-500' },
+    { value: 3, label: 'Доставленный', color: 'bg-emerald-500' },
+    { value: 4, label: 'Отменено', color: 'bg-red-500' },
 ]
 
 const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {
@@ -56,7 +58,7 @@ const NotificationTableFIlter = () => {
 
     const onStatusFilterChange = (selected) => {
         dispatch(setFilterData({ status: selected?.value }))
-        dispatch(getOrders({is_deleted: selected?.value}))
+        dispatch(getOrders({status: selected?.value}))
     }
 
     return (

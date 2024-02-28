@@ -270,10 +270,28 @@ export async function apiGetOrders(params) {
     })
 }
 
+export async function apiUpdateOrderStatus(data) {
+    return ApiService.fetchData({
+        url: '/admin/order/set-status',
+        method: 'post',
+        data,
+    })
+}
+
 
 export async function apiGetOrderById({id}) {
     return ApiService.fetchData({
         url: `admin/order/${id}`,
         method: 'get',
+    })
+}
+
+//delivery orders
+
+export async function apiGetDeliveryOrders (params) {
+    return ApiService.fetchData({
+        url: '/admin/order/list-by-deliver',
+        method: 'get',
+        params,
     })
 }

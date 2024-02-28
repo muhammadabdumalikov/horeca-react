@@ -7,9 +7,14 @@ import {
     HiOutlineClipboardCheck,
 } from 'react-icons/hi'
 import {HiOutlineArrowLeft } from 'react-icons/hi2'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { updateOrderStatus } from 'views/orders/OrdersList/store/dataSlice'
 
 const OrdersStep = ({ onDiscard }) => {
+
+    const dispatch = useDispatch()
+    const {id} = useParams()
 
     const orderItem = useSelector((state) => state.ordersStore.data.orderItem)
 
@@ -43,6 +48,10 @@ const OrdersStep = ({ onDiscard }) => {
 
     const onPrevious = () => onChange(step - 1)
 
+    useEffect(() => {
+        dispatch(updateOrderStatus({order_id: id, status: `${step}` }))
+    }, [step])
+
     return (
         <AdaptableCard className="h-full" bodyClass="h-full">
             <div className="lg:flex items-center justify-between mb-4">
@@ -61,7 +70,7 @@ const OrdersStep = ({ onDiscard }) => {
             {/* vertical */}
             <Steps vertical={windowWidth < 600} current={step} status="error">
                 <Steps.Item title="Принял" customIcon={<HiOutlineLogin />} />
-                <Steps.Item title="Доставка" customIcon={  <HiOutlineLogin />} />
+                <Steps.Item title="Доставка" customIcon={<HiOutlineLogin />} />
                 {/* <Spinner /> */}
                 {/* <Steps.Item
                     title="Отменено"

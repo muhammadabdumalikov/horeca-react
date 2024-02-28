@@ -16,7 +16,6 @@ const ProductEdit = () => {
 
     const loading = useSelector((state) => state.ordersStore.data.loading)
 
-
     // const handleFormSubmit = async (values, setSubmitting) => {
     //     try {
     //         setSubmitting(true)
@@ -69,15 +68,7 @@ const ProductEdit = () => {
             <Loading loading={false}>
                 {!isEmpty([{}]) && (
                     <>
-                    <OrdersStep
-                        onDiscard={handleDiscard}
-                    />
-                        {/* <ProductForm
-                            type="edit"
-                            initialData={[]}
-                            onFormSubmit={handleFormSubmit}
-                            onDiscard={handleDiscard}
-                        /> */}
+                        <OrdersStep onDiscard={handleDiscard} />
                     </>
                 )}
             </Loading>

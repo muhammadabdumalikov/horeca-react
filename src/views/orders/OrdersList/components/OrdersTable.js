@@ -1,26 +1,13 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { Badge, Notification, toast } from 'components/ui'
+import {  Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import {  getOrders, setOrderItem, setTableData } from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
-import { isActive } from 'utils/checkActive'
 
-const inventoryStatusColor = {
-    0: {
-        label: 'Активный',
-        dotClass: 'bg-emerald-500',
-        textClass: 'text-emerald-500',
-    },
-    1: {
-        label: 'Неактивный',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-}
 
 const statusOfOrder = {
     1: "Принял",
@@ -183,36 +170,7 @@ const CompanyTable = () => {
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <Link to='x' ><span className="capitalize text-blue-500">Локация</span></Link>
-                },
-            },
-            {
-                header: 'Статус',
-                accessorKey: 'in_active',
-                width: '200px',
-                cell: (props) => {
-                    const { is_deleted } = props.row.original
-                    return (
-                        <div className="flex items-center gap-2">
-                            <Badge
-                                className={
-                                    inventoryStatusColor[isActive(is_deleted)]
-                                        .dotClass
-                                }
-                            />
-                            <span
-                                className={`capitalize font-semibold ${
-                                    inventoryStatusColor[isActive(is_deleted)]
-                                        .textClass
-                                }`}
-                            >
-                                {
-                                    inventoryStatusColor[isActive(is_deleted)]
-                                        .label
-                                }
-                            </span>
-                        </div>
-                    )
+                    return <a target='_blank' href={`https://yandex.com/maps/?ll=${row?.location.long},${row?.location.lat}&z=14`} ><span className="capitalize text-blue-500">Локация</span></a>
                 },
             },
             {

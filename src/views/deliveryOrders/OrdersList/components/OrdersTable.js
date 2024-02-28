@@ -3,7 +3,7 @@ import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import {  getOrders, setOrderItem, setTableData } from '../store/dataSlice'
+import {  getDeliveryOrders, setOrderItem, setTableData } from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { Link, useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
@@ -57,12 +57,12 @@ const ActionColumn = ({ row }) => {
 
     return (
         <div className="flex justify-end text-lg">
-            <span
+            {/* <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
             >
                 <HiOutlinePencil />
-            </span>
+            </span> */}
           
         </div>
     )
@@ -122,10 +122,9 @@ const CompanyTable = () => {
 
     const fetchData = () => {
         dispatch(
-            getOrders({
+            getDeliveryOrders({
                 offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
                 limit: pageSize,
-                search,
             })
         )
     }

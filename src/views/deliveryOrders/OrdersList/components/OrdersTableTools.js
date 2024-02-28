@@ -1,14 +1,14 @@
 import React from 'react'
-import { Button } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
-import ProductTableSearch from './OrdersTableSearch'
+// import { Button } from 'components/ui'
+// import { HiPlusCircle } from 'react-icons/hi'
+// import ProductTableSearch from './OrdersTableSearch'
 import { Link } from 'react-router-dom'
 import AgentsTableFilter from './OrdersTableFilter'
 
 const ProductTableTools = () => {
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
-            <ProductTableSearch />
+            {/* <ProductTableSearch /> */}
             <AgentsTableFilter />
 
             <Link

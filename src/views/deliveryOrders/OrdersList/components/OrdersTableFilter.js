@@ -1,6 +1,6 @@
 import React from 'react'
 import { Select, Badge } from 'components/ui'
-import { getOrders, setFilterData } from '../store/dataSlice'
+import { getDeliveryOrders, getOrders, setFilterData } from '../store/dataSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { components } from 'react-select'
 import { HiCheck } from 'react-icons/hi'
@@ -9,8 +9,10 @@ const { Control } = components
 
 const options = [
     { value: '', label: 'Все', color: 'bg-gray-500' },
-    { value: 'false', label: 'Активные', color: 'bg-emerald-500' },
-    { value: 'true', label: 'Неактивные', color: 'bg-red-500' },
+    { value: 1, label: 'Принял', color: 'bg-emerald-500' },
+    { value: 2, label: 'Доставка', color: 'bg-emerald-500' },
+    { value: 3, label: 'Доставленный', color: 'bg-emerald-500' },
+    { value: 4, label: 'Отменено', color: 'bg-red-500' },
 ]
 
 const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {
@@ -56,7 +58,7 @@ const NotificationTableFIlter = () => {
 
     const onStatusFilterChange = (selected) => {
         dispatch(setFilterData({ status: selected?.value }))
-        dispatch(getOrders({is_deleted: selected?.value}))
+        dispatch(getDeliveryOrders({status: selected?.value}))
     }
 
     return (
