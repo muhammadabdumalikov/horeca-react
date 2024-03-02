@@ -1,5 +1,5 @@
 import React from 'react'
-import { AdaptableCard, RichTextEditor } from 'components/shared'
+import { AdaptableCard } from 'components/shared'
 import { Input, FormItem } from 'components/ui'
 import { Field } from 'formik'
 
@@ -36,16 +36,23 @@ const BasicInformationFields = (props) => {
                 invalid={errors.body && touched.body}
                 errorMessage={errors.body}
             >
-                <Field name="body">
-                    {({ field, form }) => (
+                <Field
+                    type="text"
+                    autoComplete="off"
+                    name="body"
+                    placeholder="Введите содержание уведомления"
+                    component={Input}
+                    textArea
+                />
+                {/* {({ field, form }) => (
                         <RichTextEditor
                             value={field.value}
                             onChange={(val) =>
                                 form.setFieldValue(field.name, val)
                             }
                         />
-                    )}
-                </Field>
+                    )} */}
+                {/* </Field> */}
             </FormItem>
         </AdaptableCard>
     )
