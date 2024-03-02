@@ -235,13 +235,13 @@ export async function apiGetEmployes(params) {
 }
 export async function apiGetEmployesById({id}) {
     return ApiService.fetchData({
-        url: `admin/users/${id}`,
+        url: `/admin/users/${id}`,
         method: 'get',
     })
 }
 export async function apiUpdateEmploye(data) {
     return ApiService.fetchData({
-        url: `admin/users/${data.id}`,
+        url: `/root/update-worker/${data.id}`,
         method: 'patch',
         data
     })
@@ -253,6 +253,8 @@ export async function apiPatchActivityEmployes(data) {
         data,
     })
 }
+
+// workers
 export async function apiCreateEmployes(data) {
     return ApiService.fetchData({
         url: '/root/create-worker',
@@ -260,6 +262,8 @@ export async function apiCreateEmployes(data) {
         data,
     })
 }
+
+
 
 //orders
 export async function apiGetOrders(params) {

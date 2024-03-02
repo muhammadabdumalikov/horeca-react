@@ -89,7 +89,7 @@ const CompanyTable = () => {
 
     const data = useSelector((state) => state.ordersStore.data.ordersList)
 
-    // console.log('data', data)
+    console.log('data', data)
 
     useEffect(() => {
         fetchData()
