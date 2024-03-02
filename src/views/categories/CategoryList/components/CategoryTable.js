@@ -53,7 +53,7 @@ const ActionColumn = ({ row }) => {
 
         if( row.id ){
             popNotification('изменено активность')
-            dispatch(getCategories({limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1), search})) 
+            dispatch(getCategories({})) 
         }
     }
 

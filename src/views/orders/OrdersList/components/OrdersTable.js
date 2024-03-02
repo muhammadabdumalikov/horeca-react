@@ -150,10 +150,10 @@ const CompanyTable = () => {
                 header: 'Комментарий',
                 accessorKey: 'comment',
                 width: '200px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <span className="capitalize">{row.login}</span>
-                // },
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span>{row.comment?.slice(0, 20)}{row.comment?.length > 20 && '...'}</span>
+                },
             },
             {
                 header: 'Статус заказа',

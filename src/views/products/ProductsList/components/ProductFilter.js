@@ -43,8 +43,8 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
     }, [])
 
     const fetchData = () => {
-        dispatch(getCategory({}))
-        dispatch(getCompany({}))
+        dispatch(getCategory({is_deleted: false}))
+        dispatch(getCompany({is_deleted: false}))
     }
 
     const categoryOptions = categoryList?.map((category) => ({
@@ -67,25 +67,74 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
             }}
         >
             {({ values, touched, errors }) => (
-                    <Form>
-                        <FormContainer>
-                            <FormItem
-                                label="Категория товара"
-                                invalid={
-                                    errors.category_id && touched.category_id
-                                }
-                                errorMessage={errors.category_id}
-                            >
-                                <Field name="category_id">
-                                    {({ field, form }) => (
+                <Form>
+                    <FormContainer>
+                        <FormItem
+                            label="Категория товара"
+                            invalid={errors.category_id && touched.category_id}
+                            errorMessage={errors.category_id}
+                        >
+                            <Field name="category_id">
+                                {({ field, form }) => (
+                                    <Select
+                                        field={field}
+                                        form={form}
+                                        options={[
+                                            {
+                                                label: 'Все',
+                                                value: '',
+                                            },
+                                            ...categoryOptions,
+                                        ]}
+                                        value={[
+                                            {
+                                                label: 'Все',
+                                                value: '',
+                                            },
+                                            ...categoryOptions,
+                                        ]?.filter(
+                                            (category) =>
+                                                category.value ===
+                                                values.category_id
+                                        )}
+                                        onChange={(option) =>
+                                            form.setFieldValue(
+                                                field.name,
+                                                option.value
+                                            )
+                                        }
+                                    />
+                                )}
+                            </Field>
+                        </FormItem>
+                        <FormItem
+                            label="Производитель"
+                            invalid={errors.company_id && touched.company_id}
+                            errorMessage={errors.company_id}
+                        >
+                            <Field name="company_id">
+                                {({ field, form }) => {
+                                    return (
                                         <Select
                                             field={field}
                                             form={form}
-                                            options={categoryOptions}
-                                            value={categoryOptions?.filter(
-                                                (category) =>
-                                                    category.value ===
-                                                    values.category_id
+                                            options={[
+                                                {
+                                                    label: 'Все',
+                                                    value: '',
+                                                },
+                                                ...companyOptions,
+                                            ]}
+                                            value={[
+                                                {
+                                                    label: 'Все',
+                                                    value: '',
+                                                },
+                                                ...companyOptions,
+                                            ]?.filter(
+                                                (tag) =>
+                                                    tag.value ===
+                                                    values.company_id
                                             )}
                                             onChange={(option) =>
                                                 form.setFieldValue(
@@ -94,66 +143,34 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
                                                 )
                                             }
                                         />
-                                    )}
-                                </Field>
-                            </FormItem>
-                            <FormItem
-                                label="Производитель"
-                                invalid={errors.company_id && touched.company_id}
-                                errorMessage={errors.company_id}
-                            >
-                                <Field name="company_id">
-                                    {({ field, form }) => {
-                                        return (
-                                            <Select
-                                                field={field}
-                                                form={form}
-                                                options={companyOptions}
-                                                value={companyOptions?.filter(
-                                                    (tag) =>
-                                                        tag.value ===
-                                                        values.company_id
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option.value
-                                                    )
-                                                }
-                                            />
-                                        )
-                                    }}
-                                </Field>
-                            </FormItem>
-                            <FormItem
-                                invalid={errors.is_deleted && touched.is_deleted}
-                                errorMessage={errors.is_deleted}
-                            >
-                                <h6 className="mb-4">Статус продукта</h6>
-                                <Field name="is_deleted">
-                                    {({ field, form }) => (
-                                        <Radio.Group
-                                            vertical
-                                            value={values.is_deleted}
-                                            onChange={(val) =>
-                                                form.setFieldValue(
-                                                    field.name,
-                                                    val
-                                                )
-                                            }
-                                        >
-                                            <Radio value={null}>Все</Radio>
-                                            <Radio value={true}>Неактивно</Radio>
-                                            <Radio value={false}>
-                                                Активно
-                                            </Radio>
-                                        </Radio.Group>
-                                    )}
-                                </Field>
-                            </FormItem>
-                        </FormContainer>
-                    </Form>
-                )}
+                                    )
+                                }}
+                            </Field>
+                        </FormItem>
+                        <FormItem
+                            invalid={errors.is_deleted && touched.is_deleted}
+                            errorMessage={errors.is_deleted}
+                        >
+                            <h6 className="mb-4">Статус продукта</h6>
+                            <Field name="is_deleted">
+                                {({ field, form }) => (
+                                    <Radio.Group
+                                        vertical
+                                        value={values.is_deleted}
+                                        onChange={(val) =>
+                                            form.setFieldValue(field.name, val)
+                                        }
+                                    >
+                                        <Radio value={null}>Все</Radio>
+                                        <Radio value={"true"}>Неактивно</Radio>
+                                        <Radio value={"false"}>Активно</Radio>
+                                    </Radio.Group>
+                                )}
+                            </Field>
+                        </FormItem>
+                    </FormContainer>
+                </Form>
+            )}
         </Formik>
     )
 })

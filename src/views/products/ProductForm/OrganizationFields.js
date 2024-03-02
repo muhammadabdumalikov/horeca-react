@@ -6,11 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCategory, getCompany } from './store/dataSlice'
 import NumberFormat from 'react-number-format'
 
-
 const NumberInput = (props) => {
     return <Input {...props} value={Number(props.field.value)} />
 }
-
 
 const NumberFormatInput = ({ onValueChange, ...rest }) => {
     return (
@@ -41,8 +39,8 @@ const OrganizationFields = (props) => {
     }, [])
 
     const fetchData = () => {
-        dispatch(getCategory({}))
-        dispatch(getCompany({}))
+        dispatch(getCategory({ is_deleted: false }))
+        dispatch(getCompany({ is_deleted: false }))
     }
 
     const categoryOptions = categoryList?.map((category) => ({
@@ -74,7 +72,8 @@ const OrganizationFields = (props) => {
                                     options={categoryOptions}
                                     value={categoryOptions?.filter(
                                         (category) =>
-                                            category.value === values.category_id
+                                            category.value ===
+                                            values.category_id
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(
@@ -118,10 +117,12 @@ const OrganizationFields = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Количество шт. (на блоке)"
-                        invalid={errors.count_in_block && touched.count_in_block}
+                        invalid={
+                            errors.count_in_block && touched.count_in_block
+                        }
                         errorMessage={errors.count_in_block}
                     >
-                          <Field name="count_in_block">
+                        <Field name="count_in_block">
                             {({ field, form }) => {
                                 return (
                                     <NumberFormatInput
