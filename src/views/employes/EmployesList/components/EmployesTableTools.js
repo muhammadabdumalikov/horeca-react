@@ -26,7 +26,7 @@ const ProductTableTools = () => {
                 to="/employes/add"
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
-                    Добавить агента
+                    Добавить сотрудника
                 </Button>
             </Link>
         </div>
