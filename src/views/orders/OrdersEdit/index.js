@@ -1,89 +1,25 @@
-import React, { useEffect } from 'react'
-import { Loading, DoubleSidedImage } from 'components/shared'
-import { toast, Notification, Select } from 'components/ui'
-import { useSelector } from 'react-redux'
-import reducer from './../OrdersList/store'
+import React from 'react'
+import reducer from './store'
 import { injectReducer } from 'store/index'
-import { useNavigate } from 'react-router-dom'
-import isEmpty from 'lodash/isEmpty'
-import OrdersStep from './components/ordersStep'
-// import ProductForm from '../EmployesForm'
+import { AdaptableCard } from 'components/shared'
+import ProductTable from './components/ProductTable'
+import ProductTableTools from './components/ProductTableTools'
 
 injectReducer('ordersStore', reducer)
 
-const ProductEdit = () => {
-    const navigate = useNavigate()
+const ProductList = () => {
 
-    const loading = useSelector((state) => state.ordersStore.data.loading)
-
-    // const handleFormSubmit = async (values, setSubmitting) => {
-    //     try {
-    //         setSubmitting(true)
-    //         const success = await updateEmploye(values)
-    //         if (success) {
-    //             popNotification('обновлено')
-    //         }
-    //         setSubmitting(false)
-    //     } catch (e) {
-    //         if (e.response.status === 449) {
-    //             toast.push(
-    //                 <Notification
-    //                     title={'Ошибка'}
-    //                     type="danger"
-    //                     duration={2500}
-    //                 >
-    //                     {e.response.data.message}
-    //                 </Notification>,
-    //                 {
-    //                     placement: 'top-center',
-    //                 }
-    //             )
-    //         }
-    //         setSubmitting(false)
-    //     }
-    // }
-
-    const handleDiscard = () => {
-        navigate('/orders')
-    }
-
-    // const popNotification = (keyword) => {
-    //     toast.push(
-    //         <Notification
-    //             title={`Успешно ${keyword}`}
-    //             type="success"
-    //             duration={2500}
-    //         >
-    //             Агент успешно {keyword}
-    //         </Notification>,
-    //         {
-    //             placement: 'top-center',
-    //         }
-    //     )
-    //     navigate('/orders')
-    // }
+    
 
     return (
-        <>
-            <Loading loading={false}>
-                {!isEmpty([{}]) && (
-                    <>
-                        <OrdersStep onDiscard={handleDiscard} />
-                    </>
-                )}
-            </Loading>
-            {!loading && isEmpty([{}]) && (
-                <div className="h-full flex flex-col items-center justify-center">
-                    <DoubleSidedImage
-                        src="/img/others/img-2.png"
-                        darkModeSrc="/img/others/img-2-dark.png"
-                        alt="No product found!"
-                    />
-                    <h3 className="mt-8">Агент не найден!</h3>
-                </div>
-            )}
-        </>
+        <AdaptableCard className="h-full" bodyClass="h-full">
+            <div className="lg:flex items-center justify-between mb-4">
+                <h3 className="mb-4 lg:mb-0">Продукты</h3>
+                <ProductTableTools />
+            </div>
+            <ProductTable />
+        </AdaptableCard>
     )
 }
 
-export default ProductEdit
+export default ProductList
