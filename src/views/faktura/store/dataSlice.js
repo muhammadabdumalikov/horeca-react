@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetSalesOrders, apiDeleteSalesOrders, apiGetCustomers } from 'services/SalesService'
+import { apiGetSalesOrders, apiDeleteSalesOrders, apiGetCustomers, apiGetFaktura } from 'services/SalesService'
 
 export const getOrders = createAsyncThunk(
     'salesProductList/data/getOrders',
@@ -16,8 +16,8 @@ export const getCustomers = createAsyncThunk(
     }
 )
 
-export const deleteOrders = async (data) => {
-    const response = await apiDeleteSalesOrders(data)
+export const getFaktura = async (data) => {
+    const response = await apiGetFaktura(data)
     return response.data
 }
 

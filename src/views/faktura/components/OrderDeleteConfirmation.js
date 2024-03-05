@@ -7,7 +7,7 @@ import {
     setSelectedRow,
     setSelectedRows,
 } from '../store/stateSlice'
-import { deleteOrders, getOrders } from '../store/dataSlice'
+import { deleteOrders, getCustomers, getFaktura } from '../store/dataSlice'
 
 const OrderDeleteConfirmation = () => {
     const dispatch = useDispatch()
@@ -32,17 +32,19 @@ const OrderDeleteConfirmation = () => {
         }
     }
 
+    console.log(selectedRow, 'selectedRow')
+
     const onDelete = async () => {
         dispatch(setDeleteMode(''))
 
         if (deleteMode === 'single') {
-            const success = await deleteOrders({ id: selectedRow })
+            const success = await getFaktura({ user_ids: selectedRow })
             deleteSucceed(success)
             dispatch(setSelectedRow([]))
         }
 
         if (deleteMode === 'batch') {
-            const success = await deleteOrders({ id: selectedRows })
+            const success = await getFaktura({ user_ids: selectedRows })
             deleteSucceed(success, selectedRows.length)
             dispatch(setSelectedRows([]))
         }
@@ -50,7 +52,7 @@ const OrderDeleteConfirmation = () => {
 
     const deleteSucceed = (success, orders) => {
         if (success) {
-            dispatch(getOrders(tableData))
+            dispatch(getCustomers(tableData))
             toast.push(
                 <Notification
                     title={'Successfuly Deleted'}
