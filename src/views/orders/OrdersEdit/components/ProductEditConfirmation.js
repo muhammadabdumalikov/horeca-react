@@ -1,57 +1,56 @@
-import React from 'react'
-import { toast, Notification } from 'components/ui'
+import React, { useState } from 'react'
+import { Input, Notification, toast } from 'components/ui'
 import { ConfirmDialog } from 'components/shared'
 import { useSelector, useDispatch } from 'react-redux'
-import { toggleDeleteConfirmation } from '../store/stateSlice'
+import { toggleEditConfirmation } from '../store/stateSlice'
 import { apiOrderUpdate } from 'services/SalesService'
 import { useParams } from 'react-router-dom'
 import { getProductsByOrderId } from '../store/dataSlice'
 
-const ProductDeleteConfirmation = () => {
+const ProductEditConfirmation = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
 
     const dialogOpen = useSelector(
-        (state) => state.xordersStore.state.deleteConfirmation
+        (state) => state.xordersStore.state.editConfirmation
     )
-
     const selectedProduct = useSelector(
         (state) => state.xordersStore.state.selectedProduct
     )
 
-    const tableData = useSelector((state) => state.xordersStore.data.tableData)
-
     const onDialogClose = () => {
-        dispatch(toggleDeleteConfirmation(false))
+        dispatch(toggleEditConfirmation(false))
+    }
+
+    const [value, setValue] = useState(selectedProduct?.quantity)
+
+    const onChangeInput = (e) => {
+        setValue(e.target.value)
     }
 
     const onDelete = async () => {
-        dispatch(toggleDeleteConfirmation(false))
-
-        console.log('ok')
+        dispatch(toggleEditConfirmation(false))
 
         const success = await apiOrderUpdate({
             items: [
                 {
                     id: id,
                     order_item_id: selectedProduct.order_item_id,
-                    order_item_quantity: 0,
+                    order_item_quantity: Math.floor(value),
                 },
             ],
         })
-
-        console.log(success, 'success')
 
         if (success) {
             dispatch(getProductsByOrderId({ id: id }))
 
             toast.push(
                 <Notification
-                    title={'Успешно удален'}
+                    title={'Успешно изменено'}
                     type="success"
                     duration={2500}
                 >
-                    Продукт успешно удалено
+                    Количество успешно изменено
                 </Notification>,
                 {
                     placement: 'top-center',
@@ -65,19 +64,23 @@ const ProductDeleteConfirmation = () => {
             isOpen={dialogOpen}
             onClose={onDialogClose}
             onRequestClose={onDialogClose}
-            type="danger"
-            title="Удалить товар"
+            type="info"
+            title="Изменить количество товара"
             onCancel={onDialogClose}
             onConfirm={onDelete}
-            confirmButtonColor="red-600"
+            confirmButtonColor="blue-600"
+            confirmText="Cохранить"
         >
-            <p>
-                Вы уверены, что хотите удалить этот товар? Все, что связано с
-                записью к этому продукту также будут удалены. Это действие не
-                может быть отменено.
-            </p>
+            <p className="mb-4">{selectedProduct?.name_ru}</p>{' '}
+            <Input
+                defaultValue={selectedProduct?.quantity}
+                type="text"
+                autoComplete="off"
+                placeholder="Количество"
+                onChange={onChangeInput}
+            />
         </ConfirmDialog>
     )
 }
 
-export default ProductDeleteConfirmation
+export default ProductEditConfirmation

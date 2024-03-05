@@ -82,7 +82,7 @@ const ConfirmDialog = (props) => {
     }
 
     return (
-        <Dialog
+        <Dialog   
             style={{
                 marginTop: 250,
             }}

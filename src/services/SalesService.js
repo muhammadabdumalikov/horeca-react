@@ -296,6 +296,13 @@ export async function apiGetProductsByOrderId({id}) {
         method: 'get',
     })
 }
+export async function apiOrderUpdate(data) {
+    return ApiService.fetchData({
+        url: `/admin/order/order-update/${data.items?.[0].id}`,
+        method: 'patch',
+        data
+    })
+}
 
 //delivery orders
 
@@ -304,5 +311,13 @@ export async function apiGetDeliveryOrders (params) {
         url: '/admin/order/list-by-deliver',
         method: 'get',
         params,
+    })
+}
+
+export async function apiUpdateOrderDeliver(data) {
+    return ApiService.fetchData({
+        url: '/admin/order/set-deliver',
+        method: 'post',
+        data,
     })
 }

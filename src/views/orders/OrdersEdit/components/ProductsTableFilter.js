@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react'
-import { Select } from 'components/ui'
+import { Notification, Select, toast } from 'components/ui'
 // import { getNotifications, setFilterData } from '../store/dataSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { HiCheck } from 'react-icons/hi'
-import { getDelivers, setFilterData } from '../store/dataSlice'
+import { getDelivers, setFilterData, updateOrderDeliver } from '../store/dataSlice'
+import { useParams } from 'react-router-dom'
+import { apiUpdateOrderDeliver } from 'services/SalesService'
 
 const ProductsTableFilter = () => {
     const dispatch = useDispatch()
 
-    const { status } = useSelector((state) => state.ordersStore.data.filterData)
-    const deliversList = useSelector(
-        (state) => state.ordersStore.data.deliversList
-    )
+    const {id: orderId} = useParams()
 
-    console.log(deliversList, 'deliversList')
+    const { status } = useSelector((state) => state.xordersStore.data.filterData)
+    const deliversList = useSelector(
+        (state) => state.xordersStore.data.deliversList
+    )
 
     const sortOptions = (data) => {
         return data.map((item) => ({
@@ -40,13 +42,53 @@ const ProductsTableFilter = () => {
         )
     }
 
-    const onStatusFilterChange = (selected) => {
+    const changeDelivery = async (data) => {
+        const response = await apiUpdateOrderDeliver(data)
+        return response.data
+    }
+
+    const onStatusFilterChange = async (selected) => {
         dispatch(setFilterData({ status: selected?.value }))
-        // dispatch(getNotifications({is_deleted: selected?.value}))
+
+        try{
+            const {success} = await changeDelivery({order_id: orderId, deliver_id: selected?.value})
+
+            if (success) {
+                toast.push(
+                    <Notification
+                        title={'Успешно изменено'}
+                        type="success"
+                        duration={2500}
+                    >
+                        Доставщик успешно изменен
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+            }
+
+        }
+        catch(e){
+            if (e.response.status) {
+                toast.push(
+                    <Notification
+                        title={'Ошибка'}
+                        type="danger"
+                        duration={2500}
+                    >
+                        {e.response.data.message}
+                    </Notification>,
+                    {
+                        placement: 'top-center',
+                    }
+                )
+            }
+        }
     }
 
     useEffect(() => {
-        dispatch(getDelivers({}))
+        dispatch(getDelivers({role: 4}))
     }, [])
 
     return (

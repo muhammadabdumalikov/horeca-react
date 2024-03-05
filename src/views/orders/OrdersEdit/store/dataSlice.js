@@ -1,17 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetDelivers, apiGetProductsByOrderId } from 'services/SalesService'
+import { apiGetDelivers, apiGetProductsByOrderId, apiUpdateOrderDeliver } from 'services/SalesService'
 
 export const getProductsByOrderId = createAsyncThunk(
-    'ordersStore/data/getProductsByOrderId',
+    'xordersStore/data/getProductsByOrderId',
     async (data) => {
         const response = await apiGetProductsByOrderId(data)
         return response.data
     }
 )
 export const getDelivers = createAsyncThunk(
-    'ordersStore/data/getDelivers',
+    'xordersStore/data/getDelivers',
     async (data) => {
         const response = await apiGetDelivers(data)
+        return response.data
+    }
+)
+export const updateOrderDeliver = createAsyncThunk(
+    'xordersStore/data/updateOrderDeliver',
+    async (data) => {
+        const response = await apiUpdateOrderDeliver(data)
         return response.data
     }
 )
@@ -42,7 +49,7 @@ export const initialFilterData = {
 }
 
 const dataSlice = createSlice({
-    name: 'ordersStore/data',
+    name: 'xordersStore/data',
     initialState: {
         loading: false,
         productList: [],

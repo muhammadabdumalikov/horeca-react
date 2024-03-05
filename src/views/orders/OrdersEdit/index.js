@@ -5,11 +5,9 @@ import { AdaptableCard } from 'components/shared'
 import ProductTable from './components/ProductTable'
 import ProductTableTools from './components/ProductTableTools'
 
-injectReducer('ordersStore', reducer)
+injectReducer('xordersStore', reducer)
 
 const ProductList = () => {
-
-    
 
     return (
         <AdaptableCard className="h-full" bodyClass="h-full">

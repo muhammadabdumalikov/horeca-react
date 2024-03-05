@@ -1,18 +1,24 @@
 import React from 'react'
 import { Button } from 'components/ui'
 import {
-    HiDownload,
     HiOutlineArrowLeft,
     HiOutlineLocationMarker,
 } from 'react-icons/hi'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ProductsTableFilter from './ProductsTableFilter'
+import { useDispatch } from 'react-redux'
+import { toggleEditOrderStep } from '../store/stateSlice'
 
 const ProductTableTools = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleDiscard = () => {
-        navigate('/orders')
+        navigate("/orders")
+    }
+
+    const handleOrderStep = () => {
+        dispatch(toggleEditOrderStep(true))
     }
 
     return (
@@ -21,7 +27,7 @@ const ProductTableTools = () => {
             <ProductsTableFilter/>
             <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
                 <Button
-                    onClick={handleDiscard}
+                    onClick={handleOrderStep}
                     block
                     size="sm"
                     icon={<HiOutlineLocationMarker />}
@@ -29,7 +35,7 @@ const ProductTableTools = () => {
                     Процесс заказа
                 </Button>
             </div>
-            <Link
+            {/* <Link
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
                 to="/data/product-list.csv"
                 target="_blank"
@@ -38,7 +44,7 @@ const ProductTableTools = () => {
                 <Button block size="sm" icon={<HiDownload />}>
                     Скачать
                 </Button>
-            </Link>
+            </Link> */}
             <div className="flex flex-col lg:flex-row lg:items-center">
                 <Button
                     onClick={handleDiscard}

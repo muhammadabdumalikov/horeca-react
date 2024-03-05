@@ -1,51 +1,36 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { Avatar, Badge } from 'components/ui'
+import { Avatar } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-    getProducts,
     getProductsByOrderId,
     setTableData,
 } from '../store/dataSlice'
-import { setSelectedProduct } from '../store/stateSlice'
+import { setSelectedProduct, toggleEditConfirmation } from '../store/stateSlice'
 import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import ProductDeleteConfirmation from './ProductDeleteConfirmation'
-import { useNavigate, useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
+import ProductEditConfirmation from './ProductEditConfirmation'
+import ProductStepConfirmation from './ProductStepConfirmation'
 
-const inventoryStatusColor = {
-    0: {
-        label: 'In Stock',
-        dotClass: 'bg-emerald-500',
-        textClass: 'text-emerald-500',
-    },
-    1: {
-        label: 'Limited',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
-    },
-    2: {
-        label: 'Out of Stock',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-}
 
 const ActionColumn = ({ row }) => {
     const dispatch = useDispatch()
     const { textTheme } = useThemeClass()
-    const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/app/sales/product-edit/${row.id}`)
+        dispatch(toggleEditConfirmation(true))
+        dispatch(setSelectedProduct(row))
+
     }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedProduct(row.id))
+        dispatch(setSelectedProduct(row))
     }
 
     return (
@@ -76,7 +61,7 @@ const ProductColumn = ({ row }) => {
     return (
         <div className="flex items-center">
             {avatar}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.name_ru}</span>
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row?.name_ru}</span>
         </div>
     )
 }
@@ -89,14 +74,14 @@ const ProductTable = () => {
     const { id } = useParams()
 
     const { pageIndex, pageSize, sort, query, total } = useSelector(
-        (state) => state.ordersStore.data.tableData
+        (state) => state.xordersStore.data.tableData
     )
 
-    const filterData = useSelector((state) => state.ordersStore.data.filterData)
+    const filterData = useSelector((state) => state.xordersStore.data.filterData)
 
-    const loading = useSelector((state) => state.ordersStore.data.loading)
+    const loading = useSelector((state) => state.xordersStore.data.loading)
 
-    const data = useSelector((state) => state.ordersStore.data.productList)
+    const data = useSelector((state) => state.xordersStore.data.productList)
 
     // console.log(data, 'data')
     useEffect(() => {
@@ -191,6 +176,8 @@ const ProductTable = () => {
                 onSort={onSort}
             />
             <ProductDeleteConfirmation />
+            <ProductEditConfirmation/>
+            <ProductStepConfirmation/>
         </>
     )
 }

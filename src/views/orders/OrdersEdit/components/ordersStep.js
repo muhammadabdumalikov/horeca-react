@@ -1,23 +1,13 @@
-import { AdaptableCard } from 'components/shared'
-import { Button, Select, Spinner, Steps } from 'components/ui'
+import { Button, Steps } from 'components/ui'
 import { useEffect, useState } from 'react'
 import {
     HiOutlineLogin,
     HiOutlineDocumentSearch,
     HiOutlineClipboardCheck,
 } from 'react-icons/hi'
-import { HiOutlineArrowLeft } from 'react-icons/hi2'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { updateOrderStatus } from 'views/orders/OrdersList/store/dataSlice'
 
-const OrdersStep = ({ onDiscard }) => {
-    const dispatch = useDispatch()
-    const { id } = useParams()
+const OrdersStep = ({ step, setStep }) => {
 
-    // const orderItem = useSelector((state) => state.ordersStore.data.orderItem)
-
-    const [step, setStep] = useState(1)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
     useEffect(() => {
@@ -44,13 +34,11 @@ const OrdersStep = ({ onDiscard }) => {
 
     const onPrevious = () => onChange(step - 1)
 
-    useEffect(() => {
-        dispatch(updateOrderStatus({ order_id: id, status: `${step}` }))
-    }, [step])
+
 
     return (
         <>
-            <Steps vertical={windowWidth < 600} current={step} status="error">
+            <Steps vertical={windowWidth < 600} current={step}>
                 <Steps.Item title="Принял" customIcon={<HiOutlineLogin />} />
                 <Steps.Item title="Доставка" customIcon={<HiOutlineLogin />} />
                 {/* <Spinner /> */}
@@ -76,10 +64,10 @@ const OrdersStep = ({ onDiscard }) => {
                     disabled={step === 1}
                     onClick={onPrevious}
                 >
-                    Previous
+                    Назад
                 </Button>
                 <Button disabled={step === 3} variant="solid" onClick={onNext}>
-                    {step === 3 ? 'Completed' : 'Next'}
+                    {step === 3 ? 'Завершено' : 'Далее'}
                 </Button>
             </div>
         </>
