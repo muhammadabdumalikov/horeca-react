@@ -1,24 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetSalesOrders, apiDeleteSalesOrders, apiGetCustomers, apiGetFaktura } from 'services/SalesService'
+import { apiGetCustomers, apiGetFaktura } from 'services/SalesService'
 
-export const getOrders = createAsyncThunk(
-    'salesProductList/data/getOrders',
-    async (data) => {
-        const response = await apiGetSalesOrders(data)
-        return response.data
-    }
-)
 export const getCustomers = createAsyncThunk(
-    'crmCustomers/data/getCustomers',
+    'fakturaStore/data/getCustomers',
     async (data) => {
         const response = await apiGetCustomers(data)
         return response.data
     }
 )
 
+// export const getFaktura = createAsyncThunk(
+//     'fakturaStore/data/getFaktura',
+//     async (data) => {
+//         const response = await apiGetFaktura(data)
+//         return response.data
+//     }
+// )
+
 export const getFaktura = async (data) => {
     const response = await apiGetFaktura(data)
-    console.log(response, 'response')
     return response.data
 }
 
@@ -27,19 +27,16 @@ export const initialTableData = {
     pageIndex: 1,
     pageSize: 10,
     query: '',
-    sort: {
-        order: '',
-        key: '',
-    },
 }
 
 const dataSlice = createSlice({
-    name: 'salesOrderList/data',
+    name: 'fakturaStore/data',
     initialState: {
         loading: false,
         orderList: [],
         tableData: initialTableData,
-        customersList: []
+        customersList: [],
+        fakturaItem: []
     },
     reducers: {
         setOrderList: (state, action) => {
@@ -50,20 +47,20 @@ const dataSlice = createSlice({
         },
     },
     extraReducers: {
-        [getOrders.fulfilled]: (state, action) => {
-            state.orderList = action.payload.data
-            state.tableData.total = action.payload.total
-            state.loading = false
-        },
-        [getOrders.pending]: (state) => {
-            state.loading = true
-        },
         [getCustomers.fulfilled]: (state, action) => {
             state.orderList = action.payload.data
             state.tableData.total = action.payload.total
             state.loading = false
         },
         [getCustomers.pending]: (state) => {
+            state.loading = true
+        },
+        [getFaktura.fulfilled]: (state, action) => {
+            console.log(action.payload, 'action.payload')
+            state.fakturaItem = action.payload
+            state.loading = false
+        },
+        [getFaktura.pending]: (state) => {
             state.loading = true
         },
     },

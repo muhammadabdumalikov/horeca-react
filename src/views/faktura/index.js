@@ -2,9 +2,9 @@ import React from 'react'
 import reducer from './store'
 import { injectReducer } from 'store/index'
 import { AdaptableCard } from 'components/shared'
-import OrdersTable from './components/OrdersTable'
-import OrdersTableTools from './components/OrdersTableTools'
-import OrderDeleteConfirmation from './components/OrderDeleteConfirmation'
+import FakturaTable from './components/FakturaTable'
+import OrdersTableTools from './components/FakturaTableTools'
+import OrderDeleteConfirmation from './components/FakturaGetConfirmation'
 
 injectReducer('fakturaStore', reducer)
 
@@ -15,7 +15,7 @@ const OrderList = () => {
                 <h3 className="mb-4 lg:mb-0">Фактура</h3>
                 <OrdersTableTools />
             </div>
-            <OrdersTable />
+            <FakturaTable />
             <OrderDeleteConfirmation />
         </AdaptableCard>
     )

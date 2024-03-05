@@ -2,12 +2,11 @@ import React, { useRef } from 'react'
 import { Input } from 'components/ui'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCustomers, getOrders, setTableData } from '../store/dataSlice'
+import { getCustomers,setTableData } from '../store/dataSlice'
 import debounce from 'lodash/debounce'
 import cloneDeep from 'lodash/cloneDeep'
-import { getEmployes } from 'views/employes/EmployesList/store/dataSlice'
 
-const OrderTableSearch = () => {
+const FakturaSearch = () => {
     const dispatch = useDispatch()
 
     const searchInput = useRef()
@@ -32,7 +31,7 @@ const OrderTableSearch = () => {
 
     const fetchData = (data) => {
         dispatch(setTableData({ ...data}))
-        // dispatch(getCustomers({...data, ...filterData}))
+        dispatch(getCustomers({search: data?.search}))
     }
 
     const onEdit = (e) => {
@@ -51,4 +50,4 @@ const OrderTableSearch = () => {
     )
 }
 
-export default OrderTableSearch
+export default FakturaSearch

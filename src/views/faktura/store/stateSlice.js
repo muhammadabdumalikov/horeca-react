@@ -2,7 +2,7 @@ import { createSlice, current } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
 
 const stateSlice = createSlice({
-    name: 'salesOrderList/state',
+    name: 'fakturaStore/state',
     initialState: {
         selectedRows: [],
         selectedRow: [],
