@@ -1,22 +1,23 @@
-import React, { forwardRef } from 'react'
+import React, { useRef } from 'react'
 import { Input } from 'components/ui'
 import { HiOutlineSearch } from 'react-icons/hi'
-import debounce from 'lodash/debounce'
-import { setTableData } from '../store/dataSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { cloneDeep } from 'lodash'
+import { getCustomers, getOrders, setTableData } from '../store/dataSlice'
+import debounce from 'lodash/debounce'
+import cloneDeep from 'lodash/cloneDeep'
+import { getEmployes } from 'views/employes/EmployesList/store/dataSlice'
 
-const CustomerTableSearch = forwardRef((props, ref) => {
-    // const { onInputChange } = props
-
+const OrderTableSearch = () => {
     const dispatch = useDispatch()
 
-    const tableData = useSelector((state) => state.crmCustomers.data.tableData)
-    const { status } = useSelector(
-        (state) => state.crmCustomers.data.filterData
+    const searchInput = useRef()
+
+    const tableData = useSelector(
+        (state) => state.fakturaStore.data.tableData
     )
 
     const debounceFn = debounce(handleDebounceFn, 500)
+
     function handleDebounceFn(val) {
         const newTableData = cloneDeep(tableData)
         newTableData.search = val
@@ -30,24 +31,24 @@ const CustomerTableSearch = forwardRef((props, ref) => {
     }
 
     const fetchData = (data) => {
-        dispatch(setTableData({ ...data, active: status }))
+        dispatch(setTableData({ ...data}))
         // dispatch(getCustomers({...data, ...filterData}))
     }
 
-    const handleInputChange = (e) => {
+    const onEdit = (e) => {
         debounceFn(e.target.value)
     }
 
     return (
         <Input
-            ref={ref}
-            className="max-w-md md:w-52 mb-4"
+            ref={searchInput}
+            className="lg:w-52"
             size="sm"
             placeholder="Search"
             prefix={<HiOutlineSearch className="text-lg" />}
-            onChange={handleInputChange}
+            onChange={onEdit}
         />
     )
-})
+}
 
-export default CustomerTableSearch
+export default OrderTableSearch

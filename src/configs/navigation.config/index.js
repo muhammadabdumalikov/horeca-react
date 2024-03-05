@@ -86,7 +86,16 @@ const navigationConfig = [
         authority: [ADMIN],
         subMenu: [],
     },
-
+    {
+        key: 'faktura',
+        path: '/faktura',
+        title: 'Фактура',
+        translateKey: 'nav.faktura',
+        icon: 'catalog',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [ADMIN],
+        subMenu: [],
+    },
 
     // {
     //     key: 'collapseMenu',
