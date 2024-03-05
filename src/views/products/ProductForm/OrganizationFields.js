@@ -143,6 +143,34 @@ const OrganizationFields = (props) => {
                     </FormItem>
                 </div>
                 <div className="col-span-1">
+                    <FormItem
+                        label="Количество остатка"
+                        invalid={
+                            errors.product_count && touched.product_count
+                        }
+                        errorMessage={errors.product_count}
+                    >
+                        <Field name="product_count">
+                            {({ field, form }) => {
+                                return (
+                                    <NumberFormatInput
+                                        form={form}
+                                        field={field}
+                                        placeholder="Количество"
+                                        customInput={NumberInput}
+                                        onValueChange={(e) => {
+                                            form.setFieldValue(
+                                                field.name,
+                                                parseInt(e.value)
+                                            )
+                                        }}
+                                    />
+                                )
+                            }}
+                        </Field>
+                    </FormItem>
+                </div>
+                {/* <div className="col-span-1"> */}
                     {/* <FormItem
                         label="Тип товара"
                         invalid={errors.type && touched.type}
@@ -167,7 +195,7 @@ const OrganizationFields = (props) => {
                             )}
                         </Field>
                     </FormItem> */}
-                </div>
+                {/* </div> */}
             </div>
         </AdaptableCard>
     )

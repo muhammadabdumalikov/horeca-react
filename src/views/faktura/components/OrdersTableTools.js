@@ -1,12 +1,13 @@
 import React from 'react'
 import { Button } from 'components/ui'
-import { HiOutlineDownload } from 'react-icons/hi'
+import { HiDownload, HiOutlineDownload } from 'react-icons/hi'
 import OrderTableSearch from './OrderTableSearch'
 import { useSelector, useDispatch } from 'react-redux'
 import { setDeleteMode } from '../store/stateSlice'
 import DatePickerRange from 'components/ui/DatePicker/DatePickerRange'
 // import { Link } from 'react-router-dom'
 import { setStartDate, setEndDate } from '../store/stateSlice'
+import { Link } from 'react-router-dom'
 
 
 const BatchDeleteButton = () => {

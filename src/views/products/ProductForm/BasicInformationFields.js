@@ -63,13 +63,14 @@ const BasicInformationFields = (props) => {
             </div>
             <FormItem
                 label="Код продукта"
-                invalid={errors.barcode && touched.barcode}
-                errorMessage={errors.barcode}
+                // invalid={errors.barcode && touched.barcode}
+                // errorMessage={errors.barcode}
             >
                 <Field
+                    disabled={true}
                     type="text"
                     autoComplete="off"
-                    name="barcode"
+                    // name="barcode"
                     placeholder="Код"
                     component={Input}
                 />

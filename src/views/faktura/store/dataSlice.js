@@ -18,6 +18,7 @@ export const getCustomers = createAsyncThunk(
 
 export const getFaktura = async (data) => {
     const response = await apiGetFaktura(data)
+    console.log(response, 'response')
     return response.data
 }
 
