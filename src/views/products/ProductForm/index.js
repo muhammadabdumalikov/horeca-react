@@ -11,6 +11,7 @@ import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
 import reducer from './store'
 import { injectReducer } from 'store'
+import ProviderPrice from './ProviderPrice'
 
 injectReducer('productForm', reducer)
 
@@ -55,6 +56,11 @@ const ProductForm = forwardRef((props, ref) => {
                                         values={values}
                                     />
                                     <PricingFields
+                                        touched={touched}
+                                        errors={errors}
+                                        values={values}
+                                    />
+                                    <ProviderPrice
                                         touched={touched}
                                         errors={errors}
                                         values={values}
@@ -119,7 +125,7 @@ ProductForm.defaultProps = {
         count_in_block: 0,
         product_count: 0,
         description: '',
-        count_price: null,
+        count_price: 0,
         discount_price: 0,
         block_price: 0,
     },

@@ -70,7 +70,7 @@ const BasicInformationFields = (props) => {
                     disabled={true}
                     type="text"
                     autoComplete="off"
-                    // name="barcode"
+                    name="barcode"
                     placeholder="Код"
                     component={Input}
                 />
