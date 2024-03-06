@@ -7,7 +7,6 @@ import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 const rolesOptions = [
     { value: 2, label: 'Администратор' },
     { value: 4, label: 'Доставщик' },
-    { value: 5, label: 'Поставщик' },
 ]
 
 const BasicInformationFields = (props) => {
