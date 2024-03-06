@@ -10,7 +10,6 @@ import {
 import { getCustomers, getFaktura } from '../store/dataSlice'
 import dayjs from 'dayjs'
 import { generateExcel } from './FakturaExelPattern'
-import { apiGetFaktura } from 'services/SalesService'
 
 const FakturaGetConfirmation = () => {
     const dispatch = useDispatch()
@@ -56,7 +55,6 @@ const FakturaGetConfirmation = () => {
                 to_date: dayjs(endDate).format('YYYY-MM-DD'),
             })
 
-            console.log(success, 'success')
             deleteSucceed(success, selectedRows.length)
             dispatch(setSelectedRows([]))
         }

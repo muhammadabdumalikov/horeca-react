@@ -24,21 +24,16 @@ const stateSlice = createSlice({
             state.selectedRow = action.payload
         },
         addRowItem: (state, { payload }) => {
-            const currentState = current(state)
-            if (!currentState.selectedRows.includes(payload)) {
-                return {
-                    selectedRows: [...currentState.selectedRows, ...payload],
+            payload.forEach(userId => {
+                if (!state.selectedRows.includes(userId)) {
+                    state.selectedRows.push(userId)
                 }
-            }
+            })
         },
         removeRowItem: (state, { payload }) => {
-            const currentState = current(state)
-            if (currentState.selectedRows.includes(payload)) {
-                return {
-                    selectedRows: currentState.selectedRows.filter(
-                        (id) => id !== payload
-                    ),
-                }
+            const index = state.selectedRows.indexOf(payload)
+            if (index !== -1) {
+                state.selectedRows.splice(index, 1)
             }
         },
         setDeleteMode: (state, action) => {
