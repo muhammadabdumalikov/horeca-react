@@ -48,22 +48,22 @@ const FakturaTableTools = () => {
 
     return (
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-            {/* {selectedRows.length > 0 && startDate && endDate && ( */}
+            {selectedRows.length > 0 && startDate && endDate && (
                 <BatchDeleteButton />
-            {/* )} */}
+            )}
             {/* <Link to="/data/order-list.csv" target="_blank" download>
                 <Button block size="sm" icon={<HiDownload />}>
                     Export
                 </Button>
             </Link> */}
-            {/* {selectedRows.length > 0 && ( */}
-            <DatePickerRange
-                value={[startDate, endDate]}
-                onChange={handleDateChange}
-                inputFormat={dateFormat}
-                size="sm"
-            />
-            {/* )} */}
+            {selectedRows.length > 0 && (
+                <DatePickerRange
+                    value={[startDate, endDate]}
+                    onChange={handleDateChange}
+                    inputFormat={dateFormat}
+                    size="sm"
+                />
+            )}
             <FakturaTableSearch />
         </div>
     )
