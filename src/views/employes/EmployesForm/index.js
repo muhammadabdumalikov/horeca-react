@@ -94,9 +94,9 @@ AgentsForm.defaultProps = {
         phone: '',
         first_name: '',
         last_name: '',
-        username: '',
         password: '',
         role: '',
+        login: ''
     },
 }
 

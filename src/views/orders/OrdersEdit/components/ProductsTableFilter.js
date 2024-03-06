@@ -1,21 +1,27 @@
 import React, { useEffect } from 'react'
 import { Notification, Select, toast } from 'components/ui'
-// import { getNotifications, setFilterData } from '../store/dataSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { HiCheck } from 'react-icons/hi'
-import { getDelivers, setFilterData, updateOrderDeliver } from '../store/dataSlice'
+import { getDelivers, setFilterData } from '../store/dataSlice'
 import { useParams } from 'react-router-dom'
 import { apiUpdateOrderDeliver } from 'services/SalesService'
 
 const ProductsTableFilter = () => {
     const dispatch = useDispatch()
 
-    const {id: orderId} = useParams()
+    const { id: orderId } = useParams()
 
-    const { status } = useSelector((state) => state.xordersStore.data.filterData)
+    const { status } = useSelector(
+        (state) => state.xordersStore.data.filterData
+    )
     const deliversList = useSelector(
         (state) => state.xordersStore.data.deliversList
     )
+    const productList = useSelector(
+        (state) => state.xordersStore.data.productList
+    )
+
+    console.log(productList?.deliver_id, 'productList')
 
     const sortOptions = (data) => {
         return data.map((item) => ({
@@ -24,7 +30,7 @@ const ProductsTableFilter = () => {
         }))
     }
 
-    const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {
+    const CustomSelectOption = ({ innerProps, label, isSelected }) => {
         return (
             <div
                 className={`flex items-center justify-between p-2 cursor-pointer ${
@@ -50,8 +56,11 @@ const ProductsTableFilter = () => {
     const onStatusFilterChange = async (selected) => {
         dispatch(setFilterData({ status: selected?.value }))
 
-        try{
-            const {success} = await changeDelivery({order_id: orderId, deliver_id: selected?.value})
+        try {
+            const { success } = await changeDelivery({
+                order_id: orderId,
+                deliver_id: selected?.value,
+            })
 
             if (success) {
                 toast.push(
@@ -67,9 +76,7 @@ const ProductsTableFilter = () => {
                     }
                 )
             }
-
-        }
-        catch(e){
+        } catch (e) {
             if (e.response.status) {
                 toast.push(
                     <Notification
@@ -88,7 +95,7 @@ const ProductsTableFilter = () => {
     }
 
     useEffect(() => {
-        dispatch(getDelivers({role: 4}))
+        dispatch(getDelivers({ role: 4 }))
     }, [])
 
     return (
@@ -100,6 +107,7 @@ const ProductsTableFilter = () => {
             components={{
                 Option: CustomSelectOption,
             }}
+            // defaultValue={{value: productList?.deliver_id, label: productList?.first_name}}
             value={sortOptions(deliversList).filter(
                 (option) => option.value === status
             )}
