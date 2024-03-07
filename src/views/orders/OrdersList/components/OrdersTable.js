@@ -89,7 +89,7 @@ const CompanyTable = () => {
 
     const data = useSelector((state) => state.ordersStore.data.ordersList)
 
-    console.log('data', data)
+    // console.log('data', data)
 
     useEffect(() => {
         fetchData()
@@ -130,7 +130,7 @@ const CompanyTable = () => {
             },
             {
                 header: 'Тип оплаты',
-                accessorKey: 'payment_type',
+                accessorKey: 'payment_type_name.name_ru',
                 width: '200px',
                 // cell: (props) => {
                 //     const row = props.row.original
@@ -138,7 +138,25 @@ const CompanyTable = () => {
                 // },
             },
             {
-                header: 'Сумма',
+                header: 'Статус оплаты',
+                accessorKey: 'paid_status',
+                width: '200px',
+                // cell: (props) => {
+                //     const row = props.row.original
+                //     return <span className="capitalize">{row.phone}</span>
+                // },
+            },
+            {
+                header: 'Оплаченная сумма',
+                accessorKey: 'paid',
+                width: '200px',
+                // cell: (props) => {
+                //     const row = props.row.original
+                //     return <span className="capitalize">{row.phone}</span>
+                // },
+            },
+            {
+                header: 'Сумма заказа',
                 accessorKey: 'total_sum',
                 width: '200px',
                 // cell: (props) => {

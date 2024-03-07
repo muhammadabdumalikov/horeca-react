@@ -20,6 +20,13 @@ export async function apiInActiveProdct(data) {
         data,
     })
 }
+export async function apiOrderUpdatePayment(data) {
+    return ApiService.fetchData({
+        url: `admin/order/set-payment`,
+        method: 'post',
+        data,
+    })
+}
 
 export async function apiGetSalesProduct(params) {
     return ApiService.fetchData({

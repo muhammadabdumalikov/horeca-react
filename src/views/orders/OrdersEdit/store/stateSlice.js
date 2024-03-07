@@ -6,9 +6,13 @@ const stateSlice = createSlice({
         deleteConfirmation: false,
         editConfirmation: false,
         editOrderStep: false,
+        editPayment: false,
         selectedProduct: '',
     },
     reducers: {
+        toggleEditPayment: (state, action) => {
+            state.editPayment = action.payload
+        },
         toggleEditOrderStep: (state, action) => {
             state.editOrderStep = action.payload
         },
@@ -24,7 +28,7 @@ const stateSlice = createSlice({
     },
 })
 
-export const { toggleDeleteConfirmation, setSelectedProduct, toggleEditConfirmation, toggleEditOrderStep } =
+export const { toggleDeleteConfirmation, setSelectedProduct, toggleEditConfirmation, toggleEditOrderStep, toggleEditPayment } =
     stateSlice.actions
 
 export default stateSlice.reducer

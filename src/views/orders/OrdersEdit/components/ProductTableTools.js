@@ -2,12 +2,13 @@ import React from 'react'
 import { Button } from 'components/ui'
 import {
     HiOutlineArrowLeft,
+    HiOutlineCash,
     HiOutlineLocationMarker,
 } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import ProductsTableFilter from './ProductsTableFilter'
 import { useDispatch } from 'react-redux'
-import { toggleEditOrderStep } from '../store/stateSlice'
+import { toggleEditOrderStep, toggleEditPayment } from '../store/stateSlice'
 
 const ProductTableTools = () => {
     const dispatch = useDispatch()
@@ -19,6 +20,9 @@ const ProductTableTools = () => {
 
     const handleOrderStep = () => {
         dispatch(toggleEditOrderStep(true))
+    }
+    const handleOpenEditPayment = () => {
+        dispatch(toggleEditPayment(true))
     }
 
     return (
@@ -33,6 +37,16 @@ const ProductTableTools = () => {
                     icon={<HiOutlineLocationMarker />}
                 >
                     Процесс заказа
+                </Button>
+            </div>
+            <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
+                <Button
+                    onClick={handleOpenEditPayment}
+                    block
+                    size="sm"
+                    icon={<HiOutlineCash />}
+                >
+                    Ввести сумму
                 </Button>
             </div>
             {/* <Link

@@ -16,6 +16,7 @@ import {  useParams } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import ProductEditConfirmation from './ProductEditConfirmation'
 import ProductStepConfirmation from './ProductStepConfirmation'
+import ProductEditPaymentConfirmation from './ProductEditPaymentConfirmation'
 
 
 const ActionColumn = ({ row }) => {
@@ -178,6 +179,7 @@ const ProductTable = () => {
             <ProductDeleteConfirmation />
             <ProductEditConfirmation/>
             <ProductStepConfirmation/>
+            <ProductEditPaymentConfirmation/>
         </>
     )
 }
