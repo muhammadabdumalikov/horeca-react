@@ -6,7 +6,9 @@ import {
     HiOutlineClipboardCheck,
 } from 'react-icons/hi'
 
-const OrdersStep = ({ step, setStep }) => {
+const OrdersStep =  ({ step, setStep }) => {
+
+    console.log(step, 'step')
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 

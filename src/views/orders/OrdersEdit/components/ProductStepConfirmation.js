@@ -17,6 +17,8 @@ const ProductStepConfirmation = () => {
         (state) => state.xordersStore.state.editOrderStep
     )
 
+    console.log(data?.status, 'data?.status')
+
     const onDialogClose = () => {
         dispatch(toggleEditOrderStep(false))
     }

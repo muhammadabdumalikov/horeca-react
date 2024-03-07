@@ -35,6 +35,8 @@ const ProviderPrice = (props) => {
         value: category.id,
     }))
 
+    // console.log(employesList, 'employesList')
+
     const dispatch = useDispatch()
 
     const fetchData = useCallback(async () => {
@@ -42,7 +44,9 @@ const ProviderPrice = (props) => {
         dispatch(getEmployes({ role: 5 }))
     }, [dispatch])
 
-    useEffect(() => {}, [fetchData])
+    useEffect(() => {
+        fetchData()
+    }, [fetchData])
 
     return (
         <AdaptableCard className="mb-4" divider>
