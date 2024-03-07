@@ -112,13 +112,8 @@ const CompanyTable = () => {
                 accessorKey: 'location',
                 width: '200px',
                 cell: (props) => {
-                    return (
-                        <Link to="x">
-                            <span className="capitalize text-blue-500">
-                                Локация
-                            </span>
-                        </Link>
-                    )
+                    const row = props.row.original
+                    return <a target='_blank' rel="noreferrer" href={`https://www.google.com/maps?q=${row?.location.lat},${row?.location.long}`} ><span className="capitalize text-blue-500">Локация</span></a>
                 },
             },
             {

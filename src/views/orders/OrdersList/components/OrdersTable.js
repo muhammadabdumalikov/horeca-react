@@ -135,7 +135,7 @@ const CompanyTable = () => {
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <a target='_blank' rel="noreferrer" href={`https://yandex.com/maps/?ll=${row?.location.long},${row?.location.lat}&z=14`} ><span className="capitalize text-blue-500">Локация</span></a>
+                    return <a target='_blank' rel="noreferrer" href={`https://www.google.com/maps?q=${row?.location.lat},${row?.location.long}`} ><span className="capitalize text-blue-500">Локация</span></a>
                 },
             },
             {

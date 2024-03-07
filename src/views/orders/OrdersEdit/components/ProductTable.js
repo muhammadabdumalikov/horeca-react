@@ -84,7 +84,7 @@ const ProductTable = () => {
 
     const data = useSelector((state) => state.xordersStore.data.productList)
 
-    // console.log(data, 'data')
+    console.log(data, 'data')
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,6 +115,16 @@ const ProductTable = () => {
                     return <ProductColumn row={row} />
                 },
             },
+            // {
+            //     header: 'Тип оплаты',
+            //     accessorKey: 'payment_type_name',
+            //     width: '200px',
+            //     cell: (props) => {
+            //         const { payment_type_name } = props.row.original
+            //         console.log
+            //         return <span>{payment_type_name?.name_ru}</span>
+            //     },
+            // },
             {
                 header: 'Количество',
                 accessorKey: 'quantity',
