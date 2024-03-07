@@ -6,7 +6,6 @@ import {
     getDeliveryOrders,
     setTableData,
 } from '../store/dataSlice'
-import { Link } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
 
