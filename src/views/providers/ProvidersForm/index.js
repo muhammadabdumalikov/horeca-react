@@ -12,9 +12,9 @@ import reducer from './store'
 injectReducer('xprovidersStore', reducer)
 
 const validationSchema = Yup.object().shape({
-    first_name: Yup.string().required('Введите Фамилию'),
-    last_name: Yup.string().required('Введите Имя'),
-    phone: Yup.string().required('Номер телефона не действителен'),
+    first_name: Yup.string(),
+    last_name: Yup.string(),
+    phone: Yup.string().required('Введите номер телефона'),
     person_type: Yup.string(),
     legal_name: Yup.string(),
     additional_name: Yup.string(),

@@ -269,6 +269,13 @@ export async function apiCreateEmployes(data) {
         data,
     })
 }
+export async function apiCreateProvider(data) {
+    return ApiService.fetchData({
+        url: '/root/create-provider',
+        method: 'post',
+        data,
+    })
+}
 
 
 

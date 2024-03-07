@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
 import { Field } from 'formik'
-import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
 const rolesOptions = [
     { value: 1, label: 'Физическое лицо' },
@@ -35,7 +34,7 @@ const BasicInformationFields = (props) => {
                                     options={rolesOptions}
                                     value={rolesOptions?.filter(
                                         (roles) =>
-                                            roles.value == values.person_type
+                                            roles.value === values.person_type
                                     )}
                                     onChange={(option) => {
                                         setRole(option.value)
@@ -111,6 +110,38 @@ const BasicInformationFields = (props) => {
                             autoComplete="off"
                             name="phone"
                             placeholder="Контактный номер (телефон)"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>  
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="col-span-1">
+                <FormItem
+                        label="Добавочное имя"
+                        invalid={errors.additional_name && touched.additional_name}
+                        errorMessage={errors.additional_name}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="additional_name"
+                            placeholder="Добавочное имя"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+                <div className="col-span-1">
+                <FormItem
+                        label="Адрес"
+                        invalid={errors.address && touched.address}
+                        errorMessage={errors.address}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="address"
+                            placeholder="Адрес"
                             component={Input}
                         />
                     </FormItem>

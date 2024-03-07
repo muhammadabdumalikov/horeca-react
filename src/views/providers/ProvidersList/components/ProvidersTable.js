@@ -149,6 +149,15 @@ const CompanyTable = () => {
                 },
             },
             {
+                header: 'Юр. имя',
+                accessorKey: 'legal_name',
+                width: '200px',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span className="capitalize">{row.legal_name}</span>
+                },
+            },
+            {
                 header: 'Контакт',
                 accessorKey: 'phone',
                 width: '200px',
@@ -157,24 +166,16 @@ const CompanyTable = () => {
                     return <span className="capitalize">{row.phone}</span>
                 },
             },
+          
             {
-                header: 'Логин',
-                accessorKey: 'login',
+                header: 'Aдрес',
+                accessorKey: 'adress',
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.login}</span>
+                    return <span className="capitalize">{row.address}</span>
                 },
             },
-            // {
-            //     header: 'Регион',
-            //     accessorKey: 'region_id',
-            //     width: '200px',
-            //     cell: (props) => {
-            //         const row = props.row.original
-            //         return <span className="capitalize">{row.ru_district}</span>
-            //     },
-            // },
             {
                 header: 'Статус',
                 accessorKey: 'in_active',
@@ -202,6 +203,15 @@ const CompanyTable = () => {
                             </span>
                         </div>
                     )
+                },
+            },
+            {
+                header: 'Добавочное имя',
+                accessorKey: 'additional_name',
+                width: '200px',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span className="capitalize">{row.additional_name}</span>
                 },
             },
             {
