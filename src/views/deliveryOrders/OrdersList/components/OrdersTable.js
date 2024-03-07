@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { Badge, Notification, toast } from 'components/ui'
+import { Badge} from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import {  getDeliveryOrders, setOrderItem, setTableData } from '../store/dataSlice'
-import useThemeClass from 'utils/hooks/useThemeClass'
-import { Link, useNavigate } from 'react-router-dom'
+import {
+    getDeliveryOrders,
+    setTableData,
+} from '../store/dataSlice'
+import { Link } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
 
@@ -23,66 +24,10 @@ const inventoryStatusColor = {
 }
 
 const statusOfOrder = {
-    1: "Принял",
-    2: "Доставка",
-    3: "Доставленный",
-    4: "Отменено",
-}
-
-const ActionColumn = ({ row }) => {
-    const dispatch = useDispatch()
-    const { textTheme } = useThemeClass()
-    const navigate = useNavigate()
-
-    const onEdit = () => {
-        dispatch(setOrderItem(row))
-        navigate(`/orders/edit/${row.id}`)
-    }
-
-    const popNotification = (keyword) => {
-        toast.push(
-            <Notification
-                title={`Успешно ${keyword}`}
-                type="success"
-                duration={2500}
-            >
-                Успешно {keyword}
-            </Notification>,
-            {
-                placement: 'top-center',
-            }
-        )
-        navigate(`/orders`)
-    }
-
-    return (
-        <div className="flex justify-end text-lg">
-            {/* <span
-                className={`cursor-pointer p-2 hover:${textTheme}`}
-                onClick={onEdit}
-            >
-                <HiOutlinePencil />
-            </span> */}
-          
-        </div>
-    )
-}
-
-const CompanyColumn = ({ row }) => {
-    // const avatar = row.img ? (
-    //     <Avatar src={row.img} />
-    // ) : (
-    //     <Avatar icon={<FiPackage />} />
-    // )
-
-    return (
-        <div className="flex items-center">
-            {/* {avatar} */}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                {row.first_name} {row.last_name}
-            </span>
-        </div>
-    )
+    1: 'Принял',
+    2: 'Доставка',
+    3: 'Доставленный',
+    4: 'Отменено',
 }
 
 const CompanyTable = () => {
@@ -94,9 +39,7 @@ const CompanyTable = () => {
         (state) => state.ordersStore.data.tableData
     )
 
-    const filterData = useSelector(
-        (state) => state.ordersStore.data.filterData
-    )
+    const filterData = useSelector((state) => state.ordersStore.data.filterData)
 
     const loading = useSelector((state) => state.ordersStore.data.loading)
 
@@ -135,37 +78,21 @@ const CompanyTable = () => {
                 header: 'Номер заказа',
                 accessorKey: 'order_number',
                 width: '250px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <CompanyColumn row={row} />
-                // },
             },
             {
                 header: 'Тип оплаты',
                 accessorKey: 'payment_type',
                 width: '200px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <span className="capitalize">{row.phone}</span>
-                // },
             },
             {
                 header: 'Сумма',
                 accessorKey: 'total_sum',
                 width: '200px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <span className="capitalize">{row.login}</span>
-                // },
             },
             {
                 header: 'Комментарий',
                 accessorKey: 'comment',
                 width: '200px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <span className="capitalize">{row.login}</span>
-                // },
             },
             {
                 header: 'Статус заказа',
@@ -173,7 +100,11 @@ const CompanyTable = () => {
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{statusOfOrder[row?.status]}</span>
+                    return (
+                        <span className="capitalize">
+                            {statusOfOrder[row?.status]}
+                        </span>
+                    )
                 },
             },
             {
@@ -181,8 +112,13 @@ const CompanyTable = () => {
                 accessorKey: 'location',
                 width: '200px',
                 cell: (props) => {
-                    const row = props.row.original
-                    return <Link to='x' ><span className="capitalize text-blue-500">Локация</span></Link>
+                    return (
+                        <Link to="x">
+                            <span className="capitalize text-blue-500">
+                                Локация
+                            </span>
+                        </Link>
+                    )
                 },
             },
             {
@@ -213,11 +149,6 @@ const CompanyTable = () => {
                         </div>
                     )
                 },
-            },
-            {
-                header: '',
-                id: 'action',
-                cell: (props) => <ActionColumn row={props.row.original} />,
             },
         ],
         []

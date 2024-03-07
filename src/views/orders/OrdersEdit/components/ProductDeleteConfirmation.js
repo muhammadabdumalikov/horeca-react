@@ -19,8 +19,6 @@ const ProductDeleteConfirmation = () => {
         (state) => state.xordersStore.state.selectedProduct
     )
 
-    const tableData = useSelector((state) => state.xordersStore.data.tableData)
-
     const onDialogClose = () => {
         dispatch(toggleDeleteConfirmation(false))
     }

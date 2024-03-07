@@ -135,7 +135,7 @@ const BasicInformationFields = (props) => {
                                     value={
                                         rolesOptions?.filter(
                                         (roles) =>
-                                            roles.value == values.role
+                                            roles.value === values.role
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(

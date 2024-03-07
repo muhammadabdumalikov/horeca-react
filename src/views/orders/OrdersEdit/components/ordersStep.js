@@ -47,9 +47,9 @@ const OrdersStep = ({ step, setStep }) => {
                     customIcon={<HiOutlineDocumentSearch />}
                 /> */}
                 <Steps.Item
-                    title={step == 4 ? 'Отменено' : 'Доставленный'}
+                    title={step === 4 ? 'Отменено' : 'Доставленный'}
                     customIcon={
-                        step == 4 ? (
+                        step === 4 ? (
                             <HiOutlineDocumentSearch />
                         ) : (
                             <HiOutlineClipboardCheck />

@@ -494,21 +494,21 @@ export  const generateExcel = async (success) => {
         startRowIndex += 10 + order_raw.items.length
     }
 
-    const buffer = await workbook.xlsx.writeBuffer().then((buffer) => {
+     await workbook.xlsx.writeBuffer().then((buffer) => {
         const blob = new Blob([buffer], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
         saveAs(blob, 'example.xlsx')
     })
 
-    const file = {
-        originalname: String('Faktura hisobot'),
-        size: String(buffer?.length),
-        buffer,
-        mimetype: String(DocumentMimeTypes?.XLSX),
-        fieldname: String('Faktura hisobot'),
-        encoding: '',
-    }
+    // const file = {
+    //     originalname: String('Faktura hisobot'),
+    //     size: String(buffer?.length),
+    //     buffer,
+    //     mimetype: String(DocumentMimeTypes?.XLSX),
+    //     fieldname: String('Faktura hisobot'),
+    //     encoding: '',
+    // }
 
     // const uploadFile = await this.fileRouterService.uploadReport(file)
 

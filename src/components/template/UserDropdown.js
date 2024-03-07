@@ -25,7 +25,7 @@ export const UserDropdown = ({ className }) => {
 
     useEffect(() => {
         dispatch(getUserInfoByToken(token))
-    }, [token])
+    }, [token, dispatch])
 
     const { signOut } = useAuth()
 

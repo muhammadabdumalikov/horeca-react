@@ -1,18 +1,16 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     getEmployes,
     patchActivityEmployes,
     setTableData,
 } from '../store/dataSlice'
-import useThemeClass from 'utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
-import { apiPatchActivityEmployes } from 'services/SalesService'
 
 const inventoryStatusColor = {
     0: {
@@ -29,7 +27,6 @@ const inventoryStatusColor = {
 
 const ActionColumn = ({ row }) => {
     const dispatch = useDispatch()
-    const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
     const onEditActivity = () => {

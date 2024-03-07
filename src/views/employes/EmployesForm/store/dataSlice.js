@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetRegions, apiUpdateAgent } from 'services/SalesService'
+import { apiGetRegions } from 'services/SalesService'
 
 export const getRegions = createAsyncThunk(
     'agentsForm/data/getRegions',

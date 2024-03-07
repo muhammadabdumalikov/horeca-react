@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import {  Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -26,22 +25,6 @@ const ActionColumn = ({ row }) => {
         navigate(`/orders/edit/${row.id}`)
     }
 
-    const popNotification = (keyword) => {
-        toast.push(
-            <Notification
-                title={`Успешно ${keyword}`}
-                type="success"
-                duration={2500}
-            >
-                Успешно {keyword}
-            </Notification>,
-            {
-                placement: 'top-center',
-            }
-        )
-        navigate(`/orders`)
-    }
-
     return (
         <div className="flex justify-end text-lg">
             <span
@@ -55,22 +38,6 @@ const ActionColumn = ({ row }) => {
     )
 }
 
-const CompanyColumn = ({ row }) => {
-    // const avatar = row.img ? (
-    //     <Avatar src={row.img} />
-    // ) : (
-    //     <Avatar icon={<FiPackage />} />
-    // )
-
-    return (
-        <div className="flex items-center">
-            {/* {avatar} */}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                {row.first_name} {row.last_name}
-            </span>
-        </div>
-    )
-}
 
 const CompanyTable = () => {
     const tableRef = useRef(null)
@@ -122,47 +89,27 @@ const CompanyTable = () => {
             {
                 header: 'Номер заказа',
                 accessorKey: 'order_number',
-                width: '250px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <CompanyColumn row={row} />
-                // },
+                width: '250px'
             },
             {
                 header: 'Тип оплаты',
                 accessorKey: 'payment_type_name.name_ru',
-                width: '200px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <span className="capitalize">{row.phone}</span>
-                // },
+                width: '200px'
             },
             {
                 header: 'Статус оплаты',
                 accessorKey: 'paid_status',
-                width: '200px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <span className="capitalize">{row.phone}</span>
-                // },
+                width: '200px'
             },
             {
                 header: 'Оплаченная сумма',
                 accessorKey: 'paid',
-                width: '200px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <span className="capitalize">{row.phone}</span>
-                // },
+                width: '200px'
             },
             {
                 header: 'Сумма заказа',
                 accessorKey: 'total_sum',
-                width: '200px',
-                // cell: (props) => {
-                //     const row = props.row.original
-                //     return <span className="capitalize">{row.login}</span>
-                // },
+                width: '200px'
             },
             {
                 header: 'Комментарий',
@@ -188,7 +135,7 @@ const CompanyTable = () => {
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <a target='_blank' href={`https://yandex.com/maps/?ll=${row?.location.long},${row?.location.lat}&z=14`} ><span className="capitalize text-blue-500">Локация</span></a>
+                    return <a target='_blank' rel="noreferrer" href={`https://yandex.com/maps/?ll=${row?.location.long},${row?.location.lat}&z=14`} ><span className="capitalize text-blue-500">Локация</span></a>
                 },
             },
             {

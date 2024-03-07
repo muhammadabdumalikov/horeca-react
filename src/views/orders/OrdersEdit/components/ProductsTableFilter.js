@@ -96,7 +96,7 @@ const ProductsTableFilter = () => {
 
     useEffect(() => {
         dispatch(getDelivers({ role: 4 }))
-    }, [])
+    }, [dispatch])
 
     return (
         <Select

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { ConfirmDialog, Loading } from 'components/shared'
+import React, { useState } from 'react'
+import { ConfirmDialog } from 'components/shared'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleEditOrderStep } from '../store/stateSlice'
 import OrdersStep from './ordersStep'
 import { updateOrderStatus } from 'views/orders/OrdersList/store/dataSlice'
 import { Notification, toast } from 'components/ui'
-import { isEmpty } from 'lodash'
-// import { useParams } from 'react-router-dom'
 
 const ProductStepConfirmation = () => {
     const dispatch = useDispatch()
@@ -14,8 +12,6 @@ const ProductStepConfirmation = () => {
     const data = useSelector((state) => state.xordersStore.data.productList)
 
     const [step, setStep] = useState(data?.status)
-
-    console.log(step, 'step')
 
     const dialogOpen = useSelector(
         (state) => state.xordersStore.state.editOrderStep

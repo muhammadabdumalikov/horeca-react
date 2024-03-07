@@ -8,7 +8,6 @@ import useThemeClass from 'utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import { isActive } from 'utils/checkActive'
-import { apiPatchActivityEmployes } from 'services/SalesService'
 
 const inventoryStatusColor = {
     0: {

@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-// import { Badge } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,8 +7,6 @@ import {
     inActiveCategory,
     setTableData,
 } from '../store/dataSlice'
-// import { setSelectedCompany } from '../store/stateSlice'
-// import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import CompanyDeleteConfirmation from './CategoryDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
@@ -36,9 +33,6 @@ const ActionColumn = ({ row }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { pageSize, pageIndex, search } = useSelector(
-        (state) => state.categoryList.data.tableData
-    )
 
     const onEdit = () => {
         navigate(`/categories/edit/${row.id}`)
@@ -136,7 +130,7 @@ const CategoryTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getCategories({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1), search }))
+        dispatch(getCategories({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), search }))
     }
 
     const columns = useMemo(

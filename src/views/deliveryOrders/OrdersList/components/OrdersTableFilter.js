@@ -1,6 +1,6 @@
 import React from 'react'
 import { Select, Badge } from 'components/ui'
-import { getDeliveryOrders, getOrders, setFilterData } from '../store/dataSlice'
+import { getDeliveryOrders, setFilterData } from '../store/dataSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { components } from 'react-select'
 import { HiCheck } from 'react-icons/hi'

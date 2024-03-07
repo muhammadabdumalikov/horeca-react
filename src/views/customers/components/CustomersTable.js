@@ -3,7 +3,6 @@ import {  Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCustomers, inActiveUser, setTableData } from '../store/dataSlice'
-import { setSelectedCustomer, setDrawerOpen } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { Link } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
@@ -27,10 +26,7 @@ const ActionColumn = ({ row }) => {
     const { textTheme } = useThemeClass()
     const dispatch = useDispatch()
 
-    const onEdit = () => {
-        dispatch(setDrawerOpen())
-        dispatch(setSelectedCustomer(row))
-    }
+
 
     const onEditActivity = () => {
         dispatch(inActiveUser({ user_id: row.id, is_deleted: `${!row.is_deleted}`, is_block: 'false'}))
@@ -184,7 +180,7 @@ const Customers = () => {
     )
     
     const fetchData = useCallback(() => {
-        dispatch(getCustomers({ offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1), limit: pageSize, search, is_deleted: status }))
+        dispatch(getCustomers({ offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), limit: pageSize, search, is_deleted: status }))
     }, [pageIndex, pageSize, search, status, dispatch])
 
     useEffect(() => {

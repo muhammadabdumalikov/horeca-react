@@ -109,7 +109,7 @@ const CompanyTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({ offset: (pageIndex-1) * pageSize + (pageIndex == 1?0:1),  search, limit: pageSize }))
+        dispatch(getCompanies({ offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1),  search, limit: pageSize }))
     }
 
     const columns = useMemo(

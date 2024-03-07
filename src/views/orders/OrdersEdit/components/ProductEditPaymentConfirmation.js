@@ -70,7 +70,7 @@ const ProductEditPaymentConfirmation = () => {
         >
             {/* <p className="mb-4">{selectedProduct?.name_ru}</p>{' '} */}
             <Input
-                defaultValue={selectedProduct?.quantity}
+                // defaultValue={selectedProduct?.quantity}
                 type="text"
                 autoComplete="off"
                 placeholder="Количество"

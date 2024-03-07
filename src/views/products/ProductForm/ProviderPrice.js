@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
 import NumberFormat from 'react-number-format'
@@ -29,19 +29,20 @@ const ProviderPrice = (props) => {
         (state) => state.productForm.data.employesList
     )
     const employesOption = employesList?.map((category) => ({
-        label: `${category.first_name || category.legal_name} ${category.last_name}`,
+        label: `${category.first_name || category.legal_name} ${
+            category.last_name
+        }`,
         value: category.id,
     }))
 
     const dispatch = useDispatch()
 
-    const fetchData = () => {
+    const fetchData = useCallback(async () => {
+        // Fetch data logic
         dispatch(getEmployes({ role: 5 }))
-    }
+    }, [dispatch])
 
-    useEffect(() => {
-        fetchData()
-    }, [])
+    useEffect(() => {}, [fetchData])
 
     return (
         <AdaptableCard className="mb-4" divider>
@@ -80,7 +81,9 @@ const ProviderPrice = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Цена продукта"
-                        invalid={errors.provider_price && touched.provider_price}
+                        invalid={
+                            errors.provider_price && touched.provider_price
+                        }
                         errorMessage={errors.provider_price}
                     >
                         <Field name="provider_price">
