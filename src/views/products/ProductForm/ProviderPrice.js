@@ -29,7 +29,7 @@ const ProviderPrice = (props) => {
         (state) => state.productForm.data.employesList
     )
     const employesOption = employesList?.map((category) => ({
-        label: `${category.first_name} ${category.last_name}`,
+        label: `${category.first_name || category.legal_name} ${category.last_name}`,
         value: category.id,
     }))
 

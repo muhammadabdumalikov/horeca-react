@@ -14,7 +14,7 @@ const OrderColumn = ({ row }) => {
             className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
             // onClick={onView}
         >
-            {row.first_name} {row.last_name}
+            {row.first_name || row.legal_name} {row.last_name}
         </span>
     )
 }
