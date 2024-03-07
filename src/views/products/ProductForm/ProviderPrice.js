@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AdaptableCard } from 'components/shared'
 import { Input, FormItem, Select } from 'components/ui'
 import NumberFormat from 'react-number-format'
 import { Field } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { getEmployes } from './store/dataSlice'
 
 const NumberInput = (props) => {
     return <Input {...props} value={Number(props.field.value)} />
@@ -21,7 +23,25 @@ const NumberFormatInput = ({ onValueChange, ...rest }) => {
 }
 
 const ProviderPrice = (props) => {
-    const { touched, errors } = props
+    const { touched, errors, values } = props
+
+    const employesList = useSelector(
+        (state) => state.productForm.data.employesList
+    )
+    const employesOption = employesList?.map((category) => ({
+        label: `${category.first_name} ${category.last_name}`,
+        value: category.id,
+    }))
+
+    const dispatch = useDispatch()
+
+    const fetchData = () => {
+        dispatch(getEmployes({ role: 5 }))
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     return (
         <AdaptableCard className="mb-4" divider>
@@ -33,18 +53,19 @@ const ProviderPrice = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Поставщик"
-                        invalid={errors.company_id && touched.company_id}
-                        errorMessage={errors.company_id}
+                        invalid={errors.provider_id && touched.provider_id}
+                        errorMessage={errors.provider_id}
                     >
-                        <Field name="company_id">
+                        <Field name="provider_id">
                             {({ field, form }) => (
                                 <Select
                                     field={field}
                                     form={form}
-                                    // options={companyOptions}
-                                    // value={companyOptions?.filter(
-                                    //     (tag) => tag.value === values.company_id
-                                    // )}
+                                    options={employesOption}
+                                    value={employesOption?.filter(
+                                        (tag) =>
+                                            tag.value === values.provider_id
+                                    )}
                                     onChange={(option) =>
                                         form.setFieldValue(
                                             field.name,
@@ -59,10 +80,10 @@ const ProviderPrice = (props) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Цена продукта"
-                        invalid={errors.block_price && touched.block_price}
-                        errorMessage={errors.block_price}
+                        invalid={errors.provider_price && touched.provider_price}
+                        errorMessage={errors.provider_price}
                     >
-                        <Field name="block_price">
+                        <Field name="provider_price">
                             {({ field, form }) => {
                                 return (
                                     <NumberFormatInput

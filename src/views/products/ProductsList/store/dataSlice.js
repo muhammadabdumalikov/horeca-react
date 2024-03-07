@@ -35,6 +35,7 @@ export const inActiveProdct = createAsyncThunk(
     }
 )
 
+
 export const initialTableData = {
     total: 0,
     pageIndex: 1,
@@ -55,6 +56,7 @@ const dataSlice = createSlice({
         productList: [],
         categoryList: [],
         companyList: [],
+        employesList: [],
         tableData: initialTableData,
         filterData: initialFilterData,
     },
@@ -70,6 +72,7 @@ const dataSlice = createSlice({
         },
     },
     extraReducers: {
+
         [getProducts.fulfilled]: (state, action) => {
             state.productList = action.payload.data
             state.tableData.total = action.payload.total_count

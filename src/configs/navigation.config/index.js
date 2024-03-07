@@ -47,6 +47,16 @@ const navigationConfig = [
         subMenu: [],
     },
     {
+        key: 'providers',
+        path: '/providers',
+        title: 'Поставщик',
+        translateKey: 'nav.providers',
+        icon: 'agents',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [ADMIN],
+        subMenu: [],
+    },
+    {
         key: 'orders',
         path: '/orders',
         title: 'Заказы',

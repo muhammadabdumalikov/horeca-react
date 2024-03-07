@@ -28,6 +28,8 @@ const validationSchema = Yup.object().shape({
     company_id: Yup.string().required('Выберите производитель'),
     count_in_block: Yup.string().required('Введите количество товара в блоке'),
     image: Yup.string().required(' Загрузите изображение товара'),
+    provider_id: Yup.string().required(' Выберите поставщика'),
+    provider_price: Yup.string().required(' Введите цену'),
 })
 
 const ProductForm = forwardRef((props, ref) => {
@@ -128,6 +130,8 @@ ProductForm.defaultProps = {
         count_price: 0,
         discount_price: 0,
         block_price: 0,
+        provider_id: '',
+        provider_price: 0,
     },
 }
 

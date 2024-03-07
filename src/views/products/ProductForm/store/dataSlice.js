@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCategory, apiGetCompany } from 'services/SalesService'
+import { apiGetCategory, apiGetCompany, apiGetEmployes } from 'services/SalesService'
 
 export const getCategory = createAsyncThunk(
     'productForm/data/getCatalog',
@@ -15,7 +15,13 @@ export const getCompany = createAsyncThunk(
         return response.data
     }
 )
-
+export const getEmployes = createAsyncThunk(
+    'productForm/data/getEmployes',
+    async (data) => {
+        const response = await apiGetEmployes(data)
+        return response.data
+    }
+)
 
 // export const deleteProduct = async (data) => {
 //     const response = await apiDeleteSalesProducts(data)
@@ -45,6 +51,7 @@ const dataSlice = createSlice({
     initialState: {
         categoryList: [],
         companyList: [],
+        employesList: [],
         // tableData: initialTableData,
         // filterData: initialFilterData,
     },
@@ -54,6 +61,13 @@ const dataSlice = createSlice({
         // },
     },
     extraReducers: {
+        [getEmployes.fulfilled]: (state, action) => {
+            state.employesList = action.payload.data
+            state.loading = false
+        },
+        [getEmployes.pending]: (state) => {
+            state.loading = true
+        },
         [getCategory.fulfilled]: (state, action) => {
             state.categoryList = action.payload.data
         },

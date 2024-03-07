@@ -137,6 +137,18 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/faktura')),
         authority: [ADMIN],
     },
+    {
+        key: 'providers',
+        path: '/providers',
+        component: React.lazy(() => import('views/providers/ProvidersList')),
+        authority: [ADMIN],
+    },
+    {
+        key: 'providersAdd',
+        path: '/providers/add',
+        component: React.lazy(() => import('views/providers/ProvidersNew')),
+        authority: [ADMIN],
+    },
 
     // {
     //     key: 'collapseMenu.item1',
