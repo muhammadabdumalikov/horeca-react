@@ -61,6 +61,8 @@ const ProductEdit = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
+    console.log(productItem, 'productItem')
+
     return (
         <>
             <Loading loading={loading}>

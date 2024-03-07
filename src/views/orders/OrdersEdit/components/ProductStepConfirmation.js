@@ -19,8 +19,27 @@ const ProductStepConfirmation = () => {
 
     console.log(data?.status, 'data?.status')
 
-    const onDialogClose = () => {
+    const onDialogClose = async () => {
         dispatch(toggleEditOrderStep(false))
+        const success = await dispatch(
+            updateOrderStatus({ order_id: data?.id, status: `4` })
+        )
+
+        if (success) {
+            toast.push(
+                <Notification
+                    title={'Успешно отменено'}
+                    type="success"
+                    duration={2500}
+                >
+                    Заказ отменен
+                </Notification>,
+                {
+                    placement: 'top-center',
+                }
+            )
+        }
+
     }
 
     const onDelete = async () => {
@@ -56,6 +75,7 @@ const ProductStepConfirmation = () => {
             onConfirm={onDelete}
             confirmButtonColor="blue-600"
             confirmText="Cохранить"
+            cancelText='Oтменить заказ'
         >
             <div className="my-10 block">
                 <OrdersStep step={step} setStep={setStep} />

@@ -70,6 +70,7 @@ const ConfirmDialog = (props) => {
         cancelText,
         confirmText,
         confirmButtonColor,
+        cencelButtonColor,
         ...rest
     } = props
 
@@ -103,6 +104,8 @@ const ConfirmDialog = (props) => {
                     size="sm"
                     className="ltr:mr-2 rtl:ml-2"
                     onClick={handleCancel}
+                    color={cencelButtonColor}
+
                 >
                     {cancelText}
                 </Button>
