@@ -103,6 +103,27 @@ export async function apiGetFaktura(data) {
         data,
     })
 }
+export async function apiGetFakturaOrder(data) {
+    return ApiService.fetchData({
+        url: 'admin/report/get-faktura-order',
+        method: 'post',
+        data,
+    })
+}
+export async function apiGetFakturaByContragent(params) {
+    return ApiService.fetchData({
+        url: 'admin/report/faktura-list',
+        method: 'get',
+        params,
+    })
+}
+export async function apiSetFakturaArchive(data) {
+    return ApiService.fetchData({
+        url: 'admin/report/set-faktura-archive',
+        method: 'post',
+        data,
+    })
+}
 
 export async function apiGetCompany(params) {
     return ApiService.fetchData({
