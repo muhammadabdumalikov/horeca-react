@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Notification, Select, toast } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { HiCheck } from 'react-icons/hi'
@@ -11,17 +11,13 @@ const ProductsTableFilter = () => {
 
     const { id: orderId } = useParams()
 
-    const { status } = useSelector(
-        (state) => state.xordersStore.data.filterData
-    )
+    const status = useSelector((state) => state.xordersStore.data.status)
     const deliversList = useSelector(
         (state) => state.xordersStore.data.deliversList
     )
     const productList = useSelector(
         (state) => state.xordersStore.data.productList
     )
-
-    console.log(productList?.deliver_id, 'productList')
 
     const sortOptions = (data) => {
         return data.map((item) => ({
@@ -94,9 +90,14 @@ const ProductsTableFilter = () => {
         }
     }
 
-    useEffect(() => {
+    const fetchData = useCallback(() => {
         dispatch(getDelivers({ role: 4 }))
-    }, [dispatch])
+        dispatch(setFilterData({ status: productList?.deliver_id }))
+    }, [dispatch, productList?.deliver_id])
+
+    useEffect(() => {
+        fetchData()
+    }, [fetchData, dispatch])
 
     return (
         <Select
@@ -107,7 +108,6 @@ const ProductsTableFilter = () => {
             components={{
                 Option: CustomSelectOption,
             }}
-            // defaultValue={{value: productList?.deliver_id, label: productList?.first_name}}
             value={sortOptions(deliversList).filter(
                 (option) => option.value === status
             )}

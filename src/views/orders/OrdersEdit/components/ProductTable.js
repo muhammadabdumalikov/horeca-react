@@ -134,14 +134,14 @@ const ProductTable = () => {
                 accessorKey: 'price_for_item',
                 cell: (props) => {
                     const { price_for_item } = props.row.original
-                    return <span>{price_for_item}</span>
+                    return <span>{new Intl.NumberFormat().format(price_for_item)}</span>
                 },
             },
             {
                 header: 'Общая сумма',
                 cell: (props) => {
                     const { price_for_item, quantity } = props.row.original
-                    return <span>{price_for_item * quantity}</span>
+                    return <span>{new Intl.NumberFormat().format(price_for_item * quantity)}</span>
                 },
             },
             {

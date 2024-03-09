@@ -1,23 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { ConfirmDialog } from 'components/shared'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleEditOrderStep } from '../store/stateSlice'
 import OrdersStep from './ordersStep'
 import { updateOrderStatus } from 'views/orders/OrdersList/store/dataSlice'
 import { Notification, toast } from 'components/ui'
+import { setStep } from '../store/dataSlice'
 
 const ProductStepConfirmation = () => {
     const dispatch = useDispatch()
 
     const data = useSelector((state) => state.xordersStore.data.productList)
+    const step = useSelector((state) => state.xordersStore.data.step)
 
-    const [step, setStep] = useState(data?.status)
 
     const dialogOpen = useSelector(
         (state) => state.xordersStore.state.editOrderStep
     )
-
-    console.log(data?.status, 'data?.status')
 
     const onDialogClose = async () => {
         dispatch(toggleEditOrderStep(false))
@@ -68,6 +67,10 @@ const ProductStepConfirmation = () => {
         }
     }
 
+    useEffect(() => {
+        dispatch(setStep(data?.status))
+    }, [data?.status])
+
     return (
         <ConfirmDialog
             isOpen={dialogOpen}
@@ -83,7 +86,7 @@ const ProductStepConfirmation = () => {
             cancelText='Oтменить заказ'
         >
             <div className="my-10 block">
-                <OrdersStep step={step} setStep={setStep} />
+                <OrdersStep />
             </div>
         </ConfirmDialog>
     )

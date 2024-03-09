@@ -54,7 +54,7 @@ const ProductEditPaymentConfirmation = () => {
         }
     }
 
-    console.log(selectedProduct, 'selectedProduct')
+    // console.log(selectedProduct, 'selectedProduct')
 
     return (
         <ConfirmDialog

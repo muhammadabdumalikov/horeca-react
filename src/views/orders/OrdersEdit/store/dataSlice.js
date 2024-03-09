@@ -34,19 +34,9 @@ export const initialTableData = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
-    query: '',
-    sort: {
-        order: '',
-        key: '',
-    },
 }
 
-export const initialFilterData = {
-    name: '',
-    category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
-    status: null,
-    productStatus: 0,
-}
+
 
 const dataSlice = createSlice({
     name: 'xordersStore/data',
@@ -55,7 +45,8 @@ const dataSlice = createSlice({
         productList: [],
         deliversList: [],
         tableData: initialTableData,
-        filterData: initialFilterData,
+        status: '',
+        step: 1
     },
     reducers: {
         updateProductList: (state, action) => {
@@ -65,7 +56,10 @@ const dataSlice = createSlice({
             state.tableData = action.payload
         },
         setFilterData: (state, action) => {
-            state.filterData = action.payload
+            state.status = action.payload.status
+        },
+        setStep: (state, action) => {
+            state.step = action.payload
         },
     },
     extraReducers: {
@@ -87,7 +81,7 @@ const dataSlice = createSlice({
     },
 })
 
-export const { updateProductList, setTableData, setFilterData } =
+export const { updateProductList, setTableData, setFilterData, setStep } =
     dataSlice.actions
 
 export default dataSlice.reducer

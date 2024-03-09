@@ -5,12 +5,16 @@ import {
     HiOutlineDocumentSearch,
     HiOutlineClipboardCheck,
 } from 'react-icons/hi'
+import { useDispatch, useSelector } from 'react-redux'
+import { setStep } from '../store/dataSlice'
 
-const OrdersStep =  ({ step, setStep }) => {
+const OrdersStep = () => {
 
-    console.log(step, 'step')
+    const dispatch = useDispatch()
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+    const step = useSelector((state) => state.xordersStore.data.step)
 
     useEffect(() => {
         const handleResize = () => {
@@ -24,19 +28,17 @@ const OrdersStep =  ({ step, setStep }) => {
 
     const onChange = (nextStep) => {
         if (nextStep < 0) {
-            setStep(0)
+            dispatch(setStep(0))
         } else if (nextStep > 3) {
-            setStep(3)
+            dispatch(setStep(3))
         } else {
-            setStep(nextStep)
+            dispatch(setStep(nextStep))
         }
     }
 
     const onNext = () => onChange(step + 1)
 
     const onPrevious = () => onChange(step - 1)
-
-
 
     return (
         <>
