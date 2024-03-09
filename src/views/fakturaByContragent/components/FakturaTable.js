@@ -50,12 +50,8 @@ const ActionColumn = ({ row }) => {
         if (!isEmpty(success)) {
             generateExcel(success)
 
-            popNotification('изменено активность')
-            dispatch(
-                setFakturaArchive({
-                    order_id: row.id,
-                })
-            )
+            popNotification('Получено фактура')
+
             dispatch(
                 getFakturaByContagent({
                     is_archived: false,
@@ -63,6 +59,12 @@ const ActionColumn = ({ row }) => {
                     to_date: dayjs(endDate).format('YYYY-MM-DD'),
                 })
             )
+            dispatch(
+                setFakturaArchive({
+                    order_id: row.id,
+                })
+            )
+            navigate('/contragent-faktura')
         }
     }
 
@@ -125,6 +127,8 @@ const FakturaTable = () => {
                 is_archived: false,
                 from_date: dayjs(startDate).format('YYYY-MM-DD'),
                 to_date: dayjs(endDate).format('YYYY-MM-DD'),
+                limit: pageSize,
+                offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
             })
         )
     }, [dispatch, startDate, endDate])
@@ -161,23 +165,36 @@ const FakturaTable = () => {
                 accessorKey: 'payment_type_name.name_ru',
             },
             {
+                // new Intl.NumberFormat().format(price)
                 header: 'Общая сумма заказа',
                 accessorKey: 'total_sum',
+                cell: (props) => (
+                    <span>
+                        {Intl.NumberFormat().format(props.row.original.total_sum)}
+                    </span>
+                ),
             },
             {
                 header: 'Дата создания',
                 accessorKey: 'created_at',
                 cell: (props) => (
-                    <span>{dayjs(props.row.original.created_at).format('YYYY-MM-DD')}</span>
+                    <span>
+                        {dayjs(props.row.original.created_at).format(
+                            'YYYY-MM-DD'
+                        )}
+                    </span>
                 ),
-                
             },
             {
                 header: 'Aрхивирован',
                 accessorKey: 'reported',
-                cell: (props) => (
-                    <span>{props.row.origina?.reported ? ' Нет' : ' Да'}</span>
-                ),
+                cell: (props) => {
+                    return (
+                        <span>
+                            {props.row.original.reported ? 'Да' : ' Нет'}
+                        </span>
+                    )
+                },
             },
             {
                 header: '',

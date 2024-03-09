@@ -1,10 +1,16 @@
 import React, { useEffect, useCallback, useMemo, useRef } from 'react'
 import { DataTable } from 'components/shared'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCustomers, setTableData } from '../store/dataSlice'
+import { getCustomers, getFaktura, setTableData } from '../store/dataSlice'
 import { setSelectedRows, addRowItem, removeRowItem } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import cloneDeep from 'lodash/cloneDeep'
+import { useNavigate } from 'react-router-dom'
+import { HiOutlineDocumentDownload } from 'react-icons/hi'
+import { isEmpty } from 'lodash'
+import { generateExcel } from './AktSverkaExelPattern'
+import { Notification, toast } from 'components/ui'
+import dayjs from 'dayjs'
 
 const OrderColumn = ({ row }) => {
     const { textTheme } = useThemeClass()
@@ -19,22 +25,72 @@ const OrderColumn = ({ row }) => {
     )
 }
 
+const ActionColumn = ({ row }) => {
+    console.log(row, 'row')
+    const dispatch = useDispatch()
+    const { textTheme } = useThemeClass()
+    const navigate = useNavigate()
+
+    const startDate = useSelector((state) => state.aktSverka.state.startDate)
+    const endDate = useSelector((state) => state.aktSverka.state.endDate)
+
+    const onEditActivity = async () => {
+        const success = await getFaktura({
+            user_id: row.id,
+            from_date: dayjs(startDate).format('YYYY-MM-DD'),
+            to_date: dayjs(endDate).format('YYYY-MM-DD'),
+        })
+
+        if (!isEmpty(success)) {
+            generateExcel(success)
+
+            popNotification(' Успешно получено акт сверка', 'success')
+            dispatch(getCustomers({ role: 3 }))
+        } else {
+            popNotification('Акт сверка пусто', 'danger')
+        }
+    }
+
+    const popNotification = (keyword, type) => {
+        toast.push(
+            <Notification title={`${keyword}`} type={type} duration={2500}>
+                {keyword}
+            </Notification>,
+            {
+                placement: 'top-center',
+            }
+        )
+        navigate(`/akt-sverka`)
+    }
+
+    return (
+        <div className="flex justify-end text-lg">
+            <span
+                className={`cursor-pointer p-2 hover:${textTheme}`}
+                onClick={onEditActivity}
+            >
+                <HiOutlineDocumentDownload size="28" />
+            </span>
+        </div>
+    )
+}
+
 const FakturaTable = () => {
     const tableRef = useRef(null)
 
     const dispatch = useDispatch()
 
     const { pageIndex, pageSize, query, total } = useSelector(
-        (state) => state.fakturaStore.data.tableData
+        (state) => state.aktSverka.data.tableData
     )
-    const loading = useSelector((state) => state.fakturaStore.data.loading)
+    const loading = useSelector((state) => state.aktSverka.data.loading)
 
-    const data = useSelector((state) => state.fakturaStore.data.orderList)
+    const data = useSelector((state) => state.aktSverka.data.orderList)
 
     // console.log(data, 'data')
 
     const fetchData = useCallback(() => {
-        dispatch(getCustomers({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), }))
+        dispatch(getCustomers({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), role: 3 }))
     }, [dispatch, pageIndex, pageSize, query])
 
     useEffect(() => {
@@ -58,7 +114,27 @@ const FakturaTable = () => {
             {
                 header: 'Контрагент',
                 accessorKey: 'first_name',
+                width: '200px',
                 cell: (props) => <OrderColumn row={props.row.original} />,
+            },
+            {
+                header: 'Юр. имя',
+                width: '200px',
+                accessorKey: 'legal_name',
+            },
+            {
+                header: 'Добавочное имя',
+                width: '200px',
+                accessorKey: 'additional_name',
+            },
+            {
+                header: 'Контакт',
+                accessorKey: 'phone',
+            },
+            {
+                header: '',
+                id: 'action',
+                cell: (props) => <ActionColumn row={props.row.original} />,
             },
         ],
         []
@@ -112,7 +188,7 @@ const FakturaTable = () => {
             onSelectChange={onSelectChange}
             onCheckBoxChange={onRowSelect}
             onIndeterminateCheckBoxChange={onAllRowSelect}
-            selectable
+            // selectable
         />
     )
 }

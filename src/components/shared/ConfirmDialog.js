@@ -102,6 +102,7 @@ const ConfirmDialog = (props) => {
             <div className="text-right px-6 py-3 bg-gray-100 dark:bg-gray-700 rounded-bl-lg rounded-br-lg">
                 <Button
                     size="sm"
+                    variant="solid"
                     className="ltr:mr-2 rtl:ml-2"
                     onClick={handleCancel}
                     color={cencelButtonColor}

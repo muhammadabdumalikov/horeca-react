@@ -510,7 +510,7 @@ export  const generateExcel = async (success) => {
         encoding: '',
     }
 
-    const uploadFile = await this.fileRouterService.uploadReport(file)
+    const uploadFile = await this?.fileRouterService.uploadReport(file)
 
     return uploadFile
 

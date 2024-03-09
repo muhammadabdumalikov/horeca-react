@@ -21,6 +21,11 @@ const ProductStepConfirmation = () => {
 
     const onDialogClose = async () => {
         dispatch(toggleEditOrderStep(false))
+    }
+
+    const onDialogReject = async () => {
+        dispatch(toggleEditOrderStep(false))
+
         const success = await dispatch(
             updateOrderStatus({ order_id: data?.id, status: `4` })
         )
@@ -39,7 +44,6 @@ const ProductStepConfirmation = () => {
                 }
             )
         }
-
     }
 
     const onDelete = async () => {
@@ -71,9 +75,10 @@ const ProductStepConfirmation = () => {
             onRequestClose={onDialogClose}
             type="info"
             title="Изменить процесс заказа"
-            onCancel={onDialogClose}
+            onCancel={onDialogReject}
             onConfirm={onDelete}
             confirmButtonColor="blue-600"
+            cencelButtonColor="red-500"
             confirmText="Cохранить"
             cancelText='Oтменить заказ'
         >

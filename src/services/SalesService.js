@@ -103,6 +103,13 @@ export async function apiGetFaktura(data) {
         data,
     })
 }
+export async function apiGetAktSverka(data) {
+    return ApiService.fetchData({
+        url: 'admin/report/get-akt-sverka',
+        method: 'post',
+        data,
+    })
+}
 export async function apiGetFakturaOrder(data) {
     return ApiService.fetchData({
         url: 'admin/report/get-faktura-order',

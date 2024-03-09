@@ -168,14 +168,42 @@ const ProductTable = () => {
             {
                 header: 'Цена за шт.',
                 accessorKey: 'count_price',
+                cell: (props) => {
+                    return (
+                        <span>
+                            {new Intl.NumberFormat().format(
+                                props.row.original.count_price
+                            )}
+                        </span>
+                    )
+                },
+                
             },
             {
                 header: 'Цена за блок',
-                accessorKey: 'block_price'
+                accessorKey: 'block_price',
+                cell: (props) => {
+                    return (
+                        <span>
+                            {new Intl.NumberFormat().format(
+                                props.row.original.block_price
+                            )}
+                        </span>
+                    )
+                },
             },
             {
                 header: 'Цена в акции',
-                accessorKey: 'discount_price'
+                accessorKey: 'discount_price',
+                cell: (props) => {
+                    return (
+                        <span>
+                            {new Intl.NumberFormat().format(
+                                props.row.original.discount_price
+                            )}
+                        </span>
+                    )
+                },
             },
             {
                 header: '',

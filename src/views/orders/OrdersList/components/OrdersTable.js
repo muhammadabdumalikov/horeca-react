@@ -2,17 +2,16 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { DataTable } from 'components/shared'
 import { HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import {  getOrders, setOrderItem, setTableData } from '../store/dataSlice'
+import { getOrders, setOrderItem, setTableData } from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 
-
 const statusOfOrder = {
-    1: "Принял",
-    2: "Доставка",
-    3: "Доставленный",
-    4: "Отменено",
+    1: 'Принял',
+    2: 'Доставка',
+    3: 'Доставленный',
+    4: 'Отменено',
 }
 
 const ActionColumn = ({ row }) => {
@@ -33,11 +32,9 @@ const ActionColumn = ({ row }) => {
             >
                 <HiOutlinePencil />
             </span>
-          
         </div>
     )
 }
-
 
 const CompanyTable = () => {
     const tableRef = useRef(null)
@@ -48,9 +45,7 @@ const CompanyTable = () => {
         (state) => state.ordersStore.data.tableData
     )
 
-    const filterData = useSelector(
-        (state) => state.ordersStore.data.filterData
-    )
+    const filterData = useSelector((state) => state.ordersStore.data.filterData)
 
     const loading = useSelector((state) => state.ordersStore.data.loading)
 
@@ -89,27 +84,45 @@ const CompanyTable = () => {
             {
                 header: 'Номер заказа',
                 accessorKey: 'order_number',
-                width: '250px'
+                width: '250px',
             },
             {
                 header: 'Тип оплаты',
                 accessorKey: 'payment_type_name.name_ru',
-                width: '200px'
+                width: '200px',
             },
             {
                 header: 'Статус оплаты',
                 accessorKey: 'paid_status',
-                width: '200px'
+                width: '200px',
             },
             {
                 header: 'Оплаченная сумма',
                 accessorKey: 'paid',
-                width: '200px'
+                cell: (props) => {
+                    return (
+                        <span>
+                            {new Intl.NumberFormat().format(
+                                props.row.original.paid
+                            )}
+                        </span>
+                    )
+                },
+                width: '200px',
             },
             {
                 header: 'Сумма заказа',
                 accessorKey: 'total_sum',
-                width: '200px'
+                width: '200px',
+                cell: (props) => {
+                    return (
+                        <span>
+                            {new Intl.NumberFormat().format(
+                                props.row.original.total_sum
+                            )}
+                        </span>
+                    )
+                },
             },
             {
                 header: 'Комментарий',
@@ -117,7 +130,12 @@ const CompanyTable = () => {
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span>{row.comment?.slice(0, 20)}{row.comment?.length > 20 && '...'}</span>
+                    return (
+                        <span>
+                            {row.comment?.slice(0, 20)}
+                            {row.comment?.length > 20 && '...'}
+                        </span>
+                    )
                 },
             },
             {
@@ -126,7 +144,11 @@ const CompanyTable = () => {
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{statusOfOrder[row?.status]}</span>
+                    return (
+                        <span className="capitalize">
+                            {statusOfOrder[row?.status]}
+                        </span>
+                    )
                 },
             },
             {
@@ -135,7 +157,17 @@ const CompanyTable = () => {
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <a target='_blank' rel="noreferrer" href={`https://www.google.com/maps?q=${row?.location.lat},${row?.location.long}`} ><span className="capitalize text-blue-500">Локация</span></a>
+                    return (
+                        <a
+                            target="_blank"
+                            rel="noreferrer"
+                            href={`https://www.google.com/maps?q=${row?.location.lat},${row?.location.long}`}
+                        >
+                            <span className="capitalize text-blue-500">
+                                Локация
+                            </span>
+                        </a>
+                    )
                 },
             },
             {

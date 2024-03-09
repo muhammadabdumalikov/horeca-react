@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
-import {  Badge, Notification, toast } from 'components/ui'
+import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCustomers, inActiveUser, setTableData } from '../store/dataSlice'
@@ -26,14 +26,18 @@ const ActionColumn = ({ row }) => {
     const { textTheme } = useThemeClass()
     const dispatch = useDispatch()
 
-
-
     const onEditActivity = () => {
-        dispatch(inActiveUser({ user_id: row.id, is_deleted: `${!row.is_deleted}`, is_block: 'false'}))
+        dispatch(
+            inActiveUser({
+                user_id: row.id,
+                is_deleted: `${!row.is_deleted}`,
+                is_block: 'false',
+            })
+        )
 
         if (row.id) {
             popNotification('изменено активность')
-            dispatch(getCustomers({}))
+            dispatch(getCustomers({ role: 3 }))
         }
     }
 
@@ -65,7 +69,7 @@ const ActionColumn = ({ row }) => {
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
-                {row.is_deleted ?  <HiOutlineEyeOff />: <HiOutlineEye />}
+                {row.is_deleted ? <HiOutlineEyeOff /> : <HiOutlineEye />}
             </span>
         </div>
     )
@@ -112,7 +116,6 @@ const columns = [
         //     const row = props.row.original
         //     return <NameColumn row={row} />
         // },
-      
     },
     {
         header: 'Фамилия',
@@ -170,7 +173,6 @@ const Customers = () => {
     const data = useSelector((state) => state.crmCustomers.data.customerList)
     const loading = useSelector((state) => state.crmCustomers.data.loading)
 
-
     const { status } = useSelector(
         (state) => state.crmCustomers.data.filterData
     )
@@ -178,9 +180,17 @@ const Customers = () => {
     const { pageIndex, pageSize, search, total } = useSelector(
         (state) => state.crmCustomers.data.tableData
     )
-    
+
     const fetchData = useCallback(() => {
-        dispatch(getCustomers({ offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), limit: pageSize, search, is_deleted: status }))
+        dispatch(
+            getCustomers({
+                offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
+                limit: pageSize,
+                search,
+                is_deleted: status,
+                role: 3,
+            })
+        )
     }, [pageIndex, pageSize, search, status, dispatch])
 
     useEffect(() => {

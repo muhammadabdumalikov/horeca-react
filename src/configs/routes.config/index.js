@@ -96,7 +96,7 @@ export const protectedRoutes = [
         authority: [ADMIN],
     },
     {
-        key: 'orderEdit',
+        key: 'orders',
         path: '/orders/edit/:id',
         component: React.lazy(() => import('views/orders/OrdersEdit')),
         authority: [ADMIN],
@@ -153,6 +153,12 @@ export const protectedRoutes = [
         key: 'providers',
         path: '/providers/add',
         component: React.lazy(() => import('views/providers/ProvidersNew')),
+        authority: [ADMIN],
+    },
+    {
+        key: 'aktSverka',
+        path: '/akt-sverka',
+        component: React.lazy(() => import('views/aktSverka')),
         authority: [ADMIN],
     },
 
