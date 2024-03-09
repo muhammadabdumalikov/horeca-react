@@ -130,7 +130,7 @@ const CategoryTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getCategories({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), search }))
+        dispatch(getCategories({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1 && 0), search }))
     }
 
     const columns = useMemo(

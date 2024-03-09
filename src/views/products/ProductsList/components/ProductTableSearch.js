@@ -33,7 +33,7 @@ const ProductTableSearch = () => {
         const { pageIndex, pageSize, search } = data
         // dispatch(setTableData(data))
 
-        dispatch(getProducts({search: search, limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1)}))
+        dispatch(getProducts({search: search, limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1 && 0)}))
     }
 
     const onEdit = (e) => {

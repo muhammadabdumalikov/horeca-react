@@ -4,20 +4,16 @@ import { DataTable } from 'components/shared'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-    getProductsByOrderId,
-    setTableData,
-} from '../store/dataSlice'
+import { getProductsByOrderId, setTableData } from '../store/dataSlice'
 import { setSelectedProduct, toggleEditConfirmation } from '../store/stateSlice'
 import { toggleDeleteConfirmation } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import ProductDeleteConfirmation from './ProductDeleteConfirmation'
-import {  useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import ProductEditConfirmation from './ProductEditConfirmation'
 import ProductStepConfirmation from './ProductStepConfirmation'
 import ProductEditPaymentConfirmation from './ProductEditPaymentConfirmation'
-
 
 const ActionColumn = ({ row }) => {
     const dispatch = useDispatch()
@@ -26,7 +22,6 @@ const ActionColumn = ({ row }) => {
     const onEdit = () => {
         dispatch(toggleEditConfirmation(true))
         dispatch(setSelectedProduct(row))
-
     }
 
     const onDelete = () => {
@@ -62,7 +57,9 @@ const ProductColumn = ({ row }) => {
     return (
         <div className="flex items-center">
             {avatar}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row?.name_ru}</span>
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>
+                {row?.name_ru}
+            </span>
         </div>
     )
 }
@@ -74,11 +71,13 @@ const ProductTable = () => {
 
     const { id } = useParams()
 
-    const { pageIndex, pageSize, sort, query, total } = useSelector(
+    const { pageIndex, pageSize } = useSelector(
         (state) => state.xordersStore.data.tableData
     )
 
-    const filterData = useSelector((state) => state.xordersStore.data.filterData)
+    const filterData = useSelector(
+        (state) => state.xordersStore.data.filterData
+    )
 
     const loading = useSelector((state) => state.xordersStore.data.loading)
 
@@ -88,7 +87,7 @@ const ProductTable = () => {
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageIndex, pageSize, sort])
+    }, [pageIndex, pageSize])
 
     useEffect(() => {
         if (tableRef) {
@@ -97,8 +96,11 @@ const ProductTable = () => {
     }, [filterData])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, sort, query, total }),
-        [pageIndex, pageSize, sort, query, total]
+        () => ({
+            offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
+            limit: pageSize,
+        }),
+        [pageIndex, pageSize]
     )
 
     const fetchData = () => {
@@ -134,14 +136,24 @@ const ProductTable = () => {
                 accessorKey: 'price_for_item',
                 cell: (props) => {
                     const { price_for_item } = props.row.original
-                    return <span>{new Intl.NumberFormat().format(price_for_item)}</span>
+                    return (
+                        <span>
+                            {new Intl.NumberFormat().format(price_for_item)}
+                        </span>
+                    )
                 },
             },
             {
                 header: 'Общая сумма',
                 cell: (props) => {
                     const { price_for_item, quantity } = props.row.original
-                    return <span>{new Intl.NumberFormat().format(price_for_item * quantity)}</span>
+                    return (
+                        <span>
+                            {new Intl.NumberFormat().format(
+                                price_for_item * quantity
+                            )}
+                        </span>
+                    )
                 },
             },
             {
@@ -187,9 +199,9 @@ const ProductTable = () => {
                 onSort={onSort}
             />
             <ProductDeleteConfirmation />
-            <ProductEditConfirmation/>
-            <ProductStepConfirmation/>
-            <ProductEditPaymentConfirmation/>
+            <ProductEditConfirmation />
+            <ProductStepConfirmation />
+            <ProductEditPaymentConfirmation />
         </>
     )
 }

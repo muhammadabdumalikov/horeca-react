@@ -34,7 +34,7 @@ const FakturaTable = () => {
     // console.log(data, 'data')
 
     const fetchData = useCallback(() => {
-        dispatch(getCustomers({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), }))
+        dispatch(getCustomers({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1 && 0), }))
     }, [dispatch, pageIndex, pageSize])
 
     useEffect(() => {

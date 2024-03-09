@@ -72,7 +72,7 @@ const CompanyTable = () => {
     const fetchData = () => {
         dispatch(
             getOrders({
-                offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
+                offset: (pageIndex - 1) * pageSize + (pageIndex === 1 && 0),
                 limit: pageSize,
                 search,
             })
