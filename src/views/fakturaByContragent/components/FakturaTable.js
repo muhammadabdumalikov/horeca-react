@@ -131,7 +131,7 @@ const FakturaTable = () => {
                 offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
             })
         )
-    }, [dispatch, startDate, endDate])
+    }, [dispatch, startDate, endDate, pageIndex, pageSize])
 
     useEffect(() => {
         dispatch(setSelectedRows([]))

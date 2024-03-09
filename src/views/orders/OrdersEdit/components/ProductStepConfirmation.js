@@ -69,7 +69,7 @@ const ProductStepConfirmation = () => {
 
     useEffect(() => {
         dispatch(setStep(data?.status))
-    }, [data?.status])
+    }, [data?.status, dispatch])
 
     return (
         <ConfirmDialog

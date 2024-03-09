@@ -80,7 +80,7 @@ const FakturaTable = () => {
 
     const dispatch = useDispatch()
 
-    const { pageIndex, pageSize, query, total } = useSelector(
+    const { pageIndex, pageSize, total } = useSelector(
         (state) => state.aktSverka.data.tableData
     )
     const loading = useSelector((state) => state.aktSverka.data.loading)
@@ -91,7 +91,7 @@ const FakturaTable = () => {
 
     const fetchData = useCallback(() => {
         dispatch(getCustomers({ limit: pageSize, offset: (pageIndex-1) * pageSize + (pageIndex === 1?0:1), role: 3 }))
-    }, [dispatch, pageIndex, pageSize, query])
+    }, [dispatch, pageIndex, pageSize])
 
     useEffect(() => {
         dispatch(setSelectedRows([]))
@@ -105,8 +105,8 @@ const FakturaTable = () => {
     }, [data])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, query, total }),
-        [pageIndex, pageSize, query, total]
+        () => ({ pageIndex, pageSize, total }),
+        [pageIndex, pageSize, total]
     )
 
     const columns = useMemo(

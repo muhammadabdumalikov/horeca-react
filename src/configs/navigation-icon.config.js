@@ -22,7 +22,6 @@ const navigationIcon = {
     catalog: <HiOutlineColorSwatch />,
     agents: <HiOutlineUserCircle/>,
     incomeBox: <HiOutlineArchiveBoxArrowDown/>,
-    users: <HiOutlineUserGroup/>,
     notification: <HiOutlineBell/>,
     calculator: <HiOutlineCalculator/>,
     clipboardList: <HiOutlineClipboardList/>,
