@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
     name_uz: Yup.string().required('Введите название товара'),
     // barcode: Yup.string().required('Введите код товара'),
     description: Yup.string().required('Введите описание товара'),
-    discount_price: Yup.string('Введите цену за скидку товара'),
+    // discount_price: Yup.string('Введите цену за скидку товара'),
     block_price: Yup.string().required('Введите цену за блок товара'),
     product_count: Yup.string().required('Введите количество товара'),
     count_price: Yup.string().required('Введите цену за единицу товара'),
@@ -28,8 +28,8 @@ const validationSchema = Yup.object().shape({
     company_id: Yup.string().required('Выберите производитель'),
     count_in_block: Yup.string().required('Введите количество товара в блоке'),
     image: Yup.string().required(' Загрузите изображение товара'),
-    provider_id: Yup.string().required(' Выберите поставщика'),
-    provider_price: Yup.string().required(' Введите цену'),
+    // provider_id: Yup.string().required(' Выберите поставщика'),
+    // provider_price: Yup.string().required(' Введите цену'),
 })
 
 const ProductForm = forwardRef((props, ref) => {
