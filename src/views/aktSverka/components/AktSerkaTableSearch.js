@@ -43,7 +43,7 @@ const FakturaSearch = () => {
             ref={searchInput}
             className="lg:w-52"
             size="sm"
-            style={{width: '150px'}}
+            // style={{width: '150px'}}
             placeholder="Search"
             prefix={<HiOutlineSearch className="text-lg" />}
             onChange={onEdit}
