@@ -61,6 +61,8 @@ const FakturaTableFilter = () => {
         (state) => state.fakturaByContragentStore.state.endDate
     )
 
+    // console.log(endDate, 'endDateß')
+
     const onStatusFilterChange = (selected) => {
         dispatch(setStatus(selected?.value))
         dispatch(

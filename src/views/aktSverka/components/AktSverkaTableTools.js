@@ -42,9 +42,19 @@ const FakturaTableTools = () => {
     const handleDateChange = (value) => {
         dispatch(setStartDate(value[0]))
         dispatch(setEndDate(value[1]))
+
+        // dispatch(
+        //     getCustomers({
+        //         limit: pageSize,
+        //         offset: (pageIndex - 1) * pageSize + (pageIndex === 1 && 0),
+        //         role: 3,
+        //         from_date: dayjs(startDate).format('YYYY-MM-DD'),
+        //         to_date: dayjs(endDate).format('YYYY-MM-DD'),
+        //     })
+        // )
     }
 
-    console.log(startDate, endDate)
+    // console.log(startDate, endDate)
 
     return (
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
@@ -57,12 +67,12 @@ const FakturaTableTools = () => {
                 </Button>
             </Link> */}
             {/* {selectedRows.length > 0 && ( */}
-                <DatePickerRange
-                    value={[startDate, endDate]}
-                    onChange={handleDateChange}
-                    inputFormat={dateFormat}
-                    size="sm"
-                />
+            {/* <DatePickerRange
+                value={[startDate, endDate]}
+                onChange={handleDateChange}
+                inputFormat={dateFormat}
+                size="sm"
+            /> */}
             {/* )} */}
             <FakturaTableSearch />
         </div>
