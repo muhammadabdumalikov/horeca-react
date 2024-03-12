@@ -1,31 +1,31 @@
 import React from 'react'
-import { Button } from 'components/ui'
-import { HiOutlineDownload } from 'react-icons/hi'
+// import { Button } from 'components/ui'
+// import { HiOutlineDownload } from 'react-icons/hi'
 import FakturaTableSearch from './AktSerkaTableSearch'
-import {  useDispatch } from 'react-redux'
-import { setDeleteMode } from '../store/stateSlice'
+// import {  useDispatch } from 'react-redux'
+// import { setDeleteMode } from '../store/stateSlice'
 // import DatePickerRange from 'components/ui/DatePicker/DatePickerRange'
 // import { setStartDate, setEndDate } from '../store/stateSlice'
 
-const BatchDeleteButton = () => {
-    const dispatch = useDispatch()
+// const BatchDeleteButton = () => {
+//     const dispatch = useDispatch()
 
-    const onBatchDelete = () => {
-        dispatch(setDeleteMode('batch'))
-    }
+//     const onBatchDelete = () => {
+//         dispatch(setDeleteMode('batch'))
+//     }
 
-    return (
-        <Button
-            variant="solid"
-            color="blue-600"
-            size="sm"
-            icon={<HiOutlineDownload />}
-            onClick={onBatchDelete}
-        >
-            Фактуры по контрагентам
-        </Button>
-    )
-}
+//     return (
+//         <Button
+//             variant="solid"
+//             color="blue-600"
+//             size="sm"
+//             icon={<HiOutlineDownload />}
+//             onClick={onBatchDelete}
+//         >
+//             Фактуры по контрагентам
+//         </Button>
+//     )
+// }
 
 const FakturaTableTools = () => {
     // const dateFormat = 'MMM DD, YYYY'
@@ -59,7 +59,7 @@ const FakturaTableTools = () => {
     return (
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
             {/* {selectedRows.length > 0 && startDate && endDate && ( */}
-                <BatchDeleteButton />
+                {/* <BatchDeleteButton /> */}
             {/* )} */}
             {/* <Link to="/data/order-list.csv" target="_blank" download>
                 <Button block size="sm" icon={<HiDownload />}>
