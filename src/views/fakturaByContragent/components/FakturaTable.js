@@ -42,6 +42,10 @@ const ActionColumn = ({ row }) => {
         (state) => state.fakturaByContragentStore.state.endDate
     )
 
+    const { pageIndex, pageSize } = useSelector(
+        (state) => state.fakturaByContragentStore.data.tableData
+    )
+
     const onEditActivity = async () => {
         const success = await getFaktura({
             order_id: row.id,
@@ -54,9 +58,12 @@ const ActionColumn = ({ row }) => {
 
             dispatch(
                 getFakturaByContagent({
-                    is_archived: false,
+                    is_archived: true,
                     from_date: dayjs(startDate).format('YYYY-MM-DD'),
                     to_date: dayjs(endDate).format('YYYY-MM-DD'),
+                    limit: pageSize,
+                    offset:
+                        (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
                 })
             )
             dispatch(
@@ -170,7 +177,9 @@ const FakturaTable = () => {
                 accessorKey: 'total_sum',
                 cell: (props) => (
                     <span>
-                        {Intl.NumberFormat().format(props.row.original.total_sum)}
+                        {Intl.NumberFormat().format(
+                            props.row.original.total_sum
+                        )}
                     </span>
                 ),
             },
