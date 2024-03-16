@@ -126,19 +126,22 @@ const FakturaTable = () => {
         (state) => state.fakturaByContragentStore.state.endDate
     )
 
+    const status = useSelector(
+        (state) => state.fakturaByContragentStore.data.status
+    )
     // console.log(data, 'data')
 
     const fetchData = useCallback(() => {
         dispatch(
             getFakturaByContagent({
-                is_archived: false,
+                is_archived: status,
                 from_date: dayjs(startDate).format('YYYY-MM-DD'),
                 to_date: dayjs(endDate).format('YYYY-MM-DD'),
                 limit: pageSize,
                 offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
             })
         )
-    }, [dispatch, startDate, endDate, pageIndex, pageSize])
+    }, [dispatch, startDate, endDate, pageIndex, pageSize, status])
 
     useEffect(() => {
         dispatch(setSelectedRows([]))
@@ -252,18 +255,31 @@ const FakturaTable = () => {
     )
 
     return (
-        <DataTable
-            ref={tableRef}
-            columns={columns}
-            data={data}
-            loading={loading}
-            pagingData={tableData}
-            onPaginationChange={onPaginationChange}
-            onSelectChange={onSelectChange}
-            onCheckBoxChange={onRowSelect}
-            onIndeterminateCheckBoxChange={onAllRowSelect}
-            // selectable
-        />
+        <>
+            <DataTable
+                ref={tableRef}
+                columns={columns}
+                data={data}
+                loading={loading}
+                pagingData={tableData}
+                onPaginationChange={onPaginationChange}
+                onSelectChange={onSelectChange}
+                onCheckBoxChange={onRowSelect}
+                onIndeterminateCheckBoxChange={onAllRowSelect}
+                // selectable
+            />
+            {!loading && isEmpty(data) && (
+                <div className=" flex flex-col items-center justify-center">
+                    {/* <DoubleSidedImage
+                        src="/img/others/img-2.png"
+                        darkModeSrc="/img/others/img-2-dark.png"
+                        alt="No product found!"
+                        // width="100vh"
+                    /> */}
+                    <h3 className="mt-8">Фактура по контрагентам не найден!</h3>
+                </div>
+            )}
+        </>
     )
 }
 

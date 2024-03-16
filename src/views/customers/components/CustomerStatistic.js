@@ -75,7 +75,7 @@ const CustomerStatistic = () => {
             <StatisticCard
                 icon={<HiOutlineUserGroup />}
                 avatarClass="!bg-indigo-600"
-                label="Всего пользователей"
+                label="Всего клиентов"
                 value={data.length}
                 growthRate={data.length}
                 // loading={loading}

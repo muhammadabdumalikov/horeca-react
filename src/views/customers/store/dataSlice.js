@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCustomers, apiSeActivityCustomers } from 'services/SalesService'
+import { apiGetCustomers, apiSeActivityCustomers, apiSetSuperUser } from 'services/SalesService'
 
 export const getCustomers = createAsyncThunk(
     'crmCustomers/data/getCustomers',
@@ -12,6 +12,13 @@ export const inActiveUser = createAsyncThunk(
     'crmCustomers/data/inActiveUser',
     async (data) => {
         const response = await apiSeActivityCustomers(data)
+        return response.data
+    }
+)
+export const setSuperUser = createAsyncThunk(
+    'crmCustomers/data/setSuperUser',
+    async (data) => {
+        const response = await apiSetSuperUser(data)
         return response.data
     }
 )

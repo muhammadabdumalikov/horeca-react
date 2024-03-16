@@ -35,7 +35,7 @@ const PricingFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Цена за шт."
+                        label="Цена за шт. *"
                         invalid={errors.count_price && touched.count_price}
                         errorMessage={errors.count_price}
                     >
@@ -62,7 +62,7 @@ const PricingFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Цена за блок"
+                        label="Цена за блок *"
                         invalid={errors.block_price && touched.block_price}
                         errorMessage={errors.block_price}
                     >

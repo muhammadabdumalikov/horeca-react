@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AdaptableCard } from 'components/shared'
-import { Input, FormItem, Select } from 'components/ui'
+import { Input, FormItem, Select, InputGroup } from 'components/ui'
 import { Field } from 'formik'
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
@@ -11,6 +11,7 @@ const rolesOptions = [
 
 const BasicInformationFields = (props) => {
     const { touched, errors, values } = props
+    const { Addon } = InputGroup
 
     const [pwInputType, setPwInputType] = useState('password')
 
@@ -18,7 +19,6 @@ const BasicInformationFields = (props) => {
         e.preventDefault()
         setPwInputType(pwInputType === 'password' ? 'text' : 'password')
     }
-
 
     const passwordVisible = (
         <span
@@ -42,7 +42,7 @@ const BasicInformationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Фамилия"
+                        label="Фамилия *"
                         invalid={errors.first_name && touched.first_name}
                         errorMessage={errors.first_name}
                     >
@@ -57,7 +57,7 @@ const BasicInformationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Имя"
+                        label="Имя *"
                         invalid={errors.last_name && touched.last_name}
                         errorMessage={errors.last_name}
                     >
@@ -72,24 +72,27 @@ const BasicInformationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Контактный номер (телефон)"
+                        label="Контактный номер (телефон) *"
                         invalid={errors.phone && touched.phone}
                         errorMessage={errors.phone}
                     >
-                        <Field
-                            type="text"
-                            autoComplete="off"
-                            name="phone"
-                            placeholder="Контактный номер (телефон)"
-                            component={Input}
-                        />
+                        <InputGroup className="mb-4">
+                            <Addon>+998</Addon>
+                            <Field
+                                type="text"
+                                autoComplete="off"
+                                name="phone"
+                                placeholder="Введите номер телефона"
+                                component={Input}
+                            />
+                        </InputGroup>
                     </FormItem>
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Логин"
+                        label="Логин *"
                         invalid={errors.login && touched.login}
                         errorMessage={errors.login}
                     >
@@ -104,7 +107,7 @@ const BasicInformationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Пароль"
+                        label="Пароль *"
                         invalid={errors.password && touched.password}
                         errorMessage={errors.password}
                     >
@@ -122,7 +125,7 @@ const BasicInformationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Роль"
+                        label="Роль *"
                         invalid={errors.role && touched.role}
                         errorMessage={errors.role}
                     >
@@ -132,10 +135,8 @@ const BasicInformationFields = (props) => {
                                     field={field}
                                     form={form}
                                     options={rolesOptions}
-                                    value={
-                                        rolesOptions?.filter(
-                                        (roles) =>
-                                            roles.value === values.role
+                                    value={rolesOptions?.filter(
+                                        (roles) => roles.value === values.role
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(

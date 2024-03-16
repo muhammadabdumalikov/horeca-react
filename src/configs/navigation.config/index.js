@@ -17,10 +17,10 @@ const navigationConfig = [
         subMenu: [],
     },
     {
-        key: 'companies',
-        path: '/companies',
-        title: 'Компании',
-        translateKey: 'nav.companies',
+        key: 'brand',
+        path: '/brand',
+        title: 'Бренд',
+        translateKey: 'nav.brand',
         icon: 'buildings',
         type: NAV_ITEM_TYPE_ITEM,
         authority: [ADMIN],
@@ -79,7 +79,7 @@ const navigationConfig = [
     {
         key: 'users',
         path: '/users',
-        title: 'Пользователи',
+        title: 'Клиенты',
         translateKey: 'nav.users',
         icon: 'users',
         type: NAV_ITEM_TYPE_ITEM,

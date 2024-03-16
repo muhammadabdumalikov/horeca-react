@@ -2,11 +2,11 @@ import React, { useEffect, useCallback, useMemo } from 'react'
 import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCustomers, inActiveUser, setTableData } from '../store/dataSlice'
+import { getCustomers, inActiveUser, setSuperUser, setTableData } from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { Link } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
-import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlineEyeOff, HiOutlineStar, HiStar } from 'react-icons/hi'
 import { isActive } from 'utils/checkActive'
 
 const inventoryStatusColor = {
@@ -41,6 +41,20 @@ const ActionColumn = ({ row }) => {
         }
     }
 
+    const onEditSuperUser = () => {
+        dispatch(
+            setSuperUser({
+                user_id: row.id,
+                super_user: `${!row.super_user}`,
+            })
+        )
+
+        if (row.id) {
+            popNotification('изменено статус')
+            dispatch(getCustomers({ role: 3 }))
+        }
+    }
+
     const popNotification = (keyword) => {
         toast.push(
             <Notification
@@ -59,18 +73,19 @@ const ActionColumn = ({ row }) => {
 
     return (
         <div className="flex justify-end text-lg">
-            <Link
-                className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
-                to={`/users/${row.id}`}
-            >
-                {/* <HiOutlinePencil /> */}
-            </Link>
-            <span
+             <span
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onEditActivity}
             >
                 {row.is_deleted ? <HiOutlineEyeOff /> : <HiOutlineEye />}
             </span>
+            <span
+                className="cursor-pointer p-2 text-yellow-600 hover:text-red-500"
+                onClick={onEditSuperUser}
+            >
+                {row.super_user ? <HiStar size="22"/> : <HiOutlineStar size="22" />}
+            </span>
+           
         </div>
     )
 }
@@ -132,6 +147,10 @@ const columns = [
     {
         header: 'Контакт',
         accessorKey: 'phone',
+        cell: (props) => {
+            const row = props.row.original
+            return <span>+{row.phone}</span>
+        },
     },
     {
         header: 'Статус',

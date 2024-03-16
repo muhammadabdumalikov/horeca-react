@@ -16,7 +16,7 @@ const inventoryStatusColor = {
         textClass: 'text-emerald-500',
     },
     1: {
-        label: 'Неактивныйы',
+        label: 'Неактивный',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
@@ -158,7 +158,7 @@ const CompanyTable = () => {
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.phone}</span>
+                    return <span>+{row.phone}</span>
                 },
             },
             {

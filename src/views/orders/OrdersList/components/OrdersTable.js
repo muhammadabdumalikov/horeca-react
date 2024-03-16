@@ -87,9 +87,19 @@ const CompanyTable = () => {
                 width: '250px',
             },
             {
+                header: 'Имя клиента',
+                accessorKey: 'first_name',
+                width: '250px',
+                cell: (props) => {
+                    const {user_json
+                    } = props.row.original
+                    return <span>{user_json.first_name} {user_json.last_name}</span>
+                }
+            },
+            {
                 header: 'Тип оплаты',
                 accessorKey: 'payment_type_name.name_ru',
-                width: '200px',
+                // width: '200px',
             },
             {
                 header: 'Статус оплаты',

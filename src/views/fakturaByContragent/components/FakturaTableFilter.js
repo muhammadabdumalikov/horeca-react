@@ -60,6 +60,10 @@ const FakturaTableFilter = () => {
     const endDate = useSelector(
         (state) => state.fakturaByContragentStore.state.endDate
     )
+   
+    const { pageIndex, pageSize } = useSelector(
+        (state) => state.fakturaByContragentStore.data.tableData
+    )
 
     // console.log(endDate, 'endDateß')
 
@@ -70,6 +74,8 @@ const FakturaTableFilter = () => {
                 is_archived: selected?.value,
                 from_date: dayjs(startDate).format('YYYY-MM-DD'),
                 to_date: dayjs(endDate).format('YYYY-MM-DD'),
+                limit: pageSize,
+                offset: (pageIndex - 1) * pageSize + (pageIndex === 1 ? 0 : 1),
             })
         )
     }

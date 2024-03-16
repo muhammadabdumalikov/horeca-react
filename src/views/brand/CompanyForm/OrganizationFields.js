@@ -13,7 +13,7 @@ const OrganizationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Регион (рус)"
+                        label="Регион (рус) *"
                         invalid={errors.country_ru && touched.country_ru}
                         errorMessage={errors.country_ru}
                     >
@@ -28,7 +28,7 @@ const OrganizationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Регион (узб)"
+                        label="Регион (узб) *"
                         invalid={errors.country_uz && touched.country_uz}
                         errorMessage={errors.country_uz}
                     >

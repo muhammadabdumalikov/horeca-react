@@ -29,12 +29,12 @@ const ProductNew = () => {
                     placement: 'top-center',
                 }
             )
-            navigate('/companies')
+            navigate('/brand')
         }
     }
 
     const handleDiscard = () => {
-        navigate('/companies')
+        navigate('/brand')
     }
 
     return (

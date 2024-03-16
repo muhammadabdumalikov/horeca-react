@@ -2,10 +2,10 @@ import React from 'react'
 // import { Button } from 'components/ui'
 // import { HiOutlineDownload } from 'react-icons/hi'
 import FakturaTableSearch from './AktSerkaTableSearch'
-// import {  useDispatch } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
 // import { setDeleteMode } from '../store/stateSlice'
-// import DatePickerRange from 'components/ui/DatePicker/DatePickerRange'
-// import { setStartDate, setEndDate } from '../store/stateSlice'
+import DatePickerRange from 'components/ui/DatePicker/DatePickerRange'
+import { setStartDate, setEndDate } from '../store/stateSlice'
 
 // const BatchDeleteButton = () => {
 //     const dispatch = useDispatch()
@@ -28,31 +28,31 @@ import FakturaTableSearch from './AktSerkaTableSearch'
 // }
 
 const FakturaTableTools = () => {
-    // const dateFormat = 'MMM DD, YYYY'
+    const dateFormat = 'MMM DD, YYYY'
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     // const selectedRows = useSelector(
     //     (state) => state.aktSverka.state.selectedRows
     // )
 
-    // const startDate = useSelector((state) => state.aktSverka.state.startDate)
-    // const endDate = useSelector((state) => state.aktSverka.state.endDate)
+    const startDate = useSelector((state) => state.aktSverka.state.startDate)
+    const endDate = useSelector((state) => state.aktSverka.state.endDate)
 
-    // const handleDateChange = (value) => {
-    //     dispatch(setStartDate(value[0]))
-    //     dispatch(setEndDate(value[1]))
+    const handleDateChange = (value) => {
+        dispatch(setStartDate(value[0]))
+        dispatch(setEndDate(value[1]))
 
-    //     // dispatch(
-    //     //     getCustomers({
-    //     //         limit: pageSize,
-    //     //         offset: (pageIndex - 1) * pageSize + (pageIndex === 1 && 0),
-    //     //         role: 3,
-    //     //         from_date: dayjs(startDate).format('YYYY-MM-DD'),
-    //     //         to_date: dayjs(endDate).format('YYYY-MM-DD'),
-    //     //     })
-    //     // )
-    // }
+        // dispatch(
+        //     getCustomers({
+        //         limit: pageSize,
+        //         offset: (pageIndex - 1) * pageSize + (pageIndex === 1 && 0),
+        //         role: 3,
+        //         from_date: dayjs(startDate).format('YYYY-MM-DD'),
+        //         to_date: dayjs(endDate).format('YYYY-MM-DD'),
+        //     })
+        // )
+    }
 
     // console.log(startDate, endDate)
 
@@ -67,12 +67,12 @@ const FakturaTableTools = () => {
                 </Button>
             </Link> */}
             {/* {selectedRows.length > 0 && ( */}
-            {/* <DatePickerRange
+            <DatePickerRange
                 value={[startDate, endDate]}
                 onChange={handleDateChange}
                 inputFormat={dateFormat}
                 size="sm"
-            /> */}
+            />
             {/* )} */}
             <FakturaTableSearch />
         </div>

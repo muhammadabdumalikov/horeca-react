@@ -17,7 +17,7 @@ const BasicInformationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Наименование товара (рус)"
+                        label="Наименование товара (рус) *"
                         invalid={errors.name_ru && touched.name_ru}
                         errorMessage={errors.name_ru}
                     >
@@ -32,7 +32,7 @@ const BasicInformationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Наименование товара (узб)"
+                        label="Наименование товара (узб) *"
                         invalid={errors.name_uz && touched.name_uz}
                         errorMessage={errors.name_uz}
                     >
@@ -76,7 +76,7 @@ const BasicInformationFields = (props) => {
                 />
             </FormItem>
             <FormItem
-                label="Описание"
+                label="Описание *"
                 labelClass="!justify-start"
                 invalid={errors.description && touched.description}
                 errorMessage={errors.description}

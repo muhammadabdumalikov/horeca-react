@@ -11,10 +11,12 @@ import reducer from './store'
 
 injectReducer('xprovidersStore', reducer)
 
+const phoneSchema = Yup.string().phone('UZ').required('Введите номер телефона')
+
 const validationSchema = Yup.object().shape({
     first_name: Yup.string(),
     last_name: Yup.string(),
-    phone: Yup.string().required('Введите номер телефона'),
+    phone: phoneSchema,
     person_type: Yup.string(),
     legal_name: Yup.string(),
     additional_name: Yup.string(),
@@ -35,7 +37,13 @@ const AgentsForm = forwardRef((props, ref) => {
                 onSubmit={(values, { setSubmitting }) => {
                     const formData = cloneDeep(values)
 
-                    onFormSubmit?.(formData, setSubmitting)
+                    const validPhone = formData.phone.length < 12 && {
+                        phone: '998' + formData.phone,
+                    }
+                    onFormSubmit?.(
+                        { ...formData, ...validPhone },
+                        setSubmitting
+                    )
                 }}
             >
                 {({ values, touched, errors, isSubmitting }) => (

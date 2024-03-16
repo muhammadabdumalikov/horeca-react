@@ -60,7 +60,7 @@ const OrganizationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Категория товара"
+                        label="Категория товара *"
                         invalid={errors.categoryId && touched.categoryId}
                         errorMessage={errors.category_id}
                     >
@@ -88,7 +88,7 @@ const OrganizationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Производитель"
+                        label="Производитель *"
                         invalid={errors.company_id && touched.company_id}
                         errorMessage={errors.company_id}
                     >
@@ -116,7 +116,7 @@ const OrganizationFields = (props) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Количество шт. (на блоке)"
+                        label="Количество шт. (на блоке) *"
                         invalid={
                             errors.count_in_block && touched.count_in_block
                         }
@@ -144,7 +144,7 @@ const OrganizationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Количество остатка"
+                        label="Количество остатка *"
                         invalid={
                             errors.product_count && touched.product_count
                         }

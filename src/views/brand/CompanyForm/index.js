@@ -10,24 +10,20 @@ import OrganizationFields from './OrganizationFields'
 
 
 const validationSchema = Yup.object().shape({
-    name_ru: Yup.string().test(
+    name: Yup.string().test(
         'len',
-        'Введите название компании',
+        'Введите название бренда',
         (val) => val?.length >= 3
     ),
-    name_uz: Yup.string().test(
-        'len',
-        'Введите название компании',
-        (val) => val?.length >= 3
-    ),
+ 
     country_uz: Yup.string().test(
         'len',
-        'Введите название страны компании',
+        'Введите название страны бренда',
         (val) => val?.length >= 3
     ),
     country_ru: Yup.string().test(
         'len',
-        'Введите название страны компании',
+        'Введите название страны бренда',
         (val) => val?.length >= 3
     ),
 })
@@ -46,6 +42,7 @@ const ProductForm = forwardRef((props, ref) => {
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
                     const formData = cloneDeep(values)
+                    // console.log(formData, 'formData')
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
@@ -107,8 +104,7 @@ const ProductForm = forwardRef((props, ref) => {
 ProductForm.defaultProps = {
     type: 'edit',
     initialData: {
-        name_ru: '',
-        name_uz: '',
+        name: '',
         country_ru: '',
         country_uz: '',
     },

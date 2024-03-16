@@ -6,18 +6,19 @@ import BasicInformationFields from './BasicInformationFields'
 import cloneDeep from 'lodash/cloneDeep'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
+import 'yup-phone'
 import { injectReducer } from 'store'
 import reducer from './store'
 
 injectReducer('agentsForm', reducer)
 
+const phoneSchema = Yup.string().phone('UZ').required('Введите номер телефона')
+
 const validationSchema = Yup.object().shape({
     password: Yup.string().required('Введите  пароль'),
     first_name: Yup.string().required('Введите Фамилию'),
     last_name: Yup.string().required('Введите Имя'),
-    phone: Yup.string().required(
-        'Номер телефона не действителен'
-    ),
+    phone: phoneSchema,
     login: Yup.string().required('Введите логин агента'),
     role: Yup.string().required('Выберите роль'),
 })
@@ -35,8 +36,8 @@ const AgentsForm = forwardRef((props, ref) => {
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
                     const formData = cloneDeep(values)
-
-                    onFormSubmit?.(formData, setSubmitting)
+                    const validPhone = formData.phone.length < 12 && {phone: '998' + formData.phone}
+                    onFormSubmit?.({...formData, ...validPhone}, setSubmitting)
                 }}
             >
                 {({ values, touched, errors, isSubmitting }) => (
@@ -70,7 +71,7 @@ const AgentsForm = forwardRef((props, ref) => {
                                             <Button
                                                 size="sm"
                                                 variant="solid"
-                                                loading={isSubmitting}
+                                                // loading={isSubmitting}
                                                 icon={<AiOutlineSave />}
                                                 type="submit"
                                             >
@@ -96,7 +97,7 @@ AgentsForm.defaultProps = {
         last_name: '',
         password: '',
         role: '',
-        login: ''
+        login: '',
     },
 }
 

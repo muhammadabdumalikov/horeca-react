@@ -96,6 +96,13 @@ export async function apiSeActivityCustomers(data) {
         data,
     })
 }
+export async function apiSetSuperUser(data) {
+    return ApiService.fetchData({
+        url: 'admin/users/set-super-user',
+        method: 'post',
+        data,
+    })
+}
 export async function apiGetFaktura(data) {
     return ApiService.fetchData({
         url: 'admin/report/get-faktura-report',

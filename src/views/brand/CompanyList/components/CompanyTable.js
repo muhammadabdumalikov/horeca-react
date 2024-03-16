@@ -29,7 +29,7 @@ const ActionColumn = ({ row }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/companies/edit/${row.id}`)
+        navigate(`/brand/edit/${row.id}`)
     }
 
     const onEditActivity = () => {
@@ -54,7 +54,7 @@ const ActionColumn = ({ row }) => {
                 placement: 'top-center',
             }
         )
-        navigate(`/companies`)
+        navigate(`/brand`)
     }
 
     return (
@@ -115,8 +115,8 @@ const CompanyTable = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Название компании',
-                accessorKey: 'name_ru',
+                header: 'Название бренда',
+                accessorKey: 'name',
                 width: '250px',
             },
             {

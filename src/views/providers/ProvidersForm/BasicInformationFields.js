@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AdaptableCard } from 'components/shared'
-import { Input, FormItem, Select } from 'components/ui'
+import { Input, FormItem, Select, InputGroup } from 'components/ui'
 import { Field } from 'formik'
 
 const rolesOptions = [
@@ -10,6 +10,8 @@ const rolesOptions = [
 
 const BasicInformationFields = (props) => {
     const { touched, errors, values } = props
+    const { Addon } = InputGroup
+
 
     const [role, setRole] = useState(1)
 
@@ -101,25 +103,30 @@ const BasicInformationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Контактный номер (телефон)"
+                        label="Контактный номер (телефон) * "
                         invalid={errors.phone && touched.phone}
                         errorMessage={errors.phone}
                     >
-                        <Field
-                            type="text"
-                            autoComplete="off"
-                            name="phone"
-                            placeholder="Контактный номер (телефон)"
-                            component={Input}
-                        />
+                        <InputGroup className="mb-4">
+                            <Addon>+998</Addon>
+                            <Field
+                                type="text"
+                                autoComplete="off"
+                                name="phone"
+                                placeholder="Контактный номер (телефон)"
+                                component={Input}
+                            />
+                        </InputGroup>
                     </FormItem>
-                </div>  
+                </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
-                <FormItem
+                    <FormItem
                         label="Добавочное имя"
-                        invalid={errors.additional_name && touched.additional_name}
+                        invalid={
+                            errors.additional_name && touched.additional_name
+                        }
                         errorMessage={errors.additional_name}
                     >
                         <Field
@@ -132,7 +139,7 @@ const BasicInformationFields = (props) => {
                     </FormItem>
                 </div>
                 <div className="col-span-1">
-                <FormItem
+                    <FormItem
                         label="Адрес"
                         invalid={errors.address && touched.address}
                         errorMessage={errors.address}

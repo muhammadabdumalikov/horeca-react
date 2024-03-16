@@ -130,6 +130,10 @@ const FakturaTable = () => {
             {
                 header: 'Контакт',
                 accessorKey: 'phone',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span>+{row.phone}</span>
+                },
             },
             {
                 header: '',

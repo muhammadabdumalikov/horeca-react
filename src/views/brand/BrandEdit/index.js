@@ -28,12 +28,12 @@ const ProductEdit = () => {
         setSubmitting(false)
         if (success) {
             popNotification('изменено')
-            navigate('/companies')
+            navigate('/brand')
         }
     }
 
     const handleDiscard = () => {
-        navigate('/companies')
+        navigate('/brand')
     }
 
     const popNotification = (keyword) => {
@@ -49,7 +49,7 @@ const ProductEdit = () => {
                 placement: 'top-center',
             }
         )
-        navigate('/companies')
+        navigate('/brand')
     }
 
     useEffect(() => {
