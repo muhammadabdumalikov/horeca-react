@@ -3,8 +3,7 @@ import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCustomers, inActiveUser, setSuperUser, setTableData } from '../store/dataSlice'
-import useThemeClass from 'utils/hooks/useThemeClass'
-import { Link } from 'react-router-dom'
+// import useThemeClass from 'utils/hooks/useThemeClass'
 import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineEye, HiOutlineEyeOff, HiOutlineStar, HiStar } from 'react-icons/hi'
 import { isActive } from 'utils/checkActive'
@@ -23,7 +22,7 @@ const inventoryStatusColor = {
 }
 
 const ActionColumn = ({ row }) => {
-    const { textTheme } = useThemeClass()
+    // const { textTheme } = useThemeClass()
     const dispatch = useDispatch()
 
     const onEditActivity = () => {
