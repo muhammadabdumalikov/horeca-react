@@ -87,6 +87,16 @@ const navigationConfig = [
         subMenu: [],
     },
     {
+        key: 'debt',
+        path: '/debt',
+        title: 'Должники',
+        translateKey: 'nav.debt',
+        icon: 'users',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [ADMIN],
+        subMenu: [],
+    },
+    {
         key: 'notifications',
         path: '/notifications',
         title: 'Уведомления',

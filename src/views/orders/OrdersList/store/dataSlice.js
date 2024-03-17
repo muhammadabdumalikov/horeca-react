@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetOrders, apiUpdateOrderStatus } from 'services/SalesService'
+import { apiGetDelivers, apiGetOrders, apiUpdateOrderStatus } from 'services/SalesService'
 
 export const getOrders = createAsyncThunk(
     'employesStore/data/getOrders',
@@ -17,6 +17,14 @@ export const updateOrderStatus = createAsyncThunk(
     }
 )
 
+export const getDelivers = createAsyncThunk(
+    'employesStore/data/getDelivers',
+    async (data) => {
+        const response = await apiGetDelivers(data)
+        return response.data
+    }
+)
+
 export const initialTableData = {
     total: 0,
     pageIndex: 1,
@@ -28,6 +36,11 @@ export const initialFilterData = {
     status: '',
 }
 
+export const multipleSelect = {
+    deliver: '',
+    orderStatus: ''
+}
+
 const dataSlice = createSlice({
     name: 'employesStore/data',
     initialState: {
@@ -35,7 +48,9 @@ const dataSlice = createSlice({
         tableData: initialTableData,
         filterData: initialFilterData,
         ordersList: [],
-        orderItem: {}
+        orderItem: {},
+        deliversList: [],
+        multipleSelect: multipleSelect
     },
     reducers: {
         setTableData: (state, action) => {
@@ -47,6 +62,9 @@ const dataSlice = createSlice({
         setFilterData: (state, action) => {
             state.filterData = action.payload
         },
+        setMultipleSelect: (state, action) => {
+            state.multipleSelect = action.payload
+        },
     },
     extraReducers: {
         [getOrders.fulfilled]: (state, action) => {
@@ -55,6 +73,13 @@ const dataSlice = createSlice({
             state.loading = false
         },
         [getOrders.pending]: (state) => {
+            state.loading = true
+        },
+        [getDelivers.fulfilled]: (state, action) => {
+            state.deliversList = action.payload.data
+            state.loading = false
+        },
+        [getDelivers.pending]: (state) => {
             state.loading = true
         },
         [updateOrderStatus.fulfilled]: (state, action) => {
@@ -66,7 +91,7 @@ const dataSlice = createSlice({
     },
 })
 
-export const { updateCompanyList, setTableData, setFilterData, setOrderItem } =
+export const { updateCompanyList, setTableData, setFilterData, setOrderItem, setMultipleSelect } =
     dataSlice.actions
 
 export default dataSlice.reducer

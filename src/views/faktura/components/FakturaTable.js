@@ -27,6 +27,7 @@ const FakturaTable = () => {
     const { pageIndex, pageSize, query, total } = useSelector(
         (state) => state.fakturaStore.data.tableData
     )
+    
     const loading = useSelector((state) => state.fakturaStore.data.loading)
 
     const data = useSelector((state) => state.fakturaStore.data.orderList)

@@ -49,7 +49,7 @@ const OrganizationFields = (props) => {
     }))
 
     const companyOptions = companyList?.map((company) => ({
-        label: company.name_ru,
+        label: company.name,
         value: company.id,
     }))
 
@@ -88,7 +88,7 @@ const OrganizationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Производитель *"
+                        label="Бренд *"
                         invalid={errors.company_id && touched.company_id}
                         errorMessage={errors.company_id}
                     >

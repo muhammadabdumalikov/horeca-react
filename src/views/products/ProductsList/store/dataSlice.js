@@ -4,6 +4,7 @@ import {
     apiGetCategory,
     apiGetCompany,
     apiInActiveProdct,
+    getProductsFaktura,
 } from 'services/SalesService'
 
 export const getProducts = createAsyncThunk(
@@ -27,6 +28,11 @@ export const getCompany = createAsyncThunk(
         return response.data
     }
 )
+export const getFaktura = async (data) => {
+    const response = await getProductsFaktura(data)
+    return response.data
+}
+
 export const inActiveProdct = createAsyncThunk(
     'salesProductList/data/inActiveProdct',
     async (data) => {
@@ -59,6 +65,7 @@ const dataSlice = createSlice({
         employesList: [],
         tableData: initialTableData,
         filterData: initialFilterData,
+        exelName: ''
     },
     reducers: {
         updateProductList: (state, action) => {
@@ -69,6 +76,9 @@ const dataSlice = createSlice({
         },
         setFilterData: (state, action) => {
             state.filterData = action.payload
+        },
+        setExelName: (state, action) => {
+            state.exelName = action.payload
         },
     },
     extraReducers: {
@@ -94,6 +104,7 @@ export const {
     updateProductList,
     setTableData,
     setFilterData,
+    setExelName
 } = dataSlice.actions
 
 export default dataSlice.reducer

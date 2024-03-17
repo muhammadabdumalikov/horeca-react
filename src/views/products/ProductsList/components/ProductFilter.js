@@ -53,7 +53,7 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
     }))
 
     const companyOptions = companyList?.map((company) => ({
-        label: company.name_ru,
+        label: company.name,
         value: company.id,
     }))
 
@@ -108,7 +108,7 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
                             </Field>
                         </FormItem>
                         <FormItem
-                            label="Производитель"
+                            label="Бренд"
                             invalid={errors.company_id && touched.company_id}
                             errorMessage={errors.company_id}
                         >
@@ -161,7 +161,7 @@ const FilterForm = forwardRef(({ onSubmitComplete }, ref) => {
                                             form.setFieldValue(field.name, val)
                                         }
                                     >
-                                        <Radio value={null}>Все</Radio>
+                                        <Radio value={''}>Все</Radio>
                                         <Radio value={"true"}>Неактивно</Radio>
                                         <Radio value={"false"}>Активно</Radio>
                                     </Radio.Group>

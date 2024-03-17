@@ -26,7 +26,7 @@ const OrderColumn = ({ row }) => {
 }
 
 const ActionColumn = ({ row }) => {
-    console.log(row, 'row')
+    // console.log(row, 'row')
     const dispatch = useDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()

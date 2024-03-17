@@ -337,10 +337,24 @@ export async function apiGetDelivers(params) {
         params,
     })
 }
+export async function getProductsFaktura(params) {
+    return ApiService.fetchData({
+        url: '/admin/report/get-all-products-excel-data',
+        method: 'get',
+        params,
+    })
+}
 
 export async function apiUpdateOrderStatus(data) {
     return ApiService.fetchData({
         url: '/admin/order/set-status',
+        method: 'post',
+        data,
+    })
+}
+export async function apiSetDeliverStatusMultiple(data) {
+    return ApiService.fetchData({
+        url: '/admin/order/set-deliver-multiple',
         method: 'post',
         data,
     })
@@ -350,6 +364,13 @@ export async function apiGetProductsByOrderId({id}) {
     return ApiService.fetchData({
         url: `admin/order/${id}`,
         method: 'get',
+    })
+}
+export async function apiGetDebtUsers(params) {
+    return ApiService.fetchData({
+        url: `admin/users/in-debt-list`,
+        method: 'get',
+        params
     })
 }
 export async function apiOrderUpdate(data) {
@@ -373,6 +394,13 @@ export async function apiGetDeliveryOrders (params) {
 export async function apiUpdateOrderDeliver(data) {
     return ApiService.fetchData({
         url: '/admin/order/set-deliver',
+        method: 'post',
+        data,
+    })
+}
+export async function apiUpdateProductsListExel(data) {
+    return ApiService.fetchData({
+        url: '/admin/report/set-products-ostatok',
         method: 'post',
         data,
     })

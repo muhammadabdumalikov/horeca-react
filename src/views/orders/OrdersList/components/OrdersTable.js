@@ -1,11 +1,17 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { DataTable } from 'components/shared'
 import { HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOrders, setOrderItem, setTableData } from '../store/dataSlice'
+import {
+    getDelivers,
+    getOrders,
+    setOrderItem,
+    setTableData,
+} from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
+import { addRowItem, removeRowItem, setSelectedRows } from '../store/stateSlice'
 
 const statusOfOrder = {
     1: 'Принял',
@@ -77,6 +83,7 @@ const CompanyTable = () => {
                 search,
             })
         )
+        dispatch(getDelivers({ role: 4 }))
     }
 
     const columns = useMemo(
@@ -91,10 +98,13 @@ const CompanyTable = () => {
                 accessorKey: 'first_name',
                 width: '250px',
                 cell: (props) => {
-                    const {user_json
-                    } = props.row.original
-                    return <span>{user_json.first_name} {user_json.last_name}</span>
-                }
+                    const { user_json } = props.row.original
+                    return (
+                        <span>
+                            {user_json.first_name} {user_json.last_name}
+                        </span>
+                    )
+                },
             },
             {
                 header: 'Тип оплаты',
@@ -202,6 +212,31 @@ const CompanyTable = () => {
         dispatch(setTableData(newTableData))
     }
 
+    const onRowSelect = (checked, row) => {
+        console.log(checked, row)
+        if (checked) {
+            dispatch(addRowItem([row.id]))
+        } else {
+            dispatch(removeRowItem(row.id))
+        }
+    }
+
+    const onAllRowSelect = useCallback(
+        (checked, rows) => {
+            if (checked) {
+                const originalRows = rows.map((row) => row.original)
+                const selectedIds = []
+                originalRows.forEach((row) => {
+                    selectedIds.push(row.id)
+                })
+                dispatch(setSelectedRows(selectedIds))
+            } else {
+                dispatch(setSelectedRows([]))
+            }
+        },
+        [dispatch]
+    )
+
     return (
         <>
             <DataTable
@@ -214,6 +249,9 @@ const CompanyTable = () => {
                 pagingData={tableData}
                 onPaginationChange={onPaginationChange}
                 onSelectChange={onSelectChange}
+                onCheckBoxChange={onRowSelect}
+                onIndeterminateCheckBoxChange={onAllRowSelect}
+                selectable
             />
         </>
     )
