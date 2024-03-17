@@ -21,4 +21,4 @@ app.get('/*', function (req, res) {
     )
 })
 
-server.listen(5001, () => console.log('Listening to port 5001'))
+server.listen(5001, () => console.log('Listening to port: 5001'))
