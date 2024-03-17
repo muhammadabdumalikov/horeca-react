@@ -124,6 +124,7 @@ export async function apiGetFakturaOrder(data) {
         data,
     })
 }
+
 export async function apiGetFakturaByContragent(params) {
     return ApiService.fetchData({
         url: 'admin/report/faktura-list',
