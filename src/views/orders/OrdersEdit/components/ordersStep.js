@@ -4,6 +4,7 @@ import {
     HiOutlineLogin,
     HiOutlineDocumentSearch,
     HiOutlineClipboardCheck,
+    HiOutlineArchive,
 } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import { setStep } from '../store/dataSlice'
@@ -44,6 +45,7 @@ const OrdersStep = () => {
         <>
             <Steps vertical={windowWidth < 600} current={step}>
                 <Steps.Item title="Принял" customIcon={<HiOutlineLogin />} />
+                <Steps.Item title="Склад" customIcon={<HiOutlineArchive />} />
                 <Steps.Item title="Доставка" customIcon={<HiOutlineLogin />} />
                 {/* <Spinner /> */}
                 {/* <Steps.Item
@@ -70,8 +72,8 @@ const OrdersStep = () => {
                 >
                     Назад
                 </Button>
-                <Button disabled={step === 3} variant="solid" onClick={onNext}>
-                    {step === 3 ? 'Завершено' : 'Далее'}
+                <Button disabled={step === 4} variant="solid" onClick={onNext}>
+                    {step === 4 ? 'Завершено' : 'Далее'}
                 </Button>
             </div>
         </>

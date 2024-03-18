@@ -73,6 +73,7 @@ const ProductStepConfirmation = () => {
 
     return (
         <ConfirmDialog
+        width="full"
             isOpen={dialogOpen}
             onClose={onDialogClose}
             onRequestClose={onDialogClose}

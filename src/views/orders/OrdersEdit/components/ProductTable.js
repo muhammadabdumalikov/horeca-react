@@ -83,7 +83,6 @@ const ProductTable = () => {
 
     const data = useSelector((state) => state.xordersStore.data.productList)
 
-    // console.log(data, 'data')
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -176,10 +176,6 @@ const columns = [
         },
     },
     {
-        header: 'Организация',
-        accessorKey: 'organization',
-    },
-    {
         header: '',
         id: 'action',
         cell: (props) => <ActionColumn row={props.row.original} />,

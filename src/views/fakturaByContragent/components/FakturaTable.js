@@ -45,10 +45,13 @@ const ActionColumn = ({ row }) => {
     const { pageIndex, pageSize } = useSelector(
         (state) => state.fakturaByContragentStore.data.tableData
     )
+    const status = useSelector(
+        (state) => state.fakturaByContragentStore.data.status
+    )
 
     const onEditActivity = async () => {
         const success = await getFaktura({
-            order_id: row.id,
+            order_ids: [row.id],
         })
 
         if (!isEmpty(success)) {
@@ -58,7 +61,7 @@ const ActionColumn = ({ row }) => {
 
             dispatch(
                 getFakturaByContagent({
-                    is_archived: true,
+                    is_archived: status,
                     from_date: dayjs(startDate).format('YYYY-MM-DD'),
                     to_date: dayjs(endDate).format('YYYY-MM-DD'),
                     limit: pageSize,

@@ -361,10 +361,11 @@ export async function apiSetDeliverStatusMultiple(data) {
     })
 }
 
-export async function apiGetProductsByOrderId({id}) {
+export async function apiGetProductsByOrderId(params) {
     return ApiService.fetchData({
-        url: `admin/order/${id}`,
+        url: `admin/order/${params.id}`,
         method: 'get',
+        // params
     })
 }
 export async function apiGetDebtUsers(params) {

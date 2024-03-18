@@ -64,8 +64,9 @@ const dataSlice = createSlice({
     },
     extraReducers: {
         [getProductsByOrderId.fulfilled]: (state, action) => {
+            console.log(action.payload.order_items, 'action.payload')
             state.productList = action.payload
-            state.tableData.total = action.payload.total_count
+            state.tableData.total = action.payload.order_items.length
             state.loading = false
         },
         [getProductsByOrderId.pending]: (state) => {
