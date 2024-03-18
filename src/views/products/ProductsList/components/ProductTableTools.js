@@ -99,7 +99,7 @@ const ProductTableTools = () => {
                 size="sm"
                 icon={<HiUpload />}
                 onClick={onUpload}
-            ></Button> */}
+            ></Button */}
             <Upload
                 accept=".xlsx"
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
