@@ -12,7 +12,8 @@ const options = [
     { value: 1, label: 'Принял', color: 'bg-emerald-500' },
     { value: 2, label: 'Доставка', color: 'bg-emerald-500' },
     { value: 3, label: 'Доставленный', color: 'bg-emerald-500' },
-    { value: 4, label: 'Отменено', color: 'bg-red-500' },
+    { value: 4, label: 'Склад', color: 'bg-emerald-500' },
+    { value: 5, label: 'Отменено', color: 'bg-red-500' },
 ]
 
 const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {
