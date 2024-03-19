@@ -10,6 +10,7 @@ const { Control } = components
 const options = [
     { value: '', label: 'Все', color: 'bg-gray-500' },
     { value: 1, label: 'Принял', color: 'bg-emerald-500' },
+    { value: 7, label: 'Cклад', color: 'bg-emerald-500' },
     { value: 2, label: 'Доставка', color: 'bg-emerald-500' },
     { value: 3, label: 'Доставленный', color: 'bg-emerald-500' },
     { value: 4, label: 'Отменено', color: 'bg-red-500' },

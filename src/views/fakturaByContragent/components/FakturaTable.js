@@ -269,7 +269,7 @@ const FakturaTable = () => {
                 onSelectChange={onSelectChange}
                 onCheckBoxChange={onRowSelect}
                 onIndeterminateCheckBoxChange={onAllRowSelect}
-                // selectable
+                selectable
             />
             {!loading && isEmpty(data) && (
                 <div className=" flex flex-col items-center justify-center">

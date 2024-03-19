@@ -1,21 +1,18 @@
 import React from 'react'
 import { Button } from 'components/ui'
-import {
-    HiOutlineArrowLeft,
-    HiOutlineCash,
-    HiOutlineLocationMarker,
-} from 'react-icons/hi'
+import { HiOutlineArrowLeft, HiOutlineCash } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import ProductsTableFilter from './ProductsTableFilter'
 import { useDispatch } from 'react-redux'
 import { toggleEditOrderStep, toggleEditPayment } from '../store/stateSlice'
+import ProductStatusFilter from './ProductsStatusFilter'
 
 const ProductTableTools = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleDiscard = () => {
-        navigate("/orders")
+        navigate('/orders')
     }
 
     const handleOrderStep = () => {
@@ -27,17 +24,17 @@ const ProductTableTools = () => {
 
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
-            
-            <ProductsTableFilter/>
+            <span className='font-semibold'>Доставщик:</span> <ProductsTableFilter />
             <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
-                <Button
+                <span className='font-semibold'>Статус заказа:</span> <ProductStatusFilter />
+                {/* <Button
                     onClick={handleOrderStep}
                     block
                     size="sm"
                     icon={<HiOutlineLocationMarker />}
                 >
                     Процесс заказа
-                </Button>
+                </Button> */}
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
                 <Button

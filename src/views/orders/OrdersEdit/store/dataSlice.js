@@ -46,6 +46,7 @@ const dataSlice = createSlice({
         deliversList: [],
         tableData: initialTableData,
         status: '',
+        orderStatus: 1,
         step: 1
     },
     reducers: {
@@ -58,13 +59,15 @@ const dataSlice = createSlice({
         setFilterData: (state, action) => {
             state.status = action.payload.status
         },
+        setOrderStatus: (state, action) => {
+            state.orderStatus = action.payload.orderStatus
+        },
         setStep: (state, action) => {
             state.step = action.payload
         },
     },
     extraReducers: {
         [getProductsByOrderId.fulfilled]: (state, action) => {
-            console.log(action.payload.order_items, 'action.payload')
             state.productList = action.payload
             state.tableData.total = action.payload.order_items.length
             state.loading = false
@@ -82,7 +85,7 @@ const dataSlice = createSlice({
     },
 })
 
-export const { updateProductList, setTableData, setFilterData, setStep } =
+export const { updateProductList, setTableData, setFilterData, setStep, setOrderStatus } =
     dataSlice.actions
 
 export default dataSlice.reducer
