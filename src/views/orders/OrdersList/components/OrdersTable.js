@@ -213,8 +213,7 @@ const CompanyTable = () => {
         dispatch(setTableData(newTableData))
     }
 
-    const onRowSelect = (checked, row) => {
-        console.log(checked, row)
+    const onRowSelect = (checked, row) => { 
         if (checked) {
             dispatch(addRowItem([row.id]))
         } else {

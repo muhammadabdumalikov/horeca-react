@@ -4,7 +4,7 @@ import { HiOutlineArrowLeft, HiOutlineCash } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import ProductsTableFilter from './ProductsTableFilter'
 import { useDispatch } from 'react-redux'
-import { toggleEditOrderStep, toggleEditPayment } from '../store/stateSlice'
+import { toggleEditPayment } from '../store/stateSlice'
 import ProductStatusFilter from './ProductsStatusFilter'
 
 const ProductTableTools = () => {
@@ -15,9 +15,9 @@ const ProductTableTools = () => {
         navigate('/orders')
     }
 
-    const handleOrderStep = () => {
-        dispatch(toggleEditOrderStep(true))
-    }
+    // const handleOrderStep = () => {
+    //     dispatch(toggleEditOrderStep(true))
+    // }
     const handleOpenEditPayment = () => {
         dispatch(toggleEditPayment(true))
     }

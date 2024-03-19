@@ -15,7 +15,7 @@ const BatchDeleteButton = () => {
     const dispatch = useDispatch()
 
     const selectedRow = useSelector(
-        (state) => state.fakturaByContragentStore.state.selectedRow
+        (state) => state.fakturaByContragentStore.state.selectedRows
     )
 
     const startDate = useSelector(
@@ -29,7 +29,7 @@ const BatchDeleteButton = () => {
 
     const onBatchDelete = async () => {
         const success = await getFaktura({
-            user_ids: selectedRow,
+            order_ids: selectedRow,
             from_date: dayjs(startDate).format('YYYY-MM-DD'),
             to_date: dayjs(endDate).format('YYYY-MM-DD'),
         })
