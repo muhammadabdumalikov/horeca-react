@@ -7,10 +7,11 @@ import { Button, Notification, toast } from 'components/ui'
 import { isEmpty } from 'lodash'
 import { generateExcel } from './OrdersExcelPattern'
 import { getOrders } from '../store/dataSlice'
-import { apiGetFakturaOrder } from 'services/SalesService'
+import { apiGetAllItogOrders, apiGetFakturaOrder } from 'services/SalesService'
 import OrdersPaymentTypeFilter from './OrdersPaymentTypeFilter'
 import OrdersTableSearch from './OrdersTableSearch'
 import OrdersTableSearchByClient from './OrdersTableSearchByClient'
+import { generateAllItogExcel } from './OrdersGetAllItogExelPattern'
 
 const ProductTableTools = () => {
     const dispatch = useDispatch()
@@ -25,10 +26,27 @@ const ProductTableTools = () => {
 
     const onEditActivity = async () => {
         const success = await apiGetFakturaOrder({ order_ids: selectedRows })
-
+        console.log(success,'sucess')
         if (!isEmpty(success)) {
             generateExcel(success)
-            popNotification(' Успешно получено', 'success')
+            popNotification('Успешно получено', 'success')
+            dispatch(
+                getOrders({
+                    search,
+                    limit: pageSize,
+                    offset: (pageIndex - 1) * pageSize + (pageIndex === 1 && 0),
+                })
+            )
+        } else {
+            popNotification('Список пуст', 'danger')
+        }
+    }
+    const onGetOveralSum = async () => {
+        const success = await apiGetAllItogOrders({ order_ids: selectedRows })
+
+        if (!isEmpty(success)) {
+            generateAllItogExcel(success)
+            popNotification('Успешно получено', 'success')
             dispatch(
                 getOrders({
                     search,
@@ -64,6 +82,16 @@ const ProductTableTools = () => {
                     onClick={onEditActivity}
                 >
                     Фактура для склада
+                </Button>
+            )}
+            {selectedRows.length > 0 && (
+                <Button
+                    className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
+                    size="sm"
+                    icon={<HiDownload />}
+                    onClick={onGetOveralSum}
+                >
+                    Итоговый отчет
                 </Button>
             )}
             {/* <ProductTableSearch /> */}

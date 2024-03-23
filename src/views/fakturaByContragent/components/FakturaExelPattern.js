@@ -477,7 +477,7 @@ export  const generateExcel = async (success) => {
         )
         worksheet.getCell(
             `G${startRowIndex + 7 + order_raw.items.length}`
-        ).value = `Итого по инвойсу: 00 шт ${order_raw.total_sum}`
+        ).value = `Итого по инвойсу: ${order_raw.items.length} шт ${order_raw.total_sum}`
 
         worksheet.getCell(
             `G${startRowIndex + 8 + order_raw.items.length}`

@@ -274,7 +274,7 @@ export  const generateExcel = async (success) => {
 
       worksheet.getCell(`A${startRowIndex + i + 7 + order_raw.items.length}`).style = cell_bold_right_style;
       worksheet.mergeCells(`A${startRowIndex + i + 7 + order_raw.items.length}:E${startRowIndex + i + 7 + order_raw.items.length}`);
-      worksheet.getCell(`A${startRowIndex + i + 7 + order_raw.items.length}`).value = `Итого по инвойсу: 00 шт ${order_raw.total_sum}`;
+      worksheet.getCell(`A${startRowIndex + i + 7 + order_raw.items.length}`).value = `Итого по инвойсу: ${order_raw.items.length} шт ${order_raw.total_sum}`;
 
       worksheet.getCell(`A${startRowIndex + i + 8 + order_raw.items.length}`).style = cell_center_style;
       worksheet.mergeCells(`A${startRowIndex + i + 8 + order_raw.items.length}:E${startRowIndex + i + 8 + order_raw.items.length}`);

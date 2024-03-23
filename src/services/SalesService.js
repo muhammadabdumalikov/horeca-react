@@ -124,6 +124,13 @@ export async function apiGetFakturaOrder(data) {
         data,
     })
 }
+export async function apiGetAllItogOrders(data) {
+    return ApiService.fetchData({
+        url: 'admin/report/get-all-itog-orders',
+        method: 'post',
+        data,
+    })
+}
 
 export async function apiGetFakturaByContragent(params) {
     return ApiService.fetchData({
