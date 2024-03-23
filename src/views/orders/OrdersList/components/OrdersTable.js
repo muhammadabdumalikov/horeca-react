@@ -38,7 +38,7 @@ const ActionColumn = ({ row }) => {
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
             >
-                {row?.status !== 3 && <HiOutlinePencil />}
+                 <HiOutlinePencil />
             </span>
         </div>
     )

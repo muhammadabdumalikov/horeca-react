@@ -7,7 +7,7 @@ export const getUserInfoByToken = createAsyncThunk(
         const response = await apiGetUserInfoByToken(data)
         return response.data
     }
-) 
+)
 
 export const initialState = {
     avatar: '',
@@ -24,10 +24,10 @@ export const userSlice = createSlice({
         setUser: (_, action) => action.payload,
         userLoggedOut: () => initialState,
     },
-    extraReducers: {
-        [getUserInfoByToken.fulfilled]: (state, action) => {
+    extraReducers: (builder) => {
+        builder.addCase(getUserInfoByToken.fulfilled, (state, action) => {
             state.userInfo = action.payload
-        },
+        })
     },
 })
 

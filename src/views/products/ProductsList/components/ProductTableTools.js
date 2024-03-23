@@ -22,11 +22,11 @@ const ProductTableTools = () => {
     const { pageIndex, pageSize, search } = useSelector(
         (state) => state.salesProductList.data.tableData
     )
-    const fileName = useSelector(
-        (state) => state.salesProductList.data.exelName
-    )
+    // const fileName = useSelector(
+    //     (state) => state.salesProductList.data.exelName
+    // )
 
-    console.log(fileName, 'fileName')
+    // console.log(fileName, 'fileName')
 
     const generateFileName = `Mahsulotlar qoldig'i-${ObjectID()}.xlsx`
 

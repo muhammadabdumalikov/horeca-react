@@ -28,19 +28,23 @@ const ActionColumn = ({ row }) => {
         dispatch(setSelectedProduct(row))
     }
 
+    const productList = useSelector(
+        (state) => state.xordersStore.data.productList
+    )
+
     return (
         <div className="flex justify-end text-lg">
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
             >
-                <HiOutlinePencil />
+                {productList.status !== 3 && <HiOutlinePencil />}
             </span>
             <span
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onDelete}
             >
-                <HiOutlineTrash />
+                {productList.status !== 3 && <HiOutlineTrash />}
             </span>
         </div>
     )
@@ -110,6 +114,7 @@ const ProductTable = () => {
             {
                 header: 'Название продукта',
                 accessorKey: 'name',
+                width: '250px',
                 cell: (props) => {
                     const row = props.row.original
                     return <ProductColumn row={row} />
@@ -128,10 +133,14 @@ const ProductTable = () => {
             {
                 header: 'Количество',
                 accessorKey: 'quantity',
+                width: '250px',
+
             },
             {
                 header: 'Цена за шт.',
                 accessorKey: 'price_for_item',
+                width: '250px',
+
                 cell: (props) => {
                     const { price_for_item } = props.row.original
                     return (

@@ -103,6 +103,7 @@ const ProductsTableFilter = () => {
         <Select
             options={sortOptions(deliversList)}
             size="sm"
+            isDisabled={productList?.status === 3}
             className="ml-4 min-w-[130px]"
             onChange={onStatusFilterChange}
             components={{

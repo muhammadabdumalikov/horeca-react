@@ -3,7 +3,7 @@ import { Button } from 'components/ui'
 import { HiOutlineArrowLeft, HiOutlineCash } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import ProductsTableFilter from './ProductsTableFilter'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toggleEditPayment } from '../store/stateSlice'
 import ProductStatusFilter from './ProductsStatusFilter'
 
@@ -18,6 +18,9 @@ const ProductTableTools = () => {
     // const handleOrderStep = () => {
     //     dispatch(toggleEditOrderStep(true))
     // }
+    const productList = useSelector(
+        (state) => state.xordersStore.data.productList
+    )
     const handleOpenEditPayment = () => {
         dispatch(toggleEditPayment(true))
     }
@@ -36,7 +39,7 @@ const ProductTableTools = () => {
                     Процесс заказа
                 </Button> */}
             </div>
-            <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
+           {productList.status !== 3 && <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
                 <Button
                     onClick={handleOpenEditPayment}
                     block
@@ -45,7 +48,7 @@ const ProductTableTools = () => {
                 >
                     Ввести сумму
                 </Button>
-            </div>
+            </div>}
             {/* <Link
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
                 to="/data/product-list.csv"

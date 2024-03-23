@@ -27,6 +27,8 @@ const ProductStatusFilter = () => {
         { value: 4, label: 'Отменен' },
     ]
 
+    console.log(productList, 'productList')
+
     const CustomSelectOption = ({ innerProps, label, isSelected }) => {
         return (
             <div
@@ -99,7 +101,8 @@ const ProductStatusFilter = () => {
         <Select
             options={statusOfOrder}
             size="sm"
-            className="ml-4 min-w-[130px]"
+            isDisabled={productList?.status === 3}
+            className="ml-4 min-w-[130px] disabled"
             onChange={onStatusFilterChange}
             components={{
                 Option: CustomSelectOption,
