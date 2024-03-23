@@ -12,13 +12,14 @@ import useThemeClass from 'utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import { addRowItem, removeRowItem, setSelectedRows } from '../store/stateSlice'
+import dayjs from 'dayjs'
 
 const statusOfOrder = {
-    1: 'Принял',
-    2: 'Доставка',
-    3: 'Доставленный',
-    7: 'Cклад',
-    4: 'Отменено',
+    1: 'Получен',
+    7: 'На складе',
+    2: 'Отгружен',
+    3: 'Доставлен',
+    4: 'Отменен',
 }
 
 const ActionColumn = ({ row }) => {
@@ -32,12 +33,12 @@ const ActionColumn = ({ row }) => {
     }
 
     return (
-        <div className="flex justify-end text-lg">
+        <div className="flex justify-center text-lg">
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
             >
-                <HiOutlinePencil />
+                {row?.status !== 3 && <HiOutlinePencil />}
             </span>
         </div>
     )
@@ -90,14 +91,45 @@ const CompanyTable = () => {
     const columns = useMemo(
         () => [
             {
+                header: 'Изменить',
+                id: 'action',
+                cell: (props) => <ActionColumn row={props.row.original} />,
+            },
+            {
+                header: 'Статус заказа',
+                // accessorKey: 'orderStatus',
+                width: '200px',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <span className="capitalize">
+                            {statusOfOrder[row?.status]}
+                        </span>
+                    )
+                },
+            },
+            {
                 header: 'Номер заказа',
                 accessorKey: 'order_number',
                 width: '250px',
             },
             {
+                header: 'Время заказа',
+                // accessorKey: 'first_name',
+                // width: '250px',
+                cell: (props) => {
+                    const { created_at } = props.row.original
+                    return (
+                        <span>
+                            {dayjs(created_at).format('DD-MM-YYYY HH:mm')}
+                        </span>
+                    )
+                },
+            },
+            {
                 header: 'Имя клиента',
-                accessorKey: 'first_name',
-                width: '250px',
+                // accessorKey: 'first_name',
+                // width: '1px',
                 cell: (props) => {
                     const { user_json } = props.row.original
                     return (
@@ -108,32 +140,8 @@ const CompanyTable = () => {
                 },
             },
             {
-                header: 'Тип оплаты',
-                accessorKey: 'payment_type_name.name_ru',
-                // width: '200px',
-            },
-            {
-                header: 'Статус оплаты',
-                accessorKey: 'paid_status',
-                width: '200px',
-            },
-            {
-                header: 'Оплаченная сумма',
-                accessorKey: 'paid',
-                cell: (props) => {
-                    return (
-                        <span>
-                            {new Intl.NumberFormat().format(
-                                props.row.original.paid
-                            )}
-                        </span>
-                    )
-                },
-                width: '200px',
-            },
-            {
                 header: 'Сумма заказа',
-                accessorKey: 'total_sum',
+                // accessorKey: 'total_sum',
                 width: '200px',
                 cell: (props) => {
                     return (
@@ -146,8 +154,41 @@ const CompanyTable = () => {
                 },
             },
             {
+                header: 'Оплаченная сумма',
+                // accessorKey: 'paid',
+                cell: (props) => {
+                    return (
+                        <span>
+                            {new Intl.NumberFormat().format(
+                                props.row.original.paid
+                            )}
+                        </span>
+                    )
+                },
+                width: '200px',
+            },
+            {
+                header: 'Тип оплаты',
+                accessorKey: 'payment_type_name.name_ru',
+                // width: '200px',
+            },
+            {
+                header: 'Имя доставщика',
+                // accessorKey: 'deliver_user_json.last_name',
+                // width: '500px',
+                cell: (props) => {
+                    const { deliver_user_json } = props.row.original
+                    return (
+                        <span>
+                            {deliver_user_json?.first_name} {deliver_user_json?.last_name}
+                        </span>
+                    )
+                },
+            },
+
+            {
                 header: 'Комментарий',
-                accessorKey: 'comment',
+                // accessorKey: 'comment',
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
@@ -159,22 +200,10 @@ const CompanyTable = () => {
                     )
                 },
             },
-            {
-                header: 'Статус заказа',
-                accessorKey: 'orderStatus',
-                width: '200px',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <span className="capitalize">
-                            {statusOfOrder[row?.status]}
-                        </span>
-                    )
-                },
-            },
+
             {
                 header: 'Локация',
-                accessorKey: 'location',
+                // accessorKey: 'location',
                 width: '200px',
                 cell: (props) => {
                     const row = props.row.original
@@ -192,9 +221,9 @@ const CompanyTable = () => {
                 },
             },
             {
-                header: '',
-                id: 'action',
-                cell: (props) => <ActionColumn row={props.row.original} />,
+                header: 'Статус оплаты',
+                accessorKey: 'paid_status',
+                width: '200px',
             },
         ],
         []
@@ -213,7 +242,7 @@ const CompanyTable = () => {
         dispatch(setTableData(newTableData))
     }
 
-    const onRowSelect = (checked, row) => { 
+    const onRowSelect = (checked, row) => {
         if (checked) {
             dispatch(addRowItem([row.id]))
         } else {

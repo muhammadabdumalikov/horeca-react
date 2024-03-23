@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce'
 import cloneDeep from 'lodash/cloneDeep'
 import { getOrders, setTableData } from '../store/dataSlice'
 
-const OrdersTableSearch = () => {
+const OrdersTableSearchByClient = () => {
     const dispatch = useDispatch()
 
     const searchInput = useRef()
@@ -17,7 +17,7 @@ const OrdersTableSearch = () => {
 
     function handleDebounceFn(val) {
         const newTableData = cloneDeep(tableData)
-        newTableData.order_number = val
+        newTableData.client_name = val
         newTableData.pageIndex = 1
         if (typeof val === 'string' && val.length > 1) {
             fetchData(newTableData)
@@ -42,11 +42,11 @@ const OrdersTableSearch = () => {
             ref={searchInput}
             className="max-w-md md:w-52 md:mb-0 mb-4"
             size="sm"
-            placeholder="Номер заказа"
+            placeholder="Имя клиента"
             prefix={<HiOutlineSearch className="text-lg" />}
             onChange={onEdit}
         />
     )
 }
 
-export default OrdersTableSearch
+export default OrdersTableSearchByClient

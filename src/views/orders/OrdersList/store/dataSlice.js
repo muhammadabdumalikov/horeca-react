@@ -29,11 +29,15 @@ export const initialTableData = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
-    search: '',
+    // search: '',
+    order_number: '',
+    client_name: ''
 }
 
 export const initialFilterData = {
     status: '',
+    paidStatus: '',
+
 }
 
 export const multipleSelect = {

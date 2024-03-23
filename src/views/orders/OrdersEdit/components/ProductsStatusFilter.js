@@ -20,11 +20,11 @@ const ProductStatusFilter = () => {
     )
 
     const statusOfOrder = [
-        { value: 1, label: 'Принял' },
-        { value: 7, label: 'Cклад' },
-        { value: 2, label: 'Доставка' },
-        { value: 3, label: 'Доставленный' },
-        { value: 4, label: 'Отменено' },
+        { value: 1, label: 'Получен' },
+        { value: 7, label: 'На складе' },
+        { value: 2, label: 'Отгружен' },
+        { value: 3, label: 'Доставлен' },
+        { value: 4, label: 'Отменен' },
     ]
 
     const CustomSelectOption = ({ innerProps, label, isSelected }) => {

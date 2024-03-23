@@ -9,11 +9,11 @@ const { Control } = components
 
 const options = [
     { value: '', label: 'Все', color: 'bg-gray-500' },
-    { value: 1, label: 'Принял', color: 'bg-emerald-500' },
-    { value: 7, label: 'Cклад', color: 'bg-emerald-500' },
-    { value: 2, label: 'Доставка', color: 'bg-emerald-500' },
-    { value: 3, label: 'Доставленный', color: 'bg-emerald-500' },
-    { value: 4, label: 'Отменено', color: 'bg-red-500' },
+    { value: 1, label: 'Получен', color: 'bg-emerald-500' },
+    { value: 7, label: 'На складе', color: 'bg-emerald-500' },
+    { value: 2, label: 'Отгружен', color: 'bg-emerald-500' },
+    { value: 3, label: 'Доставлен', color: 'bg-emerald-500' },
+    { value: 4, label: 'Отменен', color: 'bg-red-500' },
 ]
 
 const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {

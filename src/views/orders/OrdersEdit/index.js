@@ -8,7 +8,6 @@ import ProductTableTools from './components/ProductTableTools'
 injectReducer('xordersStore', reducer)
 
 const ProductList = () => {
-
     return (
         <AdaptableCard className="h-full" bodyClass="h-full">
             <div className="lg:flex items-center justify-between mb-4">

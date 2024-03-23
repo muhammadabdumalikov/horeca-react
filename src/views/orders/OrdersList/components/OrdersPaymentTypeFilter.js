@@ -9,11 +9,9 @@ const { Control } = components
 
 const options = [
     { value: '', label: 'Все', color: 'bg-gray-500' },
-    { value: 1, label: 'Получен', color: 'bg-emerald-500' },
-    { value: 7, label: 'На складе', color: 'bg-emerald-500' },
-    { value: 2, label: 'Отгружен', color: 'bg-emerald-500' },
-    { value: 3, label: 'Доставлен', color: 'bg-emerald-500' },
-    { value: 4, label: 'Отменен', color: 'bg-red-500' },
+    { value: 3, label: 'Оплачен', color: 'bg-emerald-500' },
+    { value: 1, label: 'Неоплачен', color: 'bg-emerald-500' },
+    { value: 2, label: 'Частично оплачен', color: 'bg-emerald-500' },
 ]
 
 const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {
@@ -50,16 +48,18 @@ const CustomControl = ({ children, ...props }) => {
     )
 }
 
-const NotificationTableFIlter = () => {
+const OrdersPaymentTypeFilter = () => {
     const dispatch = useDispatch()
 
-    const { status } = useSelector(
+    const { paidStatus } = useSelector(
         (state) => state.ordersStore.data.filterData
     )
 
     const onStatusFilterChange = (selected) => {
-        dispatch(setFilterData({ status: selected?.value }))
-        dispatch(getOrders(selected?.value ? {status: selected?.value} : {}))
+        dispatch(setFilterData({ paidStatus: selected?.value }))
+        dispatch(
+            getOrders(selected?.value ? { paid_status: selected?.value } : {})
+        )
     }
 
     return (
@@ -72,9 +72,9 @@ const NotificationTableFIlter = () => {
                 Option: CustomSelectOption,
                 Control: CustomControl,
             }}
-            value={options.filter((option) => option.value === status)}
+            value={options.filter((option) => option.value === paidStatus)}
         />
     )
 }
 
-export default NotificationTableFIlter
+export default OrdersPaymentTypeFilter

@@ -3,7 +3,11 @@ import { Badge, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { HiOutlineEye, HiOutlineEyeOff, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getEmployes, patchActivityEmployes, setTableData } from '../store/dataSlice'
+import {
+    getEmployes,
+    patchActivityEmployes,
+    setTableData,
+} from '../store/dataSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
@@ -96,6 +100,12 @@ const CompanyColumn = ({ row }) => {
     )
 }
 
+const rolesOptions = {
+    2: 'Администратор',
+    4: 'Доставщик',
+}
+
+
 const CompanyTable = () => {
     const tableRef = useRef(null)
 
@@ -168,6 +178,19 @@ const CompanyTable = () => {
                 cell: (props) => {
                     const row = props.row.original
                     return <span className="capitalize">{row.login}</span>
+                },
+            },
+            {
+                header: 'Pоль',
+                accessorKey: 'role',
+                width: '200px',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <span className="capitalize">
+                            {rolesOptions?.[row.role]}
+                        </span>
+                    )
                 },
             },
             // {

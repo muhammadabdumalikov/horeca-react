@@ -8,6 +8,9 @@ import { isEmpty } from 'lodash'
 import { generateExcel } from './OrdersExcelPattern'
 import { getOrders } from '../store/dataSlice'
 import { apiGetFakturaOrder } from 'services/SalesService'
+import OrdersPaymentTypeFilter from './OrdersPaymentTypeFilter'
+import OrdersTableSearch from './OrdersTableSearch'
+import OrdersTableSearchByClient from './OrdersTableSearchByClient'
 
 const ProductTableTools = () => {
     const dispatch = useDispatch()
@@ -21,7 +24,7 @@ const ProductTableTools = () => {
     )
 
     const onEditActivity = async () => {
-        const success = await apiGetFakturaOrder({order_ids: selectedRows})
+        const success = await apiGetFakturaOrder({ order_ids: selectedRows })
 
         if (!isEmpty(success)) {
             generateExcel(success)
@@ -63,9 +66,26 @@ const ProductTableTools = () => {
                     Фактура для склада
                 </Button>
             )}
-
             {/* <ProductTableSearch /> */}
-            <AgentsTableFilter />
+
+            <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
+                {/* <span className="font-semibold md:mr-2">Номер заказа:</span> */}
+                <OrdersTableSearchByClient />
+            </div>
+            <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
+                {/* <span className="font-semibold md:mr-2">Номер заказа:</span> */}
+                <OrdersTableSearch />
+            </div>
+
+            <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
+                <span className="font-semibold">Тип оплаты:</span>
+                <OrdersPaymentTypeFilter />
+            </div>
+
+            <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
+                <span className="font-semibold">Статус заказа:</span>
+                <AgentsTableFilter />
+            </div>
         </div>
     )
 }
