@@ -76,6 +76,7 @@ const Upload = React.forwardRef((props, ref) => {
     }
 
     const onNewFileUpload = (e) => {
+        console.log(e, 'e')
         const { files: newFiles } = e.target
         let result = true
 
@@ -108,6 +109,7 @@ const Upload = React.forwardRef((props, ref) => {
 
     const triggerUpload = (e) => {
         if (!disabled) {
+            console.log(fileInputField, 'fileInputField')
             fileInputField.current?.click()
         }
         e.stopPropagation()
@@ -169,6 +171,7 @@ const Upload = React.forwardRef((props, ref) => {
         draggable && `draggable`
     )
 
+    // console.log(draggable, 'draggable')
     return (
         <>
             <div

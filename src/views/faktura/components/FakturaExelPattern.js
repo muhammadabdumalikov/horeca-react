@@ -1,4 +1,4 @@
-import dayjs from "dayjs"
+import dayjs from 'dayjs'
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
 
@@ -160,8 +160,7 @@ export const XLSTableStyles = {
     },
 }
 
-export  const generateExcel = async (success) => {
-
+export const generateExcel = async (success) => {
     const workbook = new ExcelJS.Workbook()
     workbook.addWorksheet('table_1', {
         pageSetup: {
@@ -205,7 +204,9 @@ export  const generateExcel = async (success) => {
         worksheet.mergeCells(`C${startRowIndex + i}:E${startRowIndex + i}`)
         worksheet.getCell(
             `C${startRowIndex + i}`
-        ).value = `Дата заказа: ${dayjs(order_raw.created_at).format('YYYY-MM-DD')}`
+        ).value = `Дата заказа: ${dayjs(order_raw.created_at).format(
+            'YYYY-MM-DD'
+        )}`
 
         worksheet.getCell(`G${startRowIndex + i}`).style = cell_style
         worksheet.mergeCells(`G${startRowIndex + i}:H${startRowIndex + i}`)
@@ -217,7 +218,9 @@ export  const generateExcel = async (success) => {
         worksheet.mergeCells(`I${startRowIndex + i}:K${startRowIndex + i}`)
         worksheet.getCell(
             `I${startRowIndex + i}`
-        ).value = `Дата заказа: ${dayjs(order_raw.created_at).format('YYYY-MM-DD')}`
+        ).value = `Дата заказа: ${dayjs(order_raw.created_at).format(
+            'YYYY-MM-DD'
+        )}`
 
         worksheet.getCell(`A${startRowIndex + i + 1}`).style = cell_style
         worksheet.mergeCells(
@@ -243,41 +246,39 @@ export  const generateExcel = async (success) => {
         worksheet.mergeCells(
             `I${startRowIndex + i + 1}:K${startRowIndex + i + 1}`
         )
-        worksheet.getCell(
-            `I${startRowIndex + i + 1}`
-        ).value = `Ориентир: test`
+        worksheet.getCell(`I${startRowIndex + i + 1}`).value = `Ориентир: test`
 
         worksheet.getCell(`A${startRowIndex + i + 2}`).style = cell_style
         worksheet.mergeCells(
             `A${startRowIndex + i + 2}:B${startRowIndex + i + 2}`
         )
-        worksheet.getCell(
-            `A${startRowIndex + i + 2}`
-        ).value = `Агент: ${order_raw.registrator_first_name || '-'} ${order_raw.registrator_last_name || '-'}`
+        worksheet.getCell(`A${startRowIndex + i + 2}`).value = `Агент: ${
+            order_raw.registrator_first_name || '-'
+        } ${order_raw.registrator_last_name || '-'}`
 
         worksheet.getCell(`C${startRowIndex + i + 2}`).style = cell_style
         worksheet.mergeCells(
             `C${startRowIndex + i + 2}:E${startRowIndex + i + 2}`
         )
-        worksheet.getCell(
-            `C${startRowIndex + i + 2}`
-        ).value = `Тел. контр.: ${order_raw.client_phone || '-'}`
+        worksheet.getCell(`C${startRowIndex + i + 2}`).value = `Тел. контр.: ${
+            order_raw.client_phone || '-'
+        }`
 
         worksheet.getCell(`G${startRowIndex + i + 2}`).style = cell_style
         worksheet.mergeCells(
             `G${startRowIndex + i + 2}:H${startRowIndex + i + 2}`
         )
-        worksheet.getCell(
-            `G${startRowIndex + i + 2}`
-        ).value = `Агент: ${order_raw.registrator_first_name || '-'} ${order_raw.registrator_last_name || '-'}`
+        worksheet.getCell(`G${startRowIndex + i + 2}`).value = `Агент: ${
+            order_raw.registrator_first_name || '-'
+        } ${order_raw.registrator_last_name || '-'}`
 
         worksheet.getCell(`I${startRowIndex + i + 2}`).style = cell_style
         worksheet.mergeCells(
             `I${startRowIndex + i + 2}:K${startRowIndex + i + 2}`
         )
-        worksheet.getCell(
-            `I${startRowIndex + i + 2}`
-        ).value = `Тел. агента.: ${order_raw.registrator_phone || '-'}`
+        worksheet.getCell(`I${startRowIndex + i + 2}`).value = `Тел. агента.: ${
+            order_raw.registrator_phone || '-'
+        }`
 
         worksheet.getCell(`A${startRowIndex + i + 3}`).style = cell_style
         worksheet.mergeCells(
@@ -291,32 +292,31 @@ export  const generateExcel = async (success) => {
         worksheet.mergeCells(
             `C${startRowIndex + i + 3}:E${startRowIndex + i + 3}`
         )
-        worksheet.getCell(
-            `C${startRowIndex + i + 3}`
-        ).value = `Тел. агента: ${order_raw.registrator_phone || '-'}`
+        worksheet.getCell(`C${startRowIndex + i + 3}`).value = `Тел. агента: ${
+            order_raw.registrator_phone || '-'
+        }`
 
         worksheet.getCell(`G${startRowIndex + i + 3}`).style = cell_style
         worksheet.mergeCells(
             `G${startRowIndex + i + 3}:H${startRowIndex + i + 3}`
         )
-        worksheet.getCell(
-            `G${startRowIndex + i + 3}`
-        ).value = `Доставщик: ${order_raw.deliver_user_json?.first_name || '-'} ${order_raw.deliver_user_json?.last_name || '-'}`
+        worksheet.getCell(`G${startRowIndex + i + 3}`).value = `Доставщик: ${
+            order_raw.deliver_user_json?.first_name || '-'
+        } ${order_raw.deliver_user_json?.last_name || '-'}`
 
         worksheet.getCell(`I${startRowIndex + i + 3}`).style = cell_style
         worksheet.mergeCells(
             `I${startRowIndex + i + 3}:K${startRowIndex + i + 3}`
         )
-        worksheet.getCell(
-            `I${startRowIndex + i + 3}`
-        ).value = `Тел. достав.: ${order_raw.deliver_user_json?.phone || '-'}`
+        worksheet.getCell(`I${startRowIndex + i + 3}`).value = `Тел. достав.: ${
+            order_raw.deliver_user_json?.phone || '-'
+        }`
 
         worksheet.getCell(`A${startRowIndex + i + 4}`).style = cell_style
         worksheet.mergeCells(
             `A${startRowIndex + i + 4}:B${startRowIndex + i + 4}`
         )
-        worksheet.getCell(`A${startRowIndex + i + 4}`).value =
-            'Примечание: -'
+        worksheet.getCell(`A${startRowIndex + i + 4}`).value = 'Примечание: -'
 
         worksheet.getCell(`C${startRowIndex + i + 4}`).style = cell_style
         worksheet.mergeCells(
@@ -346,15 +346,13 @@ export  const generateExcel = async (success) => {
         worksheet.mergeCells(
             `G${startRowIndex + i + 5}:H${startRowIndex + i + 5}`
         )
-        worksheet.getCell(`G${startRowIndex + i + 5}`).value =
-            'Примечание: -'
+        worksheet.getCell(`G${startRowIndex + i + 5}`).value = 'Примечание: -'
 
         worksheet.getCell(`A${startRowIndex + i + 6}`).value = '№'
         worksheet.getCell(`A${startRowIndex + i + 6}`).style =
             cell_bold_center_style
 
-        worksheet.getCell(`B${startRowIndex + i + 6}`).value =
-            'Наименование'
+        worksheet.getCell(`B${startRowIndex + i + 6}`).value = 'Наименование'
         worksheet.getCell(`B${startRowIndex + i + 6}`).style =
             cell_bold_center_style
 
@@ -374,8 +372,7 @@ export  const generateExcel = async (success) => {
         worksheet.getCell(`G${startRowIndex + i + 6}`).style =
             cell_bold_center_style
 
-        worksheet.getCell(`H${startRowIndex + i + 6}`).value =
-            'Наименование'
+        worksheet.getCell(`H${startRowIndex + i + 6}`).value = 'Наименование'
         worksheet.getCell(`H${startRowIndex + i + 6}`).style =
             cell_bold_center_style
 
@@ -396,53 +393,50 @@ export  const generateExcel = async (success) => {
             const item_raw = order_raw.items[k]
 
             worksheet.getCell(`A${innerStartRowIndex + k}`).value = k + 1
-            worksheet.getCell(`A${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`A${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`B${innerStartRowIndex + k}`).value =
                 item_raw?.name_uz
-            worksheet.getCell(`B${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`B${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`C${innerStartRowIndex + k}`).value =
                 item_raw?.price
-            worksheet.getCell(`C${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`C${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`D${innerStartRowIndex + k}`).value =
                 item_raw?.quantity
-            worksheet.getCell(`D${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`D${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`E${innerStartRowIndex + k}`).value =
                 item_raw?.total_sum
-            worksheet.getCell(`E${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`E${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`G${innerStartRowIndex + k}`).value = k + 1
-            worksheet.getCell(`G${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`G${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`H${innerStartRowIndex + k}`).value =
                 item_raw?.name_uz
-            worksheet.getCell(`H${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`H${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`I${innerStartRowIndex + k}`).value =
                 item_raw?.price
-            worksheet.getCell(`I${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`I${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`J${innerStartRowIndex + k}`).value =
                 item_raw?.quantity
-            worksheet.getCell(`J${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`J${innerStartRowIndex + k}`).style = cell_style
 
             worksheet.getCell(`K${innerStartRowIndex + k}`).value =
                 item_raw?.total_sum
-            worksheet.getCell(`K${innerStartRowIndex + k}`).style =
-                cell_style
+            worksheet.getCell(`K${innerStartRowIndex + k}`).style = cell_style
         }
+
+        const totalQuantity = order_raw?.items.reduce(
+            (accumulator, currentItem) => {
+                return accumulator + currentItem.quantity
+            },
+            0
+        )
         worksheet.getCell(
             `A${startRowIndex + 7 + order_raw.items.length}`
         ).style = cell_bold_right_style
@@ -453,7 +447,7 @@ export  const generateExcel = async (success) => {
         )
         worksheet.getCell(
             `A${startRowIndex + 7 + order_raw.items.length}`
-        ).value = `Итого по инвойсу: ${order_raw.items.length} шт ${order_raw.total_sum}`
+        ).value = `Итого по инвойсу: ${totalQuantity} шт ${order_raw.total_sum}`
 
         worksheet.getCell(
             `A${startRowIndex + 8 + order_raw.items.length}`
@@ -477,7 +471,7 @@ export  const generateExcel = async (success) => {
         )
         worksheet.getCell(
             `G${startRowIndex + 7 + order_raw.items.length}`
-        ).value = `Итого по инвойсу: ${order_raw.items.length} шт ${order_raw.total_sum}`
+        ).value = `Итого по инвойсу: ${totalQuantity} шт ${order_raw.total_sum}`
 
         worksheet.getCell(
             `G${startRowIndex + 8 + order_raw.items.length}`
@@ -494,7 +488,7 @@ export  const generateExcel = async (success) => {
         startRowIndex += 10 + order_raw.items.length
     }
 
-     const buffer = await workbook.xlsx.writeBuffer().then((buffer) => {
+    const buffer = await workbook.xlsx.writeBuffer().then((buffer) => {
         const blob = new Blob([buffer], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })

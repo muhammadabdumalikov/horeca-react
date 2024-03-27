@@ -72,6 +72,7 @@ const dataSlice = createSlice({
     },
     extraReducers: {
         [getOrders.fulfilled]: (state, action) => {
+            // console.log(action.payload.total_count, 'action.payload.total_count')
             state.ordersList = action.payload.data
             state.tableData.total = action.payload.total_count
             state.loading = false

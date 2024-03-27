@@ -101,7 +101,9 @@ const ProductStatusFilter = () => {
         <Select
             options={statusOfOrder}
             size="sm"
-            isDisabled={productList?.status === 3}
+            isDisabled={
+                productList?.status === 3 || (productList.paid === 1 && 2)
+            }
             className="ml-4 min-w-[130px] disabled"
             onChange={onStatusFilterChange}
             components={{

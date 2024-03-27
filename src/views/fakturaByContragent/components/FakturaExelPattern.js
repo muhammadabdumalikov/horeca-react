@@ -443,6 +443,13 @@ export  const generateExcel = async (success) => {
             worksheet.getCell(`K${innerStartRowIndex + k}`).style =
                 cell_style
         }
+
+        const totalQuantity = order_raw?.items.reduce(
+            (accumulator, currentItem) => {
+                return accumulator + currentItem.quantity
+            },
+            0
+        )
         worksheet.getCell(
             `A${startRowIndex + 7 + order_raw.items.length}`
         ).style = cell_bold_right_style
@@ -453,7 +460,7 @@ export  const generateExcel = async (success) => {
         )
         worksheet.getCell(
             `A${startRowIndex + 7 + order_raw.items.length}`
-        ).value = `Итого по инвойсу: ${order_raw.items.length} шт ${order_raw.total_sum}`
+        ).value = `Итого по инвойсу: ${totalQuantity} шт ${order_raw.total_sum}`
 
         worksheet.getCell(
             `A${startRowIndex + 8 + order_raw.items.length}`
@@ -477,7 +484,7 @@ export  const generateExcel = async (success) => {
         )
         worksheet.getCell(
             `G${startRowIndex + 7 + order_raw.items.length}`
-        ).value = `Итого по инвойсу: ${order_raw.items.length} шт ${order_raw.total_sum}`
+        ).value = `Итого по инвойсу: ${totalQuantity} шт ${order_raw.total_sum}`
 
         worksheet.getCell(
             `G${startRowIndex + 8 + order_raw.items.length}`
@@ -498,7 +505,7 @@ export  const generateExcel = async (success) => {
         const blob = new Blob([buffer], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
-        saveAs(blob, 'example.xlsx')
+        saveAs(blob, `Фактура-по-контрагентам(${dayjs(new Date()).format('MM-DD-YYYY')}).xlsx`)
     })
 
     const file = {

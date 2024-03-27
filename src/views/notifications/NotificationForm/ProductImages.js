@@ -211,6 +211,7 @@ const ProductImages = (props) => {
                         }
 
                         return (
+
                             <Upload
                                 beforeUpload={beforeUpload}
                                 onChange={(files) =>

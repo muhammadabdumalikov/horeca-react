@@ -39,7 +39,7 @@ const ProductTableTools = () => {
                     Процесс заказа
                 </Button> */}
             </div>
-           {productList.status !== 3 && <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
+           {productList.status !== 3 || productList.paid === 1 && 2 && <div className="flex flex-col lg:flex-row lg:items-center md:mx-2">
                 <Button
                     onClick={handleOpenEditPayment}
                     block

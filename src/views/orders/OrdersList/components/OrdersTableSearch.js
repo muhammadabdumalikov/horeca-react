@@ -4,7 +4,7 @@ import { HiOutlineSearch } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import debounce from 'lodash/debounce'
 import cloneDeep from 'lodash/cloneDeep'
-import { getOrders, setTableData } from '../store/dataSlice'
+import { getOrders } from '../store/dataSlice'
 
 const OrdersTableSearch = () => {
     const dispatch = useDispatch()
@@ -18,7 +18,7 @@ const OrdersTableSearch = () => {
     function handleDebounceFn(val) {
         const newTableData = cloneDeep(tableData)
         newTableData.order_number = val
-        newTableData.pageIndex = 1
+        // newTableData.limit = 1
         if (typeof val === 'string' && val.length > 1) {
             fetchData(newTableData)
         }
@@ -29,8 +29,21 @@ const OrdersTableSearch = () => {
     }
 
     const fetchData = (data) => {
-        dispatch(setTableData(data))
-        dispatch(getOrders(data))
+        const { order_number } = data
+
+        // dispatch(
+        //     setTableData({
+        //         order_number: data?.order_number,
+        //         offset:
+        //             (data?.pageIndex - 1) * data?.pageSize +
+        //             (data?.pageIndex === 1 && 0),
+        //         limit: data?.pageSize,
+        //     })
+        // )
+        // dispatch(
+        //     setTableData(data)
+        // )
+        dispatch(getOrders({ order_number }))
     }
 
     const onEdit = (e) => {

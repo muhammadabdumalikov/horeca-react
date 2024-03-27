@@ -278,7 +278,7 @@ export const generateAllItogExcel = async (success) => {
         const blob = new Blob([buffer], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
-        saveAs(blob, `итоговый-отчет(${dayjs(new Date()).format("MM-DD-YYYY")}).xlsx`)
+        saveAs(blob, `Итоговый-отчет(${dayjs(new Date()).format("MM-DD-YYYY")}).xlsx`)
     })
 
     return buffer

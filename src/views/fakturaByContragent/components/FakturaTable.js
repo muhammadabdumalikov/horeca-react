@@ -11,7 +11,7 @@ import { setSelectedRows, addRowItem, removeRowItem } from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import cloneDeep from 'lodash/cloneDeep'
 import dayjs from 'dayjs'
-import { HiOutlineDocumentDownload } from 'react-icons/hi'
+// import { HiOutlineDocumentDownload } from 'react-icons/hi'
 import { Notification, toast } from 'components/ui'
 import { useNavigate } from 'react-router-dom'
 import { generateExcel } from './FakturaExelPattern'
@@ -100,7 +100,7 @@ const ActionColumn = ({ row }) => {
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEditActivity}
             >
-                <HiOutlineDocumentDownload size="28" />
+                {/* <HiOutlineDocumentDownload size="28" /> */}
             </span>
         </div>
     )

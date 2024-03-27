@@ -38,7 +38,7 @@ const ActionColumn = ({ row }) => {
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
             >
-                 <HiOutlinePencil />
+                <HiOutlinePencil />
             </span>
         </div>
     )
@@ -52,6 +52,9 @@ const CompanyTable = () => {
     const { pageIndex, pageSize, search, total } = useSelector(
         (state) => state.ordersStore.data.tableData
     )
+    // const x = useSelector((state) => state.ordersStore.data.tableData)
+
+    // console.log(x, 'x')
 
     const filterData = useSelector((state) => state.ordersStore.data.filterData)
 
@@ -77,6 +80,8 @@ const CompanyTable = () => {
         [pageIndex, pageSize, search, total]
     )
 
+    // console.log(pageSize, 'pageSize')
+    
     const fetchData = () => {
         dispatch(
             getOrders({
@@ -180,7 +185,8 @@ const CompanyTable = () => {
                     const { deliver_user_json } = props.row.original
                     return (
                         <span>
-                            {deliver_user_json?.first_name} {deliver_user_json?.last_name}
+                            {deliver_user_json?.first_name}{' '}
+                            {deliver_user_json?.last_name}
                         </span>
                     )
                 },
