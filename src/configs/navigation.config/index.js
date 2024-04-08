@@ -136,6 +136,16 @@ const navigationConfig = [
         authority: [ADMIN],
         subMenu: [],
     },
+    {
+        key: 'paid',
+        path: '/payment-history-list',
+        title: 'Оплаченная сумма',
+        translateKey: 'nav.aktSverka',
+        icon: 'money',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [ADMIN],
+        subMenu: [],
+    },
 
     // {
     //     key: 'collapseMenu',

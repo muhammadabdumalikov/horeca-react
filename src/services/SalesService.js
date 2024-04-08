@@ -382,6 +382,13 @@ export async function apiGetDebtUsers(params) {
         params
     })
 }
+export async function apiGetPaymentHistory(params) {
+    return ApiService.fetchData({
+        url: `admin/order/payment-history-list`,
+        method: 'get',
+        params
+    })
+}
 export async function apiOrderUpdate(data) {
     return ApiService.fetchData({
         url: `/admin/order/order-update/${data.items?.[0].id}`,

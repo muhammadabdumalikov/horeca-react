@@ -8,7 +8,8 @@ import {
     HiOutlineUserCircle,
     HiOutlineBell,
     HiOutlineCalculator,
-    HiOutlineClipboardList
+    HiOutlineClipboardList,
+    HiOutlineCash
 } from 'react-icons/hi'
 import { HiOutlineInboxStack, HiOutlineBuildingOffice2, HiOutlineArchiveBoxArrowDown } from "react-icons/hi2";
 
@@ -25,7 +26,8 @@ const navigationIcon = {
     notification: <HiOutlineBell/>,
     calculator: <HiOutlineCalculator/>,
     clipboardList: <HiOutlineClipboardList/>,
-    users: <HiOutlineUserGroup/>
+    users: <HiOutlineUserGroup/>,
+    money: <HiOutlineCash/>,
 }
 
 export default navigationIcon

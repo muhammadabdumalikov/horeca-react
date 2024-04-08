@@ -167,6 +167,12 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/debtUser/DebtUsersList')),
         authority: [ADMIN],
     },
+    {
+        key: 'paid',
+        path: '/payment-history-list',
+        component: React.lazy(() => import('views/paidHistory/PaidHistoryList')),
+        authority: [ADMIN],
+    },
 
     // {
     //     key: 'collapseMenu.item1',
